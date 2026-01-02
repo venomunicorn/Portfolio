@@ -1,0 +1,6 @@
+API Key Setup
+Visit OpenWeatherMap and create a free account
+
+Generate an API key from your account dashboard
+
+Replace "your_api_key_here" in the script with your actual API key

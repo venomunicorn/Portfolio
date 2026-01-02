@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Resizer - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px
+        }
+
+        .container {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            display: inline-block;
+            margin-bottom: 10px
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px
+        }
+
+        h1 {
+            color: #10b981
+        }
+
+        .preview {
+            background: rgba(0, 0, 0, .3);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .preview-img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .3)
+        }
+
+        .placeholder {
+            color: #888;
+            font-size: .9rem
+        }
+
+        .modes {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px
+        }
+
+        .mode {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 10px;
+            background: transparent;
+            color: #888;
+            cursor: pointer;
+            text-align: center;
+            transition: all .2s
+        }
+
+        .mode.active {
+            border-color: #10b981;
+            color: #10b981;
+            background: rgba(16, 185, 129, .1)
+        }
+
+        .controls {
+            background: rgba(0, 0, 0, .2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px
+        }
+
+        .control-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px
+        }
+
+        .control-row:last-child {
+            margin-bottom: 0
+        }
+
+        label {
+            width: 80px;
+            color: #888;
+            font-size: .9rem
+        }
+
+        input[type="number"],
+        input[type="range"] {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, .3);
+            color: #fff
+        }
+
+        input[type="range"] {
+            padding: 0;
+            height: 8px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, .1);
+            border-radius: 4px
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #10b981;
+            border-radius: 50%;
+            cursor: pointer
+        }
+
+        .output {
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: .85rem
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(16, 185, 129, .4)
+        }
+
+        .info {
+            background: rgba(16, 185, 129, .1);
+            border: 1px solid rgba(16, 185, 129, .3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center
+        }
+
+        .info-title {
+            color: #10b981;
+            font-weight: bold;
+            margin-bottom: 5px
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header"><span class="badge">Python Demo</span>
+            <h1>📷 Image Resizer Pro</h1>
+        </div>
+        <div class="preview" id="preview">
+            <div class="placeholder">🖼️ Click to select an image or use demo</div>
+        </div>
+        <div class="modes">
+            <button class="mode active" onclick="setMode('pixels')">📐 Pixels</button>
+            <button class="mode" onclick="setMode('percent')">📊 Percent</button>
+            <button class="mode" onclick="setMode('size')">💾 File Size</button>
+        </div>
+        <div class="controls" id="controls"></div>
+        <div class="output"><span id="original">Original: 1920 × 1080</span><span id="result">Output: 1920 × 1080</span>
+        </div>
+        <button class="btn" style="margin-top:15px" onclick="resize()">✨ Resize Image</button>
+        <div class="info" id="info" style="display:none">
+            <div class="info-title">✓ Resize Complete!</div>
+            <div id="infoText"></div>
+        </div>
+    </div>
+    <script>
+        let mode = 'pixels', origW = 1920, origH = 1080;
+        function setMode(m) { mode = m; document.querySelectorAll('.mode').forEach(b => b.classList.remove('active')); event.target.classList.add('active'); renderControls() }
+        function renderControls() {
+            const c = document.getElementById('controls');
+            if (mode === 'pixels') c.innerHTML = `<div class="control-row"><label>Width</label><input type="number" id="width" value="${origW}" oninput="updatePreview()"></div><div class="control-row"><label>Height</label><input type="number" id="height" value="${origH}" oninput="updatePreview()"></div><div class="control-row"><label>Lock Ratio</label><input type="checkbox" id="lock" checked></div>`;
+            else if (mode === 'percent') c.innerHTML = `<div class="control-row"><label>Scale</label><input type="range" id="scale" min="10" max="200" value="100" oninput="updatePreview()"><span id="scaleVal" style="width:50px;text-align:right">100%</span></div>`;
+            else c.innerHTML = `<div class="control-row"><label>Target</label><input type="range" id="target" min="10" max="100" value="50" oninput="updatePreview()"><span id="targetVal" style="width:60px;text-align:right">500 KB</span></div><div class="control-row"><label>Quality</label><input type="range" id="quality" min="10" max="100" value="85" oninput="updatePreview()"><span id="qualityVal" style="width:50px;text-align:right">85%</span></div>`;
+            updatePreview()
+        }
+        function updatePreview() {
+            let w, h;
+            if (mode === 'pixels') { w = parseInt(document.getElementById('width').value) || origW; h = parseInt(document.getElementById('height').value) || origH }
+            else if (mode === 'percent') { const s = parseInt(document.getElementById('scale').value); document.getElementById('scaleVal').textContent = s + '%'; w = Math.round(origW * s / 100); h = Math.round(origH * s / 100) }
+            else { const t = parseInt(document.getElementById('target').value), q = parseInt(document.getElementById('quality').value); document.getElementById('targetVal').textContent = (t * 10) + ' KB'; document.getElementById('qualityVal').textContent = q + '%'; const factor = Math.sqrt(t / 100); w = Math.round(origW * factor); h = Math.round(origH * factor) }
+            document.getElementById('result').textContent = `Output: ${w} × ${h}`
+        }
+        function resize() { document.getElementById('info').style.display = 'block'; const r = document.getElementById('result').textContent; document.getElementById('infoText').textContent = r + ' • Ready to save' }
+        document.getElementById('preview').onclick = () => { document.getElementById('preview').innerHTML = '<img class="preview-img" src="data:image/svg+xml,' + encodeURIComponent('<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"400\\" height=\\"225\\"><rect fill=\\"#2d3748\\" width=\\"400\\" height=\\"225\\"/><text x=\\"200\\" y=\\"120\\" text-anchor=\\"middle\\" fill=\\"#10b981\\" font-size=\\"40\\">🖼️ Demo Image</text></svg>') + '">' };
+        renderControls();
+    </script>
+</body>
+
+</html>

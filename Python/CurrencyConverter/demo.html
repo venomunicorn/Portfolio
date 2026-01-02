@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px
+        }
+
+        .container {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 35px;
+            max-width: 420px;
+            width: 100%
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            display: inline-block;
+            margin-bottom: 10px
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px
+        }
+
+        h1 {
+            color: #10b981;
+            margin-bottom: 5px
+        }
+
+        .converter {
+            background: rgba(0, 0, 0, .3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px
+        }
+
+        input[type="number"] {
+            flex: 1;
+            padding: 15px;
+            font-size: 1.2rem;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, .3);
+            color: #fff;
+            text-align: right
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #10b981
+        }
+
+        select {
+            padding: 15px;
+            font-size: 1rem;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, .5);
+            color: #fff;
+            cursor: pointer;
+            min-width: 90px
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #10b981
+        }
+
+        .swap-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin: 10px auto;
+            display: block;
+            transition: transform .3s
+        }
+
+        .swap-btn:hover {
+            transform: rotate(180deg)
+        }
+
+        .result {
+            background: rgba(16, 185, 129, .1);
+            border: 2px solid rgba(16, 185, 129, .3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #10b981
+        }
+
+        .result-rate {
+            font-size: .9rem;
+            color: #888;
+            margin-top: 5px
+        }
+
+        .rates {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, .1)
+        }
+
+        .rates h3 {
+            font-size: .9rem;
+            color: #888;
+            margin-bottom: 15px;
+            text-align: center
+        }
+
+        .rate-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px
+        }
+
+        .rate-item {
+            background: rgba(0, 0, 0, .2);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: .85rem;
+            display: flex;
+            justify-content: space-between
+        }
+
+        .rate-item span {
+            color: #10b981;
+            font-weight: bold
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header"><span class="badge">Python Demo</span>
+            <h1>💱 Currency Converter</h1>
+            <p style="color:#888;font-size:.9rem">10+ currencies with live conversion</p>
+        </div>
+        <div class="converter">
+            <div class="input-group">
+                <input type="number" id="amount" value="100" oninput="convert()">
+                <select id="from" onchange="convert()">
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="INR">INR</option>
+                    <option value="JPY">JPY</option>
+                    <option value="AUD">AUD</option>
+                    <option value="CAD">CAD</option>
+                    <option value="CHF">CHF</option>
+                    <option value="CNY">CNY</option>
+                    <option value="SGD">SGD</option>
+                </select>
+            </div>
+            <button class="swap-btn" onclick="swap()">⇅</button>
+            <div class="input-group">
+                <input type="number" id="result" readonly>
+                <select id="to" onchange="convert()">
+                    <option value="USD">USD</option>
+                    <option value="EUR" selected>EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="INR">INR</option>
+                    <option value="JPY">JPY</option>
+                    <option value="AUD">AUD</option>
+                    <option value="CAD">CAD</option>
+                    <option value="CHF">CHF</option>
+                    <option value="CNY">CNY</option>
+                    <option value="SGD">SGD</option>
+                </select>
+            </div>
+        </div>
+        <div class="result">
+            <div class="result-value" id="display">$100.00 = €92.00</div>
+            <div class="result-rate" id="rate">1 USD = 0.92 EUR</div>
+        </div>
+        <div class="rates">
+            <h3>Exchange Rates (Base: USD)</h3>
+            <div class="rate-grid">
+                <div class="rate-item">EUR <span>0.92</span></div>
+                <div class="rate-item">GBP <span>0.79</span></div>
+                <div class="rate-item">INR <span>83.50</span></div>
+                <div class="rate-item">JPY <span>149.50</span></div>
+                <div class="rate-item">AUD <span>1.53</span></div>
+                <div class="rate-item">CAD <span>1.36</span></div>
+                <div class="rate-item">CHF <span>0.88</span></div>
+                <div class="rate-item">CNY <span>7.24</span></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const rates = { USD: 1, EUR: 0.92, GBP: 0.79, INR: 83.50, JPY: 149.50, AUD: 1.53, CAD: 1.36, CHF: 0.88, CNY: 7.24, SGD: 1.34 };
+        const symbols = { USD: '$', EUR: '€', GBP: '£', INR: '₹', JPY: '¥', AUD: 'A$', CAD: 'C$', CHF: 'Fr', CNY: '¥', SGD: 'S$' };
+        function convert() { const a = parseFloat(document.getElementById('amount').value) || 0, f = document.getElementById('from').value, t = document.getElementById('to').value, r = (a / rates[f]) * rates[t]; document.getElementById('result').value = r.toFixed(2); const rt = (rates[t] / rates[f]).toFixed(4); document.getElementById('display').textContent = `${symbols[f]}${a.toFixed(2)} = ${symbols[t]}${r.toFixed(2)}`; document.getElementById('rate').textContent = `1 ${f} = ${rt} ${t}` }
+        function swap() { const f = document.getElementById('from'), t = document.getElementById('to'), tmp = f.value; f.value = t.value; t.value = tmp; convert() }
+        convert();
+    </script>
+</body>
+
+</html>

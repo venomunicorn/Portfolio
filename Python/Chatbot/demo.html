@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .chatbot {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            width: 450px;
+            height: 650px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #10b981;
+            font-size: 1.3rem;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .mode-toggle {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .mode-btn {
+            padding: 6px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            color: #888;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .mode-btn.active {
+            background: rgba(16, 185, 129, 0.3);
+            border-color: #10b981;
+            color: #10b981;
+        }
+
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 15px;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .bubble {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            position: relative;
+        }
+
+        .message.bot .bubble {
+            background: rgba(255, 255, 255, 0.1);
+            border-bottom-left-radius: 5px;
+        }
+
+        .message.user .bubble {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-bottom-right-radius: 5px;
+        }
+
+        .timestamp {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .message.user .timestamp {
+            text-align: right;
+        }
+
+        .typing {
+            display: flex;
+            gap: 5px;
+            padding: 12px 16px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #888;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .input-area {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 18px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #10b981;
+        }
+
+        .send-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="chatbot">
+        <div class="header">
+            <span class="badge">Python Demo</span>
+            <h1>💬 PyBot - AI Chatbot</h1>
+            <div class="status">
+                <div class="status-dot"></div>
+                <span>Online</span>
+            </div>
+            <div class="mode-toggle">
+                <button class="mode-btn active" onclick="setMode('general')">General</button>
+                <button class="mode-btn" onclick="setMode('tech')">🛠️ Tech Support</button>
+            </div>
+        </div>
+
+        <div class="messages" id="messages">
+            <div class="message bot">
+                <div class="bubble">
+                    Hello! I'm PyBot, your AI assistant. How can I help you today?
+                    <div class="timestamp">Just now</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type a message..."
+                onkeypress="if(event.key==='Enter')sendMessage()">
+            <button class="send-btn" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        let mode = 'general';
+        const responses = {
+            general: {
+                greetings: ["Hello! How are you?", "Hi there! Nice to chat with you!", "Hey! What's on your mind?"],
+                thanks: ["You're welcome!", "Happy to help!", "Anytime!"],
+                how_are_you: ["I'm doing great, thanks for asking!", "All systems running smoothly!", "Wonderful! How about you?"],
+                name: ["I'm PyBot, your friendly AI assistant!", "You can call me PyBot!"],
+                help: ["I can chat with you, answer questions, or provide tech support!", "Try asking me anything or switch to Tech Support mode!"],
+                default: ["That's interesting! Tell me more.", "I see! What else would you like to discuss?", "Fascinating! Let's keep chatting."]
+            },
+            tech: {
+                python: ["Python is a versatile programming language! Need help with syntax or libraries?", "Great choice! Python is perfect for beginners and pros alike."],
+                javascript: ["JavaScript powers the web! Are you working on front-end or Node.js?", "JS is essential for web development. What are you building?"],
+                error: ["Don't worry, errors happen! Can you share the error message?", "Let's debug this together! What's the issue?"],
+                help: ["I can help with Python, JavaScript, debugging, and general coding questions!", "Ask me about coding, debugging, or tech concepts!"],
+                default: ["Interesting tech question! Let me think...", "From a technical standpoint, I'd suggest researching that further.", "That's a great tech topic to explore!"]
+            }
+        };
+
+        function setMode(newMode) {
+            mode = newMode;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            addBotMessage(mode === 'tech' ? "Switched to Tech Support mode. How can I assist with your technical questions?" : "Switched to General mode. Let's chat!");
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            addUserMessage(text);
+            input.value = '';
+
+            // Show typing indicator
+            showTyping();
+
+            setTimeout(() => {
+                hideTyping();
+                const response = getResponse(text);
+                addBotMessage(response);
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function getResponse(input) {
+            const lower = input.toLowerCase();
+            const r = responses[mode];
+
+            if (lower.match(/hello|hi|hey|greetings/)) return random(r.greetings || r.default);
+            if (lower.match(/thank|thanks/)) return random(r.thanks || r.default);
+            if (lower.match(/how are you/)) return random(r.how_are_you || r.default);
+            if (lower.match(/your name|who are you/)) return random(r.name || r.default);
+            if (lower.match(/help|what can you do/)) return random(r.help);
+
+            if (mode === 'tech') {
+                if (lower.match(/python/)) return random(r.python);
+                if (lower.match(/javascript|js/)) return random(r.javascript);
+                if (lower.match(/error|bug|issue|problem/)) return random(r.error);
+            }
+
+            return random(r.default);
+        }
+
+        function random(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function addUserMessage(text) {
+            const messages = document.getElementById('messages');
+            messages.innerHTML += `
+                <div class="message user">
+                    <div class="bubble">
+                        ${escapeHtml(text)}
+                        <div class="timestamp">${getTime()}</div>
+                    </div>
+                </div>
+            `;
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function addBotMessage(text) {
+            const messages = document.getElementById('messages');
+            messages.innerHTML += `
+                <div class="message bot">
+                    <div class="bubble">
+                        ${text}
+                        <div class="timestamp">${getTime()}</div>
+                    </div>
+                </div>
+            `;
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function showTyping() {
+            const messages = document.getElementById('messages');
+            messages.innerHTML += `
+                <div class="message bot" id="typing">
+                    <div class="bubble typing">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `;
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function hideTyping() {
+            const typing = document.getElementById('typing');
+            if (typing) typing.remove();
+        }
+
+        function getTime() {
+            return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+
+</html>

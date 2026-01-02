@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonic X1 | Premium Wireless Headphones</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="glow-bg" id="glowBg"></div>
+
+    <header>
+        <div class="logo">SONIC</div>
+        <nav>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#specs">Specs</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+            </ul>
+        </nav>
+        <div class="cart" id="cartBtn">
+            <i class="fas fa-shopping-bag"></i>
+            <span class="cart-count" id="cartCount">0</span>
+        </div>
+    </header>
+
+    <!-- Cart Notification -->
+    <div class="cart-notification" id="cartNotification">
+        <i class="fas fa-check-circle"></i>
+        <span>Added to cart!</span>
+    </div>
+
+    <main class="product-page">
+        <!-- Product Gallery -->
+        <section class="gallery-section">
+            <div class="main-image">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600&fit=crop"
+                    alt="Sonic X1 Headphones" id="mainProductImage" class="product-image">
+            </div>
+            <div class="thumbnail-row">
+                <div class="thumbnail active"
+                    data-img="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600&fit=crop">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100&h=100&fit=crop"
+                        alt="Front view">
+                </div>
+                <div class="thumbnail"
+                    data-img="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&h=600&fit=crop">
+                    <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=100&h=100&fit=crop"
+                        alt="Side view">
+                </div>
+                <div class="thumbnail"
+                    data-img="https://images.unsplash.com/photo-1484704849700-f032a568e944?w=600&h=600&fit=crop">
+                    <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?w=100&h=100&fit=crop"
+                        alt="Detail view">
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Info -->
+        <section class="info-section">
+            <div class="product-badge">New Release</div>
+            <h1>Sonic X1</h1>
+            <p class="tagline">Premium Wireless Headphones with Active Noise Cancellation</p>
+
+            <div class="rating">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="rating-count">4.8 (2,847 reviews)</span>
+            </div>
+
+            <div class="price-section">
+                <span class="price" id="currentPrice">$299</span>
+                <span class="original-price">$349</span>
+                <span class="discount">Save $50</span>
+            </div>
+
+            <!-- Color Selection -->
+            <div class="option-group">
+                <label>Color</label>
+                <div class="color-options">
+                    <button class="color-btn active" data-color="black" style="background: #1a1a1a;"
+                        title="Midnight Black"></button>
+                    <button class="color-btn" data-color="silver"
+                        style="background: linear-gradient(135deg, #c0c0c0, #e8e8e8);" title="Silver"></button>
+                    <button class="color-btn" data-color="blue" style="background: #0077b6;"
+                        title="Ocean Blue"></button>
+                    <button class="color-btn" data-color="rose" style="background: #e8b4b8;" title="Rose Gold"></button>
+                </div>
+                <span class="selected-label" id="colorLabel">Midnight Black</span>
+            </div>
+
+            <!-- Variant Selection -->
+            <div class="option-group">
+                <label>Model</label>
+                <div class="variant-options">
+                    <button class="variant-btn active" data-variant="standard" data-price="299">
+                        <span class="variant-name">Standard</span>
+                        <span class="variant-price">$299</span>
+                    </button>
+                    <button class="variant-btn" data-variant="pro" data-price="399">
+                        <span class="variant-name">Pro</span>
+                        <span class="variant-price">$399</span>
+                    </button>
+                    <button class="variant-btn" data-variant="max" data-price="499">
+                        <span class="variant-name">Max</span>
+                        <span class="variant-price">$499</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quantity -->
+            <div class="option-group">
+                <label>Quantity</label>
+                <div class="quantity-selector">
+                    <button class="qty-btn" id="qtyMinus">−</button>
+                    <span class="qty-value" id="qtyValue">1</span>
+                    <button class="qty-btn" id="qtyPlus">+</button>
+                </div>
+            </div>
+
+            <!-- Add to Cart -->
+            <div class="action-buttons">
+                <button class="btn-add-cart" id="addToCartBtn">
+                    <i class="fas fa-shopping-bag"></i>
+                    Add to Cart
+                </button>
+                <button class="btn-wishlist" id="wishlistBtn">
+                    <i class="far fa-heart"></i>
+                </button>
+            </div>
+
+            <!-- Features Quick List -->
+            <div class="quick-features">
+                <div class="feature-item">
+                    <i class="fas fa-volume-xmark"></i>
+                    <span>Active Noise Cancellation</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-battery-full"></i>
+                    <span>40hr Battery Life</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-bluetooth-b"></i>
+                    <span>Bluetooth 5.3</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Product Details Tabs -->
+    <section class="details-section" id="features">
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="features">Features</button>
+            <button class="tab-btn" data-tab="specs">Specifications</button>
+            <button class="tab-btn" data-tab="reviews">Reviews</button>
+        </div>
+
+        <div class="tab-content active" id="tab-features">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-headphones"></i></div>
+                    <h3>Immersive Sound</h3>
+                    <p>Custom 40mm drivers deliver rich bass and crystal-clear highs for an unparalleled listening
+                        experience.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-microphone-slash"></i></div>
+                    <h3>Adaptive ANC</h3>
+                    <p>AI-powered noise cancellation adjusts automatically to your environment for perfect silence.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                    <h3>All-Day Comfort</h3>
+                    <p>Memory foam earcups and lightweight design let you wear them for hours without fatigue.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-microphone"></i></div>
+                    <h3>Crystal Clear Calls</h3>
+                    <p>6 beamforming microphones isolate your voice for professional-quality calls anywhere.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-specs">
+            <table class="specs-table">
+                <tr>
+                    <td>Driver Size</td>
+                    <td>40mm Custom Titanium</td>
+                </tr>
+                <tr>
+                    <td>Frequency Response</td>
+                    <td>4Hz - 40,000Hz</td>
+                </tr>
+                <tr>
+                    <td>Impedance</td>
+                    <td>32Ω</td>
+                </tr>
+                <tr>
+                    <td>Battery Life</td>
+                    <td>40 hours (ANC on)</td>
+                </tr>
+                <tr>
+                    <td>Charging</td>
+                    <td>USB-C, 10min = 3hrs</td>
+                </tr>
+                <tr>
+                    <td>Bluetooth</td>
+                    <td>5.3 with multipoint</td>
+                </tr>
+                <tr>
+                    <td>Weight</td>
+                    <td>250g</td>
+                </tr>
+                <tr>
+                    <td>Connectivity</td>
+                    <td>Bluetooth, 3.5mm, USB-C</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="tab-content" id="tab-reviews">
+            <div class="reviews-summary">
+                <div class="rating-big">4.8</div>
+                <div class="rating-breakdown">
+                    <div class="rating-bar"><span>5★</span>
+                        <div class="bar">
+                            <div class="fill" style="width: 78%"></div>
+                        </div><span>78%</span>
+                    </div>
+                    <div class="rating-bar"><span>4★</span>
+                        <div class="bar">
+                            <div class="fill" style="width: 15%"></div>
+                        </div><span>15%</span>
+                    </div>
+                    <div class="rating-bar"><span>3★</span>
+                        <div class="bar">
+                            <div class="fill" style="width: 5%"></div>
+                        </div><span>5%</span>
+                    </div>
+                    <div class="rating-bar"><span>2★</span>
+                        <div class="bar">
+                            <div class="fill" style="width: 1%"></div>
+                        </div><span>1%</span>
+                    </div>
+                    <div class="rating-bar"><span>1★</span>
+                        <div class="bar">
+                            <div class="fill" style="width: 1%"></div>
+                        </div><span>1%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="reviews-list">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer">Alex M.</div>
+                        <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    </div>
+                    <p>"Absolutely incredible sound quality. The ANC is the best I've ever experienced. Worth every
+                        penny!"</p>
+                    <span class="review-date">December 15, 2024</span>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer">Sarah K.</div>
+                        <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    </div>
+                    <p>"Super comfortable for long work sessions. Battery life is insane - I charge it once a week!"</p>
+                    <span class="review-date">December 10, 2024</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Sonic Audio. Premium sound, reimagined.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

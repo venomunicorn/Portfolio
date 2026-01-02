@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainStorm Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-animation"></div>
+
+    <div class="quiz-container">
+        <header>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+            <div class="header-info">
+                <span id="question-count">Question 1/5</span>
+                <span id="score">Score: 0</span>
+            </div>
+        </header>
+
+        <div id="quiz-card" class="card">
+            <h2 id="question-text">What is the capital of France?</h2>
+            <div class="options-container" id="options">
+                <!-- Options will be injected here -->
+            </div>
+        </div>
+
+        <div id="result-card" class="card hidden">
+            <h2>Quiz Completed!</h2>
+            <div class="score-circle">
+                <span id="final-score">4</span>
+                <span class="total">/ 5</span>
+            </div>
+            <p id="feedback-text">Great job!</p>
+            <button class="btn-restart" onclick="location.reload()">Play Again</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

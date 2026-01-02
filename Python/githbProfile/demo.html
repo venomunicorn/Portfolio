@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Avatar Downloader - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px
+        }
+
+        .container {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 450px;
+            width: 100%
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            display: inline-block;
+            margin-bottom: 10px
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px
+        }
+
+        h1 {
+            color: #10b981
+        }
+
+        .search {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px
+        }
+
+        .search input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, .3);
+            color: #fff;
+            font-size: 1rem
+        }
+
+        .search input:focus {
+            outline: none;
+            border-color: #10b981
+        }
+
+        .search button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            cursor: pointer;
+            font-size: 1rem
+        }
+
+        .profile {
+            background: rgba(0, 0, 0, .3);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #10b981;
+            object-fit: cover;
+            background: rgba(255, 255, 255, .1)
+        }
+
+        .placeholder-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, .2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            background: rgba(0, 0, 0, .3)
+        }
+
+        .name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px
+        }
+
+        .username {
+            color: #10b981;
+            font-size: 1rem;
+            margin-bottom: 15px
+        }
+
+        .bio {
+            color: #888;
+            font-size: .9rem;
+            margin-bottom: 20px;
+            line-height: 1.5
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, .05);
+            padding: 12px;
+            border-radius: 10px
+        }
+
+        .stat-val {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #10b981
+        }
+
+        .stat-lbl {
+            font-size: .75rem;
+            color: #888
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-bottom: 10px
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, .1);
+            color: #fff
+        }
+
+        .btn:hover {
+            transform: translateY(-1px)
+        }
+
+        .suggestions {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 20px
+        }
+
+        .suggestion {
+            padding: 6px 12px;
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 15px;
+            background: transparent;
+            color: #888;
+            cursor: pointer;
+            font-size: .8rem
+        }
+
+        .suggestion:hover {
+            border-color: #10b981;
+            color: #10b981
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 50px
+        }
+
+        .loading.active {
+            display: block
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, .1);
+            border-top-color: #10b981;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header"><span class="badge">Python Demo</span>
+            <h1>👤 GitHub Avatar Downloader</h1>
+        </div>
+        <div class="search">
+            <input type="text" id="username" placeholder="Enter GitHub username..." value="octocat">
+            <button onclick="fetchUser()">🔍</button>
+        </div>
+        <div class="suggestions">
+            <button class="suggestion" onclick="setUser('octocat')">octocat</button>
+            <button class="suggestion" onclick="setUser('torvalds')">torvalds</button>
+            <button class="suggestion" onclick="setUser('gvanrossum')">gvanrossum</button>
+        </div>
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div>Fetching profile...</div>
+        </div>
+        <div class="profile" id="profile">
+            <div class="avatar-container">
+                <div class="placeholder-avatar">👤</div>
+            </div>
+            <div class="name">Enter a username</div>
+            <div class="username">@username</div>
+            <div class="bio">Profile information will appear here</div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-val">-</div>
+                    <div class="stat-lbl">Repos</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-val">-</div>
+                    <div class="stat-lbl">Followers</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-val">-</div>
+                    <div class="stat-lbl">Following</div>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="downloadBtn" onclick="downloadAvatar()" disabled>📥 Download
+                Avatar</button>
+            <button class="btn btn-secondary" onclick="viewProfile()">🔗 View Profile</button>
+        </div>
+    </div>
+    <script>
+        const users = {
+            'octocat': { name: 'The Octocat', bio: 'A mysterious cat that loves to code and maintain GitHub.', repos: 8, followers: 9500, following: 9, avatar: 'https://github.com/octocat.png' },
+            'torvalds': { name: 'Linus Torvalds', bio: 'Creator of Linux and Git. Finnish-American software engineer.', repos: 6, followers: 185000, following: 0, avatar: 'https://github.com/torvalds.png' },
+            'gvanrossum': { name: 'Guido van Rossum', bio: 'Creator of Python. BDFL emeritus. Currently at Microsoft.', repos: 12, followers: 50000, following: 25, avatar: 'https://github.com/gvanrossum.png' }
+        };
+        let currentUser = null;
+        function setUser(u) { document.getElementById('username').value = u; fetchUser() }
+        function fetchUser() {
+            const username = document.getElementById('username').value.trim().toLowerCase(); if (!username) return;
+            document.getElementById('loading').classList.add('active'); document.getElementById('profile').style.display = 'none';
+            setTimeout(() => {
+                currentUser = users[username] || { name: username.charAt(0).toUpperCase() + username.slice(1), bio: 'GitHub user profile', repos: Math.floor(Math.random() * 50), followers: Math.floor(Math.random() * 1000), following: Math.floor(Math.random() * 100), avatar: `https://github.com/${username}.png` };
+                document.getElementById('loading').classList.remove('active'); document.getElementById('profile').style.display = 'block';
+                document.querySelector('.avatar-container').innerHTML = `<img class="avatar" src="${currentUser.avatar}" onerror="this.outerHTML='<div class=\\'placeholder-avatar\\'>👤</div>'">`;
+                document.querySelector('.name').textContent = currentUser.name; document.querySelector('.username').textContent = '@' + username;
+                document.querySelector('.bio').textContent = currentUser.bio;
+                const stats = document.querySelectorAll('.stat-val'); stats[0].textContent = currentUser.repos; stats[1].textContent = formatNum(currentUser.followers); stats[2].textContent = currentUser.following;
+                document.getElementById('downloadBtn').disabled = false
+            }, 800)
+        }
+        function formatNum(n) { return n >= 1000 ? (n / 1000).toFixed(1) + 'k' : n }
+        function downloadAvatar() { if (!currentUser) return; const a = document.createElement('a'); a.href = currentUser.avatar; a.download = 'github_avatar.png'; a.target = '_blank'; a.click(); alert('Avatar download initiated! (Opens in new tab in demo mode)') }
+        function viewProfile() { const username = document.getElementById('username').value; if (username) window.open('https://github.com/' + username, '_blank') }
+        document.getElementById('username').addEventListener('keypress', e => { if (e.key === 'Enter') fetchUser() });
+    </script>
+</body>
+
+</html>

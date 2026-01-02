@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mad Libs Generator - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px
+        }
+
+        .container {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 550px;
+            width: 100%
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            display: inline-block;
+            margin-bottom: 10px
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px
+        }
+
+        h1 {
+            color: #10b981
+        }
+
+        .stories {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px
+        }
+
+        .story-btn {
+            padding: 10px 15px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            background: transparent;
+            color: #888;
+            cursor: pointer;
+            font-size: .85rem
+        }
+
+        .story-btn.active {
+            border-color: #10b981;
+            color: #10b981;
+            background: rgba(16, 185, 129, .1)
+        }
+
+        .inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column
+        }
+
+        .input-group label {
+            font-size: .8rem;
+            color: #888;
+            margin-bottom: 5px
+        }
+
+        .input-group input {
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, .3);
+            color: #fff;
+            font-size: .95rem
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #10b981
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer
+        }
+
+        .btn:hover {
+            box-shadow: 0 5px 20px rgba(16, 185, 129, .4)
+        }
+
+        .result {
+            background: rgba(0, 0, 0, .3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            line-height: 1.8;
+            display: none
+        }
+
+        .result.show {
+            display: block
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 2px 8px;
+            border-radius: 5px;
+            color: #fff;
+            font-weight: bold
+        }
+
+        .random-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(139, 92, 246, .3);
+            color: #a78bfa;
+            cursor: pointer;
+            font-size: .85rem;
+            margin-bottom: 15px
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header"><span class="badge">Python Demo</span>
+            <h1>📖 Mad Libs Generator</h1>
+        </div>
+        <div class="stories">
+            <button class="story-btn active" onclick="selectStory(0)">🏖️ Vacation</button>
+            <button class="story-btn" onclick="selectStory(1)">🚀 Space</button>
+            <button class="story-btn" onclick="selectStory(2)">🐉 Fantasy</button>
+            <button class="story-btn" onclick="selectStory(3)">🎭 Mystery</button>
+            <button class="story-btn" onclick="selectStory(4)">🍕 Food</button>
+        </div>
+        <button class="random-btn" onclick="randomWords()">🎲 Random Words</button>
+        <div class="inputs" id="inputs"></div>
+        <button class="btn" onclick="generate()">✨ Generate Story</button>
+        <div class="result" id="result"></div>
+    </div>
+    <script>
+        const stories = [
+            { title: 'Vacation', fields: ['adjective', 'noun', 'verb', 'place', 'emotion'], template: 'Last summer, I took a {adjective} vacation to {place}. I packed my favorite {noun} and decided to {verb} every day. It made me feel so {emotion}!' },
+            { title: 'Space', fields: ['adjective', 'planet', 'alien_name', 'verb', 'number'], template: 'The {adjective} astronaut landed on {planet}. There, they met {alien_name}, a friendly alien who loved to {verb}. Together they discovered {number} new galaxies!' },
+            { title: 'Fantasy', fields: ['adjective', 'creature', 'magical_item', 'verb', 'kingdom'], template: 'In the {adjective} kingdom of {kingdom}, a brave hero found a {magical_item}. They used it to {verb} and defeated the evil {creature} forever!' },
+            { title: 'Mystery', fields: ['adjective', 'detective', 'clue', 'verb', 'place'], template: 'The {adjective} detective {detective} found a mysterious {clue} at {place}. After careful investigation, they decided to {verb} and solved the case!' },
+            { title: 'Food', fields: ['adjective', 'food', 'chef', 'verb', 'restaurant'], template: 'At the {adjective} restaurant {restaurant}, Chef {chef} created an amazing {food}. Everyone who tasted it wanted to {verb} with joy!' }
+        ];
+        const randomOpts = { adjective: ['amazing', 'mysterious', 'sparkly', 'giant', 'tiny'], noun: ['banana', 'robot', 'umbrella', 'dragon', 'pizza'], verb: ['dance', 'fly', 'sing', 'explore', 'discover'], place: ['Mars', 'Wonderland', 'Paris', 'the Moon', 'a volcano'], emotion: ['happy', 'excited', 'amazed', 'peaceful', 'energized'], planet: ['Zorgon', 'Nebula-7', 'Crystal Prime', 'Nova X'], alien_name: ['Zyx', 'Blorp', 'Quasar', 'Nebulon'], number: ['42', '1000', '7', 'infinite'], creature: ['dragon', 'goblin', 'shadow beast', 'ice giant'], magical_item: ['glowing sword', 'enchanted amulet', 'crystal orb'], kingdom: ['Eldoria', 'Crystalia', 'Shadowmere'], detective: ['Sherlock', 'Watson', 'Noir'], clue: ['golden key', 'torn letter', 'ancient map'], restaurant: ['The Golden Fork', 'Chez Magnifique'], chef: ['Gordon', 'Julia', 'Marco'], food: ['truffle soufflé', 'rainbow pasta', 'cosmic burger'] };
+        let current = 0;
+        function selectStory(i) { current = i; document.querySelectorAll('.story-btn').forEach((b, j) => b.classList.toggle('active', i === j)); renderInputs(); document.getElementById('result').classList.remove('show') }
+        function renderInputs() { const s = stories[current], c = document.getElementById('inputs'); c.innerHTML = s.fields.map(f => `<div class="input-group"><label>${f.replace('_', ' ').toUpperCase()}</label><input type="text" id="${f}" placeholder="Enter ${f.replace('_', ' ')}"></div>`).join('') }
+        function randomWords() { stories[current].fields.forEach(f => { const opts = randomOpts[f] || randomOpts.noun; document.getElementById(f).value = opts[Math.floor(Math.random() * opts.length)] }) }
+        function generate() {
+            const s = stories[current], vals = {}; let valid = true; s.fields.forEach(f => { vals[f] = document.getElementById(f).value.trim(); if (!vals[f]) valid = false });
+            if (!valid) { alert('Please fill in all fields!'); return }
+            let text = s.template; s.fields.forEach(f => { text = text.replace(`{${f}}`, `<span class="highlight">${vals[f]}</span>`) });
+            document.getElementById('result').innerHTML = text; document.getElementById('result').classList.add('show')
+        }
+        renderInputs();
+    </script>
+</body>
+
+</html>

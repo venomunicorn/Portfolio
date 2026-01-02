@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L U X E | Minimalist Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <nav>
+        <a href="#" class="logo">L U X E</a>
+        <div class="nav-icons">
+            <i class="fas fa-search nav-icon"></i>
+            <div class="cart-icon" onclick="toggleCart()">
+                <i class="fas fa-shopping-bag"></i>
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-text">
+            <p class="hero-subtitle">New Season</p>
+            <h1>Summer Collection 2025</h1>
+            <p class="hero-desc">Redefining elegance with sustainability.</p>
+            <button class="btn-shop" onclick="scrollToProducts()">Shop Now</button>
+        </div>
+    </header>
+
+    <main class="container" id="products-section">
+        <h2>New Arrivals</h2>
+
+        <!-- Category Filters -->
+        <div class="category-filters">
+            <button class="filter-btn active" data-category="all">All</button>
+            <button class="filter-btn" data-category="Bags">Bags</button>
+            <button class="filter-btn" data-category="Clothing">Clothing</button>
+            <button class="filter-btn" data-category="Accessories">Accessories</button>
+            <button class="filter-btn" data-category="Footwear">Footwear</button>
+        </div>
+
+        <div class="product-grid" id="product-grid">
+            <!-- Products injected by JS -->
+        </div>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Bag</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <p class="empty-msg">Your bag is empty.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="total">
+                <span>Total</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button class="btn-checkout" onclick="openCheckout()">Checkout</button>
+        </div>
+    </div>
+    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+
+    <!-- Quick View Modal -->
+    <div class="modal" id="quickViewModal">
+        <div class="modal-content quick-view-content">
+            <button class="modal-close" onclick="closeQuickView()">&times;</button>
+            <div class="quick-view-body">
+                <div class="quick-view-image" id="qv-image"></div>
+                <div class="quick-view-info">
+                    <span class="qv-category" id="qv-category">Category</span>
+                    <h2 id="qv-name">Product Name</h2>
+                    <p class="qv-price" id="qv-price">$0.00</p>
+                    <p class="qv-desc" id="qv-desc">Product description goes here.</p>
+                    <div class="qv-actions">
+                        <button class="btn-add-large" id="qv-add-btn">Add to Bag</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content checkout-content">
+            <button class="modal-close" onclick="closeCheckout()">&times;</button>
+
+            <div id="checkout-form-view">
+                <h2>Checkout</h2>
+                <div class="checkout-body">
+                    <div class="checkout-summary">
+                        <h4>Order Summary</h4>
+                        <div id="checkout-items"></div>
+                        <div class="checkout-total">
+                            <span>Total:</span>
+                            <span id="checkout-total-price">$0.00</span>
+                        </div>
+                    </div>
+                    <form class="checkout-form" id="checkout-form">
+                        <h4>Shipping Details</h4>
+                        <div class="form-row">
+                            <input type="text" placeholder="Full Name" required>
+                        </div>
+                        <div class="form-row">
+                            <input type="email" placeholder="Email Address" required>
+                        </div>
+                        <div class="form-row">
+                            <input type="text" placeholder="Address" required>
+                        </div>
+                        <div class="form-row double">
+                            <input type="text" placeholder="City" required>
+                            <input type="text" placeholder="ZIP Code" required>
+                        </div>
+                        <button type="submit" class="btn-place-order">Place Order</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="checkout-success-view" class="hidden">
+                <div class="success-content">
+                    <i class="fas fa-check-circle success-icon"></i>
+                    <h2>Order Placed!</h2>
+                    <p>Thank you for your purchase. We'll send you a confirmation email shortly.</p>
+                    <button class="btn-shop" onclick="closeCheckout()">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3>L U X E</h3>
+                <p>Redefining elegance with sustainability since 2020.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Shop</h4>
+                <a href="#">All Products</a>
+                <a href="#">New Arrivals</a>
+                <a href="#">Best Sellers</a>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <a href="#">Contact Us</a>
+                <a href="#">Shipping</a>
+                <a href="#">Returns</a>
+            </div>
+            <div class="footer-newsletter">
+                <h4>Newsletter</h4>
+                <p>Get updates on new arrivals and offers.</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Enter your email">
+                    <button>Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 LUXE. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

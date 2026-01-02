@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .calculator {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 25px;
+            width: 380px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #10b981;
+            font-size: 1.5rem;
+        }
+
+        .display {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .history {
+            color: #888;
+            font-size: 0.9rem;
+            text-align: right;
+            min-height: 24px;
+            margin-bottom: 5px;
+        }
+
+        .current {
+            font-size: 2.5rem;
+            text-align: right;
+            color: #fff;
+            word-break: break-all;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-number {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .btn-number:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-op {
+            background: rgba(16, 185, 129, 0.3);
+            color: #10b981;
+        }
+
+        .btn-op:hover {
+            background: rgba(16, 185, 129, 0.5);
+        }
+
+        .btn-func {
+            background: rgba(99, 102, 241, 0.3);
+            color: #818cf8;
+        }
+
+        .btn-func:hover {
+            background: rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-clear {
+            background: rgba(239, 68, 68, 0.3);
+            color: #f87171;
+        }
+
+        .btn-clear:hover {
+            background: rgba(239, 68, 68, 0.5);
+        }
+
+        .btn-equals {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            grid-column: span 2;
+        }
+
+        .btn-equals:hover {
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .scientific {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .btn-sci {
+            padding: 12px 8px;
+            font-size: 0.9rem;
+            background: rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-sci:hover {
+            background: rgba(139, 92, 246, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator">
+        <div class="header">
+            <span class="badge">Python Demo</span>
+            <h1>🧮 Scientific Calculator</h1>
+        </div>
+
+        <div class="display">
+            <div class="history" id="history"></div>
+            <div class="current" id="display">0</div>
+        </div>
+
+        <div class="scientific">
+            <button class="btn-sci" onclick="sciOp('sin')">sin</button>
+            <button class="btn-sci" onclick="sciOp('cos')">cos</button>
+            <button class="btn-sci" onclick="sciOp('tan')">tan</button>
+            <button class="btn-sci" onclick="sciOp('log')">log</button>
+            <button class="btn-sci" onclick="sciOp('ln')">ln</button>
+            <button class="btn-sci" onclick="sciOp('sqrt')">√</button>
+            <button class="btn-sci" onclick="sciOp('pow2')">x²</button>
+            <button class="btn-sci" onclick="sciOp('pi')">π</button>
+        </div>
+
+        <div class="buttons">
+            <button class="btn btn-clear" onclick="clearAll()">C</button>
+            <button class="btn btn-func" onclick="negate()">±</button>
+            <button class="btn btn-func" onclick="percentage()">%</button>
+            <button class="btn btn-op" onclick="setOp('/')">÷</button>
+
+            <button class="btn btn-number" onclick="addDigit('7')">7</button>
+            <button class="btn btn-number" onclick="addDigit('8')">8</button>
+            <button class="btn btn-number" onclick="addDigit('9')">9</button>
+            <button class="btn btn-op" onclick="setOp('*')">×</button>
+
+            <button class="btn btn-number" onclick="addDigit('4')">4</button>
+            <button class="btn btn-number" onclick="addDigit('5')">5</button>
+            <button class="btn btn-number" onclick="addDigit('6')">6</button>
+            <button class="btn btn-op" onclick="setOp('-')">−</button>
+
+            <button class="btn btn-number" onclick="addDigit('1')">1</button>
+            <button class="btn btn-number" onclick="addDigit('2')">2</button>
+            <button class="btn btn-number" onclick="addDigit('3')">3</button>
+            <button class="btn btn-op" onclick="setOp('+')">+</button>
+
+            <button class="btn btn-number" onclick="addDigit('0')">0</button>
+            <button class="btn btn-number" onclick="addDecimal()">.</button>
+            <button class="btn btn-equals" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script>
+        let currentValue = '0';
+        let previousValue = '';
+        let operation = '';
+        let newNumber = true;
+        let history = '';
+
+        function updateDisplay() {
+            document.getElementById('display').textContent = currentValue;
+            document.getElementById('history').textContent = history;
+        }
+
+        function addDigit(digit) {
+            if (newNumber) {
+                currentValue = digit;
+                newNumber = false;
+            } else {
+                currentValue = currentValue === '0' ? digit : currentValue + digit;
+            }
+            updateDisplay();
+        }
+
+        function addDecimal() {
+            if (newNumber) {
+                currentValue = '0.';
+                newNumber = false;
+            } else if (!currentValue.includes('.')) {
+                currentValue += '.';
+            }
+            updateDisplay();
+        }
+
+        function setOp(op) {
+            if (previousValue && !newNumber) {
+                calculate();
+            }
+            previousValue = currentValue;
+            operation = op;
+            history = currentValue + ' ' + op;
+            newNumber = true;
+            updateDisplay();
+        }
+
+        function calculate() {
+            if (!previousValue || !operation) return;
+            const prev = parseFloat(previousValue);
+            const curr = parseFloat(currentValue);
+            let result;
+            switch (operation) {
+                case '+': result = prev + curr; break;
+                case '-': result = prev - curr; break;
+                case '*': result = prev * curr; break;
+                case '/': result = curr !== 0 ? prev / curr : 'Error'; break;
+            }
+            history = previousValue + ' ' + operation + ' ' + currentValue + ' =';
+            currentValue = typeof result === 'number' ? formatNumber(result) : result;
+            previousValue = '';
+            operation = '';
+            newNumber = true;
+            updateDisplay();
+        }
+
+        function clearAll() {
+            currentValue = '0';
+            previousValue = '';
+            operation = '';
+            history = '';
+            newNumber = true;
+            updateDisplay();
+        }
+
+        function negate() {
+            currentValue = formatNumber(parseFloat(currentValue) * -1);
+            updateDisplay();
+        }
+
+        function percentage() {
+            currentValue = formatNumber(parseFloat(currentValue) / 100);
+            updateDisplay();
+        }
+
+        function sciOp(op) {
+            const val = parseFloat(currentValue);
+            let result;
+            switch (op) {
+                case 'sin': result = Math.sin(val * Math.PI / 180); break;
+                case 'cos': result = Math.cos(val * Math.PI / 180); break;
+                case 'tan': result = Math.tan(val * Math.PI / 180); break;
+                case 'log': result = Math.log10(val); break;
+                case 'ln': result = Math.log(val); break;
+                case 'sqrt': result = Math.sqrt(val); break;
+                case 'pow2': result = val * val; break;
+                case 'pi': result = Math.PI; break;
+            }
+            history = op + '(' + currentValue + ') =';
+            currentValue = formatNumber(result);
+            newNumber = true;
+            updateDisplay();
+        }
+
+        function formatNumber(num) {
+            if (isNaN(num) || !isFinite(num)) return 'Error';
+            const str = num.toPrecision(10);
+            return parseFloat(str).toString();
+        }
+
+        updateDisplay();
+    </script>
+</body>
+
+</html>

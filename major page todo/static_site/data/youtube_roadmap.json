@@ -1,0 +1,171 @@
+[
+    {
+        "phase": "Month 1: Foundation & Measurement Setup",
+        "days": "1-30",
+        "goals": "CTR 5-6%, Retention 55%, Views 750-1200",
+        "weeks": [
+            {
+                "week": "Week 1",
+                "title": "Audit & Baseline",
+                "tasks": [
+                    "Export YouTube Analytics for last 10 videos",
+                    "Create Google Sheet: Columns [Video, CTR%, Retention%, AVD, Date, Notes]",
+                    "Enter baseline data for all 10 videos",
+                    "Identify average CTR, retention %, and watch time",
+                    "Screenshot retention curves for 5 recent videos",
+                    "Watch your top 3 performing videos (analyze why they won)",
+                    "Watch your 3 lowest-performing videos (identify problem areas)",
+                    "Research 5 MrBeast videos in your niche",
+                    "Set up YouTube Studio bookmarks",
+                    "Set up A/B testing tracking template"
+                ]
+            },
+            {
+                "week": "Week 2",
+                "title": "Hook Optimization Sprint",
+                "tasks": [
+                    "Rewrite titles for NEXT 5 videos using IMPACT formula",
+                    "For each new title, write first VO sentence as EXACT match",
+                    "Record these lines separately",
+                    "Design thumbnail for next 5 videos using Template #1 (High Contrast Shock)",
+                    "Test each thumbnail on mobile",
+                    "Verify first 2-3 shots feature thumbnail elements",
+                    "Review all 5 new titles and thumbnails with team"
+                ]
+            },
+            {
+                "week": "Week 3",
+                "title": "First Testing Cycle",
+                "tasks": [
+                    "Upload Video #1 with new hook + new thumbnail",
+                    "Set up YouTube A/B test for thumbnail",
+                    "Monitor hourly: CTR, impressions, clicks",
+                    "Compare to baseline: Higher or lower?",
+                    "Upload Video #2 (testing same formula)",
+                    "Compare initial performance: Video #1 vs. Video #2",
+                    "Final decision: Keep winning thumbnail/title or adjust?"
+                ]
+            },
+            {
+                "week": "Week 4",
+                "title": "Analysis & Iteration",
+                "tasks": [
+                    "Compile 7-day results for Video #1",
+                    "Decision matrix: Winner vs Marginal vs Retest",
+                    "Compare Video #1 vs. Video #2 performance",
+                    "Document Month 1 learnings",
+                    "Update master analytics spreadsheet",
+                    "Plan Month 2 tactics"
+                ]
+            }
+        ]
+    },
+    {
+        "phase": "Month 2: Production Optimization & Engagement",
+        "days": "31-60",
+        "goals": "CTR 7-8%, Retention 62%, Views 1500-2000",
+        "weeks": [
+            {
+                "week": "Week 5",
+                "title": "Editing Speed & Pacing",
+                "tasks": [
+                    "Select one recent video for re-edit",
+                    "Analyze current cut frequency",
+                    "Target: Reduce to 1.2 seconds",
+                    "Re-edit selected video with faster cuts and more B-roll",
+                    "Add 5-8 strategic sound effects",
+                    "Compare retention curves BEFORE vs AFTER",
+                    "Plan next 3 shoots with 2-3x coverage"
+                ]
+            },
+            {
+                "week": "Week 6",
+                "title": "Description & Metadata Optimization",
+                "tasks": [
+                    "Create description template with keyword + value prop",
+                    "Identify primary keyword for next 5 videos",
+                    "Create tagging system (Exact, LSI, Category, Channel)",
+                    "Add timestamps to descriptions",
+                    "Implement CTA in description",
+                    "Update all older videos with new description template"
+                ]
+            },
+            {
+                "week": "Week 7",
+                "title": "Community & Cross-Promotion",
+                "tasks": [
+                    "Enable Community Tab",
+                    "Create 3 engagement questions for next 3 videos",
+                    "Schedule Community Tab posts",
+                    "Post engagement question 1 hour before upload",
+                    "PIN a comment with clear CTA",
+                    "Extract 3 clips from recent long-form videos for Shorts",
+                    "Post 3 Shorts with link to full video"
+                ]
+            },
+            {
+                "week": "Week 8",
+                "title": "Analytics Deep Dive & Month 2 Wrap",
+                "tasks": [
+                    "Compile Month 2 metrics",
+                    "Create before/after comparison table",
+                    "Identify top 2-3 tactics that moved the needle",
+                    "Identify 2-3 tactics that didn't move needle",
+                    "Create Month 3 plan",
+                    "Draft Month 3 roadmap"
+                ]
+            }
+        ]
+    },
+    {
+        "phase": "Month 3: Scaling & Systematic Optimization",
+        "days": "61-90",
+        "goals": "CTR 10-12%, Retention 68-70%, Views 2500-3500",
+        "weeks": [
+            {
+                "week": "Week 9",
+                "title": "Formula Standardization",
+                "tasks": [
+                    "Codify 'winning formula' from Months 1-2",
+                    "Create production templates (Shot list, Timeline, Thumbnail, Description)",
+                    "Train team on winning formula",
+                    "A/B test simplified thumbnail system"
+                ]
+            },
+            {
+                "week": "Week 10",
+                "title": "Collaboration & Network Effects",
+                "tasks": [
+                    "Identify collaboration partner (2-5x size)",
+                    "Reach out with collaboration proposal",
+                    "Plan collaboration video (Format, Cross-promotion)",
+                    "Produce and upload collaboration video",
+                    "Monitor performance and subscriber gain"
+                ]
+            },
+            {
+                "week": "Week 11",
+                "title": "Monetization & Revenue Optimization",
+                "tasks": [
+                    "Ensure all monetization features enabled",
+                    "Review CPM trends",
+                    "Optimize ad placement (Pre-roll, Mid-roll)",
+                    "Evaluate sponsorship opportunities",
+                    "Calculate Month 3 revenue estimate"
+                ]
+            },
+            {
+                "week": "Week 12",
+                "title": "Capstone & Q2 Planning",
+                "tasks": [
+                    "Compile final 90-day results",
+                    "Compare Day 90 results to targets",
+                    "Identify single biggest driver of growth",
+                    "Analyze what didn't work",
+                    "Plan next growth lever",
+                    "Create Q2 90-day roadmap"
+                ]
+            }
+        ]
+    }
+]

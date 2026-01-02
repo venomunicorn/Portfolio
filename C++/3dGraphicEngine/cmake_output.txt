@@ -1,0 +1,16 @@
+CMake Warning at CMakeLists.txt:102 (message):
+  glslangValidator not found - shaders must be compiled manually
+
+
+-- 
+-- === MathVis Engine Configuration ===
+-- Version: 0.1.0
+-- C++ Standard: 20
+-- Build Type: Debug
+-- Vulkan: 1.4.328
+-- Output: C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/bin
+-- ====================================
+-- 
+-- Configuring done (2.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug

@@ -1,0 +1,12 @@
+C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/CMakeFiles/MathVisEngine.dir
+C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/CMakeFiles/edit_cache.dir
+C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/engine/core/CMakeFiles/engine_core.dir
+C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/engine/core/CMakeFiles/edit_cache.dir
+C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/engine/core/CMakeFiles/rebuild_cache.dir
+C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/engine/platform/CMakeFiles/engine_platform.dir
+C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/engine/platform/CMakeFiles/edit_cache.dir
+C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/engine/platform/CMakeFiles/rebuild_cache.dir
+C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/engine/render/CMakeFiles/engine_render.dir
+C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/engine/render/CMakeFiles/edit_cache.dir
+C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/engine/render/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,112 @@
+[
+    {
+        "rank": 1,
+        "name": "LLM Production Observability & Monitoring Platform",
+        "score": 8.75,
+        "likelihood": "HIGH",
+        "problem": "LLMs fail in production in ways traditional ML monitoring can't detect (reasoning drift, context boundary degradation, latency spikes, cost overruns). Enterprises deploying GPT-4 or Claude have zero production visibility.",
+        "revenue": "$99–999/mo tier-based SaaS + usage-based ($0.01 per 1000 logged tokens). Target: $10K MRR by month 6.",
+        "complexity": "Medium",
+        "timeToMvp": "6–8 weeks",
+        "description": "Real-time logging of LLM calls, pre-built eval metrics, alert system for cost/latency, simple dashboard."
+    },
+    {
+        "rank": 2,
+        "name": "Agentic AI for Contact Centers",
+        "score": 8.50,
+        "likelihood": "HIGH",
+        "problem": "50%+ of Tier-1 calls are routine. Agents spend 40% of time on low-value tasks. Average handle time 5–10 mins. Turnover 30%+/yr.",
+        "revenue": "$0.50–2 per resolved ticket SaaS. Enterprise: $50K–200K/yr.",
+        "complexity": "Medium",
+        "timeToMvp": "6–8 weeks",
+        "description": "AI agent handles common intents (password reset, refund status), intent classification, contextual responses, sentiment monitoring."
+    },
+    {
+        "rank": 3,
+        "name": "AI-Powered Contract Analysis & Negotiation Agent",
+        "score": 8.25,
+        "likelihood": "HIGH",
+        "problem": "Legal review is slow, expensive, error-prone. A 50-page contract takes 8–10 hours to review manually. High-risk clauses often missed.",
+        "revenue": "$2–5K/mo SaaS for teams; $10–20K for enterprise tier. Per-firm licensing: $50K–200K/yr.",
+        "complexity": "Medium-High",
+        "timeToMvp": "8–10 weeks",
+        "description": "Upload contract; AI extracts key clauses, flags risks, compares with playbook, suggests rewording."
+    },
+    {
+        "rank": 4,
+        "name": "Autonomous AI for Regulatory Compliance Monitoring",
+        "score": 8.25,
+        "likelihood": "HIGH",
+        "problem": "Compliance teams track 100+ regulations. Manual monitoring is error-prone. Regulatory changes missed.",
+        "revenue": "$5K–15K/mo SaaS based on entities + jurisdictions. Enterprise: $100K–500K/yr.",
+        "complexity": "High",
+        "timeToMvp": "8–10 weeks",
+        "description": "Dashboard showing key regulations, auto-extract requirements, map to internal controls, flag gaps."
+    },
+    {
+        "rank": 5,
+        "name": "Synthetic Data Generation for AI Training",
+        "score": 8.15,
+        "likelihood": "HIGH",
+        "problem": "Real training data is scarce, sensitive, and regulated. Synthetic data enables privacy-preserving ML but quality is poor.",
+        "revenue": "$500–2K/mo SaaS. Enterprise: $100K–500K/yr. Usage: $0.01–0.05 per synthetic record.",
+        "complexity": "High",
+        "timeToMvp": "10–14 weeks",
+        "description": "Upload real dataset; AI analyzes structure; generate synthetic data; privacy assurance report."
+    },
+    {
+        "rank": 6,
+        "name": "AI for Supply Chain Predictive Analytics",
+        "score": 8.00,
+        "likelihood": "HIGH",
+        "problem": "Demand forecasting is inaccurate. Inventory too high or too low. Supply disruptions cause cascading failures.",
+        "revenue": "$10K–50K/mo based on data volume. Enterprise: $200K–1M/yr.",
+        "complexity": "High",
+        "timeToMvp": "10–12 weeks",
+        "description": "Import historical sales; AI forecasts demand; optimal inventory levels; alerts for anomalies."
+    },
+    {
+        "rank": 7,
+        "name": "AI-Powered Recruitment Screening",
+        "score": 7.85,
+        "likelihood": "HIGH",
+        "problem": "Recruiters spend 40% of time on manual screening. High-volume applications unmanageable. Bias in manual screening.",
+        "revenue": "$99–299/mo for SMEs. Enterprise: $10K–50K/yr. Usage: $2–5 per resume.",
+        "complexity": "Medium",
+        "timeToMvp": "6–8 weeks",
+        "description": "Upload resumes; auto-extract skills; match against job description; score candidates; bias report."
+    },
+    {
+        "rank": 8,
+        "name": "AI for Fraud Detection in Financial Transactions",
+        "score": 7.85,
+        "likelihood": "HIGH",
+        "problem": "Fraud detection reactive. High false positive rates. Manual review expensive.",
+        "revenue": "Usage-based: $0.01–0.05 per transaction. Enterprise: $50K–500K/yr.",
+        "complexity": "High",
+        "timeToMvp": "10–14 weeks",
+        "description": "Real-time transaction screening; risk scoring; auto-decline high-risk; fraud pattern dashboard."
+    },
+    {
+        "rank": 9,
+        "name": "Edge AI Computer Vision for Retail",
+        "score": 7.65,
+        "likelihood": "MEDIUM-HIGH",
+        "problem": "Manual shelf checks are slow. Shrink is 1–3% of revenue. No real-time shelf visibility.",
+        "revenue": "$500–1500/camera/month SaaS. Enterprise: $50K–200K/yr.",
+        "complexity": "Medium-High",
+        "timeToMvp": "8–10 weeks",
+        "description": "Real-time object detection on shelves; stockout alerts; anomaly detection."
+    },
+    {
+        "rank": 10,
+        "name": "Multimodal AI for Healthcare Diagnostics",
+        "score": 7.60,
+        "likelihood": "MEDIUM",
+        "problem": "Clinicians diagnose based on isolated signals. Missing patterns from multimodal integration.",
+        "revenue": "$20K–50K/mo SaaS per hospital department. Enterprise: $500K–2M/yr.",
+        "complexity": "High",
+        "timeToMvp": "12–16 weeks",
+        "description": "Upload imaging + notes + labs; AI extracts features; multimodal fusion; risk scoring."
+    }
+]

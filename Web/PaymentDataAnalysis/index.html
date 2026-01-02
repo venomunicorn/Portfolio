@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💳 Transaction Analyzer Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- FIXED: Load Chart.js from reliable CDN first -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1>💳 Transaction Analyzer</h1>
+                <p>Analyze your bank transactions with beautiful insights</p>
+            </div>
+            <div class="header-actions">
+                <button id="exportCSV" class="btn-export" title="Export to CSV">
+                    📥 Export CSV
+                </button>
+                <button id="printReport" class="btn-export" title="Print Report">
+                    🖨️ Print
+                </button>
+                <button id="themeToggle" class="btn-theme" title="Toggle Theme">
+                    🌙
+                </button>
+            </div>
+        </header>
+
+        <!-- File Upload Section -->
+        <section class="upload-section">
+            <div class="card">
+                <h2>📁 Upload Transaction File</h2>
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fileInput" accept=".xlsx,.xls" hidden>
+                    <div class="upload-content">
+                        <span class="upload-icon">📊</span>
+                        <p>Drag & drop your Excel file here or click to browse</p>
+                        <small>Supports .xlsx and .xls formats</small>
+                    </div>
+                </div>
+                <button id="uploadBtn" class="btn-primary">Upload & Analyze</button>
+            </div>
+        </section>
+
+        <!-- Summary Cards -->
+        <section class="summary-section">
+            <div class="stats-grid">
+                <div class="stat-card spent">
+                    <div class="stat-icon">💸</div>
+                    <div class="stat-content">
+                        <h3 id="totalSpent">₹0</h3>
+                        <p>Total Spent</p>
+                    </div>
+                </div>
+
+                <div class="stat-card received">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-content">
+                        <h3 id="totalReceived">₹0</h3>
+                        <p>Total Received</p>
+                    </div>
+                </div>
+
+                <div class="stat-card balance">
+                    <div class="stat-icon">⚖️</div>
+                    <div class="stat-content">
+                        <h3 id="netBalance">₹0</h3>
+                        <p>Net Balance</p>
+                    </div>
+                </div>
+
+                <div class="stat-card transactions">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-content">
+                        <h3 id="transactionCount">0</h3>
+                        <p>Transactions</p>
+                    </div>
+                </div>
+
+                <div class="stat-card average">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-content">
+                        <h3 id="avgAmount">₹0</h3>
+                        <p>Avg Transaction</p>
+                    </div>
+                </div>
+
+                <div class="stat-card largest">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-content">
+                        <h3 id="largestAmount">₹0</h3>
+                        <p>Largest Transaction</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters Panel -->
+        <section class="filters-section">
+            <div class="card">
+                <h2>🔍 Filter Transactions</h2>
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label>Min Amount (₹)</label>
+                        <input type="number" id="minAmount" placeholder="0" min="0">
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Max Amount (₹)</label>
+                        <input type="number" id="maxAmount" placeholder="10000" min="0">
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Start Date</label>
+                        <input type="date" id="startDate">
+                    </div>
+
+                    <div class="filter-group">
+                        <label>End Date</label>
+                        <input type="date" id="endDate">
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Category</label>
+                        <select id="categoryFilter">
+                            <option value="All">All Categories</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Search Keyword</label>
+                        <input type="text" id="keywordSearch" placeholder="e.g., Swiggy, Amazon">
+                    </div>
+                </div>
+
+                <div class="filter-actions">
+                    <button id="applyFilters" class="btn-primary">Apply Filters</button>
+                    <button id="resetFilters" class="btn-secondary">Reset</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="charts-section">
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>📊 Spending by Category</h3>
+                    <div class="chart-container">
+                        <canvas id="categoryChart" width="400" height="400"></canvas>
+                    </div>
+                    <div id="categoryChartMessage" class="chart-message">Loading chart...</div>
+                </div>
+
+                <div class="chart-card">
+                    <h3>📈 Spending Trends</h3>
+                    <div class="trend-controls">
+                        <button class="trend-btn active" data-period="daily">Daily</button>
+                        <button class="trend-btn" data-period="weekly">Weekly</button>
+                        <button class="trend-btn" data-period="monthly">Monthly</button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="trendsChart" width="400" height="400"></canvas>
+                    </div>
+                    <div id="trendsChartMessage" class="chart-message">Loading chart...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Transactions Table -->
+        <section class="table-section">
+            <div class="card">
+                <h2>📋 Transaction Details</h2>
+                <div class="table-container">
+                    <table id="transactionsTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Details</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="5" class="no-data">Click "Analyze" to load transactions</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Status Messages -->
+        <div id="statusMessage" class="status-message">
+            <p>Ready to analyze transactions. Upload a file or use existing data.</p>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Analyzing transactions...</p>
+    </div>
+
+    <!-- FIXED: Load our script after Chart.js -->
+    <script src="script.js"></script>
+</body>
+
+</html>

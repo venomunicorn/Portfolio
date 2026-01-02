@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Adventure - C++ Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            color: #d4af37;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #d4af37;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .badge {
+            display: block;
+            text-align: center;
+            background: linear-gradient(135deg, #f87171, #dc2626);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            width: fit-content;
+            margin: 0 auto 20px;
+            font-family: 'Segoe UI', sans-serif;
+            color: white;
+        }
+
+        .game-panel {
+            background: rgba(20, 20, 20, 0.9);
+            border: 2px solid #8b4513;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .scene-title {
+            color: #d4af37;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #8b4513;
+            padding-bottom: 10px;
+        }
+
+        .scene-text {
+            color: #ddd;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .choice-btn {
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+            border: 2px solid #8b4513;
+            color: #d4af37;
+            font-size: 1rem;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s;
+            font-family: 'Georgia', serif;
+        }
+
+        .choice-btn:hover {
+            background: linear-gradient(135deg, #3d3d3d, #2a2a2a);
+            border-color: #d4af37;
+            transform: translateX(10px);
+        }
+
+        .stats-panel {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid #8b4513;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            color: #d4af37;
+            font-weight: bold;
+        }
+
+        .inventory {
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid #8b4513;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .inventory h3 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .items {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .item {
+            background: #2d2d2d;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .message {
+            text-align: center;
+            padding: 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        button.restart {
+            display: block;
+            margin: 20px auto 0;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #8b4513, #654321);
+            border: none;
+            color: #d4af37;
+            font-size: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <span class="badge">C++ Demo</span>
+        <h1>⚔️ Dragon's Lair</h1>
+
+        <div class="stats-panel">
+            <div class="stat">
+                <div class="stat-label">Health</div>
+                <div class="stat-value" id="health">100</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Gold</div>
+                <div class="stat-value" id="gold">0</div>
+            </div>
+        </div>
+
+        <div class="inventory">
+            <h3>🎒 Inventory</h3>
+            <div class="items" id="inventory">
+                <span style="color: #888;">Empty</span>
+            </div>
+        </div>
+
+        <div class="game-panel">
+            <h2 class="scene-title" id="sceneTitle">The Beginning</h2>
+            <p class="scene-text" id="sceneText"></p>
+            <div class="choices" id="choices"></div>
+        </div>
+
+        <button class="restart" onclick="startGame()">🔄 Restart Adventure</button>
+    </div>
+
+    <script>
+        let gameState = {
+            health: 100,
+            gold: 0,
+            inventory: [],
+            scene: 'start'
+        };
+
+        const scenes = {
+            start: {
+                title: "The Beginning",
+                text: "You stand at the entrance of a dark cave. Legends speak of a fearsome dragon guarding untold treasures within. The path splits into two tunnels - one lit by torches, the other shrouded in darkness.",
+                choices: [
+                    { text: "🔦 Take the lit tunnel", next: "lit_tunnel" },
+                    { text: "🌑 Brave the dark tunnel", next: "dark_tunnel" },
+                    { text: "🏃 Turn back and leave", next: "coward" }
+                ]
+            },
+            lit_tunnel: {
+                title: "The Lit Tunnel",
+                text: "The torches guide your way deeper into the cave. You come across an old chest and a skeleton clutching a rusty sword.",
+                choices: [
+                    { text: "📦 Open the chest", next: "open_chest" },
+                    { text: "⚔️ Take the sword", next: "take_sword" },
+                    { text: "➡️ Continue forward", next: "dragon_chamber" }
+                ]
+            },
+            dark_tunnel: {
+                title: "The Dark Tunnel",
+                text: "You stumble through the darkness. Suddenly, you feel something grab your ankle! It's a trap set by goblins!",
+                choices: [
+                    { text: "🥊 Fight the goblins", next: "fight_goblins" },
+                    { text: "🏃 Try to escape", next: "escape_goblins" }
+                ]
+            },
+            open_chest: {
+                title: "Treasure Found!",
+                text: "The chest creaks open revealing 50 gold coins and a healing potion!",
+                onEnter: () => {
+                    gameState.gold += 50;
+                    if (!gameState.inventory.includes("Healing Potion")) {
+                        gameState.inventory.push("Healing Potion");
+                    }
+                },
+                choices: [
+                    { text: "⚔️ Take the sword too", next: "take_sword" },
+                    { text: "➡️ Head to the dragon", next: "dragon_chamber" }
+                ]
+            },
+            take_sword: {
+                title: "Armed and Ready",
+                text: "You pick up the rusty but sturdy sword. It feels good in your hands.",
+                onEnter: () => {
+                    if (!gameState.inventory.includes("Rusty Sword")) {
+                        gameState.inventory.push("Rusty Sword");
+                    }
+                },
+                choices: [
+                    { text: "➡️ Face the dragon", next: "dragon_chamber" }
+                ]
+            },
+            fight_goblins: {
+                title: "Goblin Battle!",
+                text: "You fight bravely against 3 goblins. You defeat them but take some damage.",
+                onEnter: () => {
+                    gameState.health -= 30;
+                    gameState.gold += 20;
+                },
+                choices: [
+                    { text: "➡️ Continue deeper", next: "dragon_chamber" }
+                ]
+            },
+            escape_goblins: {
+                title: "Narrow Escape",
+                text: "You manage to slip away, but not without a scratch.",
+                onEnter: () => { gameState.health -= 10; },
+                choices: [
+                    { text: "➡️ Find another way", next: "dragon_chamber" }
+                ]
+            },
+            dragon_chamber: {
+                title: "The Dragon's Lair",
+                text: "You enter a massive chamber filled with gold and jewels. In the center, a massive red dragon raises its head and stares at you with glowing eyes. 'WHO DARES DISTURB MY SLUMBER?!'",
+                choices: [
+                    { text: "⚔️ Attack the dragon!", next: "fight_dragon" },
+                    { text: "🗣️ Try to negotiate", next: "negotiate_dragon" },
+                    { text: "💨 Grab gold and run!", next: "steal_run" }
+                ]
+            },
+            fight_dragon: {
+                title: "Battle with the Dragon!",
+                text: () => gameState.inventory.includes("Rusty Sword")
+                    ? "With your sword, you manage to wound the dragon! After an epic battle, the beast falls. You are victorious!"
+                    : "Without a weapon, you fight bravely but the dragon is too powerful. You barely escape with your life.",
+                onEnter: () => {
+                    if (gameState.inventory.includes("Rusty Sword")) {
+                        gameState.gold += 500;
+                        gameState.inventory.push("Dragon Scale");
+                    } else {
+                        gameState.health -= 60;
+                    }
+                },
+                choices: [
+                    { text: "🏆 Claim your reward", next: gameState.inventory.includes("Rusty Sword") ? "victory" : "retreat" }
+                ]
+            },
+            negotiate_dragon: {
+                title: "Words of Wisdom",
+                text: "The dragon is amused by your bravery. 'You have courage, little one. Take some gold and leave with your life.'",
+                onEnter: () => { gameState.gold += 100; },
+                choices: [
+                    { text: "🙏 Thank the dragon and leave", next: "victory" }
+                ]
+            },
+            steal_run: {
+                title: "Greedy Escape",
+                text: "You grab handfuls of gold and sprint for the exit. The dragon's fire singes your back!",
+                onEnter: () => {
+                    gameState.gold += 200;
+                    gameState.health -= 40;
+                },
+                choices: [
+                    { text: "🚪 Keep running!", next: gameState.health > 0 ? "victory" : "death" }
+                ]
+            },
+            victory: {
+                title: "🎉 Victory!",
+                text: () => `Congratulations, brave adventurer! You survive the dragon's lair with ${gameState.gold} gold and live to tell the tale!`,
+                choices: [
+                    { text: "🔄 Play Again", next: "restart" }
+                ]
+            },
+            death: {
+                title: "💀 Game Over",
+                text: "Your wounds were too severe. You collapse in the tunnels...",
+                choices: [
+                    { text: "🔄 Try Again", next: "restart" }
+                ]
+            },
+            coward: {
+                title: "The Coward's Path",
+                text: "You turn back and return to the village. The treasure remains unclaimed, and so does your glory.",
+                choices: [
+                    { text: "🔄 Maybe next time...", next: "restart" }
+                ]
+            },
+            retreat: {
+                title: "Live to Fight Another Day",
+                text: "You barely escape with your life. Perhaps with better preparation, you could return...",
+                choices: [
+                    { text: "🔄 Try Again", next: "restart" }
+                ]
+            }
+        };
+
+        function updateUI() {
+            document.getElementById('health').textContent = gameState.health;
+            document.getElementById('gold').textContent = gameState.gold;
+
+            const invEl = document.getElementById('inventory');
+            if (gameState.inventory.length === 0) {
+                invEl.innerHTML = '<span style="color: #888;">Empty</span>';
+            } else {
+                invEl.innerHTML = gameState.inventory.map(i => `<span class="item">${i}</span>`).join('');
+            }
+        }
+
+        function renderScene(sceneId) {
+            if (sceneId === 'restart') {
+                startGame();
+                return;
+            }
+
+            const scene = scenes[sceneId];
+            if (!scene) return;
+
+            // Execute onEnter if exists
+            if (scene.onEnter) scene.onEnter();
+
+            // Check death
+            if (gameState.health <= 0) {
+                renderScene('death');
+                return;
+            }
+
+            updateUI();
+
+            document.getElementById('sceneTitle').textContent = scene.title;
+            document.getElementById('sceneText').textContent =
+                typeof scene.text === 'function' ? scene.text() : scene.text;
+
+            const choicesEl = document.getElementById('choices');
+            choicesEl.innerHTML = '';
+
+            scene.choices.forEach(choice => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.textContent = choice.text;
+                btn.onclick = () => renderScene(typeof choice.next === 'function' ? choice.next() : choice.next);
+                choicesEl.appendChild(btn);
+            });
+        }
+
+        function startGame() {
+            gameState = {
+                health: 100,
+                gold: 0,
+                inventory: [],
+                scene: 'start'
+            };
+            renderScene('start');
+        }
+
+        startGame();
+    </script>
+</body>
+
+</html>

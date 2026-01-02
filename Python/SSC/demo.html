@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Math Prep - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px
+        }
+
+        .container {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 600px;
+            width: 100%
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            display: inline-block;
+            margin-bottom: 10px
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px
+        }
+
+        h1 {
+            color: #10b981
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px 8px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .1);
+            color: #888;
+            cursor: pointer;
+            font-size: .85rem
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff
+        }
+
+        .panel {
+            display: none
+        }
+
+        .panel.active {
+            display: block
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px
+        }
+
+        .controls select {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, .3);
+            color: #fff
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            cursor: pointer
+        }
+
+        .table-container {
+            background: rgba(0, 0, 0, .3);
+            border-radius: 12px;
+            padding: 15px;
+            max-height: 350px;
+            overflow-y: auto
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, .1)
+        }
+
+        th {
+            color: #10b981;
+            font-size: .85rem;
+            position: sticky;
+            top: 0;
+            background: rgba(0, 0, 0, .5)
+        }
+
+        td {
+            font-size: .9rem
+        }
+
+        .highlight {
+            color: #10b981;
+            font-weight: bold
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px
+        }
+
+        .grid-item {
+            background: rgba(0, 0, 0, .3);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center
+        }
+
+        .grid-item .num {
+            font-size: 1.1rem;
+            color: #10b981;
+            font-weight: bold
+        }
+
+        .grid-item .result {
+            font-size: .9rem;
+            color: #fff
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header"><span class="badge">Python Demo</span>
+            <h1>📊 SSC Math Prep</h1>
+        </div>
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('mult')">✕ Tables</button>
+            <button class="tab" onclick="showTab('squares')">² Squares</button>
+            <button class="tab" onclick="showTab('cubes')">³ Cubes</button>
+            <button class="tab" onclick="showTab('roots')">√ Roots</button>
+        </div>
+        <div class="panel active" id="mult">
+            <div class="controls">
+                <select id="tableNum" onchange="showTable()"></select>
+                <button class="btn" onclick="exportData()">📄 Export</button>
+            </div>
+            <div class="table-container" id="tableContent"></div>
+        </div>
+        <div class="panel" id="squares">
+            <div class="controls"><span style="color:#888">Squares from 1 to 30</span><button class="btn"
+                    onclick="exportData()">📄 Export</button></div>
+            <div class="grid" id="squaresGrid"></div>
+        </div>
+        <div class="panel" id="cubes">
+            <div class="controls"><span style="color:#888">Cubes from 1 to 20</span><button class="btn"
+                    onclick="exportData()">📄 Export</button></div>
+            <div class="grid" id="cubesGrid"></div>
+        </div>
+        <div class="panel" id="roots">
+            <div class="controls"><span style="color:#888">Square Roots (Perfect Squares)</span><button class="btn"
+                    onclick="exportData()">📄 Export</button></div>
+            <div class="table-container" id="rootsContent"></div>
+        </div>
+    </div>
+    <script>
+        function showTab(t) { document.querySelectorAll('.panel').forEach(p => p.classList.remove('active')); document.querySelectorAll('.tab').forEach(b => b.classList.remove('active')); document.getElementById(t).classList.add('active'); event.target.classList.add('active') }
+        // Init table selector
+        const sel = document.getElementById('tableNum'); for (let i = 1; i <= 20; i++) { sel.innerHTML += `<option value="${i}">Table of ${i}</option>` }
+        function showTable() {
+            const n = parseInt(document.getElementById('tableNum').value); let html = '<table><thead><tr><th>Multiplication</th><th>Result</th></tr></thead><tbody>';
+            for (let i = 1; i <= 12; i++)html += `<tr><td>${n} × ${i}</td><td class="highlight">${n * i}</td></tr>`;
+            html += '</tbody></table>'; document.getElementById('tableContent').innerHTML = html
+        }
+        // Squares
+        let sq = ''; for (let i = 1; i <= 30; i++)sq += `<div class="grid-item"><div class="num">${i}²</div><div class="result">= ${i * i}</div></div>`;
+        document.getElementById('squaresGrid').innerHTML = sq;
+        // Cubes
+        let cu = ''; for (let i = 1; i <= 20; i++)cu += `<div class="grid-item"><div class="num">${i}³</div><div class="result">= ${i * i * i}</div></div>`;
+        document.getElementById('cubesGrid').innerHTML = cu;
+        // Roots
+        let rt = '<table><thead><tr><th>Number</th><th>Square Root</th></tr></thead><tbody>';
+        for (let i = 1; i <= 20; i++)rt += `<tr><td class="highlight">${i * i}</td><td>√${i * i} = ${i}</td></tr>`;
+        rt += '</tbody></table>'; document.getElementById('rootsContent').innerHTML = rt;
+        function exportData() { alert('📄 Data exported! (Demo mode)') }
+        showTable();
+    </script>
+</body>
+
+</html>

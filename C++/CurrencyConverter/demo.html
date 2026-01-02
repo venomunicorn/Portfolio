@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter - C++ Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #f87171;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #f87171, #dc2626);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .converter {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="number"] {
+            flex: 1;
+            padding: 15px;
+            font-size: 1.3rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            text-align: right;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #f87171;
+        }
+
+        select {
+            padding: 15px;
+            font-size: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            cursor: pointer;
+            min-width: 100px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #f87171;
+        }
+
+        .swap-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f87171, #dc2626);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px 0;
+        }
+
+        .swap-btn:hover {
+            transform: rotate(180deg);
+        }
+
+        .result {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #10b981;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .rates {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .rates h3 {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        .rate-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            text-align: left;
+        }
+
+        .rate-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+
+        .rate-item span {
+            color: #10b981;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <span class="badge">C++ Demo</span>
+        <h1>💱 Currency Converter</h1>
+
+        <div class="converter">
+            <div class="input-group">
+                <input type="number" id="amount" value="100" oninput="convert()">
+                <select id="fromCurrency" onchange="convert()">
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="INR">INR</option>
+                    <option value="JPY">JPY</option>
+                </select>
+            </div>
+
+            <button class="swap-btn" onclick="swap()">⇅</button>
+
+            <div class="input-group">
+                <input type="number" id="result" readonly>
+                <select id="toCurrency" onchange="convert()">
+                    <option value="USD">USD</option>
+                    <option value="EUR" selected>EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="INR">INR</option>
+                    <option value="JPY">JPY</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="result">
+            <div class="result-value" id="conversionResult">$100.00 = €92.00</div>
+            <div class="result-label" id="rateLabel">1 USD = 0.92 EUR</div>
+        </div>
+
+        <div class="rates">
+            <h3>Exchange Rates (Base: USD)</h3>
+            <div class="rate-list">
+                <div class="rate-item">EUR: <span>0.92</span></div>
+                <div class="rate-item">GBP: <span>0.79</span></div>
+                <div class="rate-item">INR: <span>83.50</span></div>
+                <div class="rate-item">JPY: <span>149.50</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const rates = {
+            USD: 1,
+            EUR: 0.92,
+            GBP: 0.79,
+            INR: 83.50,
+            JPY: 149.50
+        };
+
+        const symbols = {
+            USD: '$',
+            EUR: '€',
+            GBP: '£',
+            INR: '₹',
+            JPY: '¥'
+        };
+
+        function convert() {
+            const amount = parseFloat(document.getElementById('amount').value) || 0;
+            const from = document.getElementById('fromCurrency').value;
+            const to = document.getElementById('toCurrency').value;
+
+            // Convert to USD first, then to target
+            const inUSD = amount / rates[from];
+            const result = inUSD * rates[to];
+
+            document.getElementById('result').value = result.toFixed(2);
+
+            // Update display
+            const rate = (rates[to] / rates[from]).toFixed(4);
+            document.getElementById('conversionResult').textContent =
+                `${symbols[from]}${amount.toFixed(2)} = ${symbols[to]}${result.toFixed(2)}`;
+            document.getElementById('rateLabel').textContent =
+                `1 ${from} = ${rate} ${to}`;
+        }
+
+        function swap() {
+            const fromEl = document.getElementById('fromCurrency');
+            const toEl = document.getElementById('toCurrency');
+            const temp = fromEl.value;
+            fromEl.value = toEl.value;
+            toEl.value = temp;
+            convert();
+        }
+
+        // Initial conversion
+        convert();
+    </script>
+</body>
+
+</html>

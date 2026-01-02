@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cave Adventure - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px
+        }
+
+        .container {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 550px;
+            width: 100%
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            display: inline-block;
+            margin-bottom: 10px
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 15px
+        }
+
+        h1 {
+            color: #10b981
+        }
+
+        .scene {
+            background: rgba(0, 0, 0, .4);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 15px;
+            min-height: 180px
+        }
+
+        .scene-icon {
+            font-size: 4rem;
+            margin-bottom: 15px
+        }
+
+        .scene-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #ccc
+        }
+
+        .stats {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px
+        }
+
+        .stat {
+            flex: 1;
+            background: rgba(0, 0, 0, .3);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center
+        }
+
+        .stat-icon {
+            font-size: 1.3rem
+        }
+
+        .stat-val {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #10b981
+        }
+
+        .stat-lbl {
+            font-size: .7rem;
+            color: #888
+        }
+
+        .inventory {
+            background: rgba(0, 0, 0, .2);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 15px
+        }
+
+        .inv-title {
+            font-size: .8rem;
+            color: #888;
+            margin-bottom: 8px
+        }
+
+        .inv-items {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            min-height: 30px
+        }
+
+        .inv-item {
+            background: rgba(16, 185, 129, .2);
+            border: 1px solid #10b981;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: .85rem
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px
+        }
+
+        .action-btn {
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, .3);
+            color: #fff;
+            cursor: pointer;
+            font-size: .95rem;
+            transition: all .2s
+        }
+
+        .action-btn:hover {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, .1)
+        }
+
+        .action-btn:disabled {
+            opacity: .5;
+            cursor: not-allowed
+        }
+
+        .log {
+            background: rgba(0, 0, 0, .2);
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 15px;
+            max-height: 100px;
+            overflow-y: auto
+        }
+
+        .log-title {
+            font-size: .8rem;
+            color: #888;
+            margin-bottom: 8px
+        }
+
+        .log-entry {
+            font-size: .85rem;
+            color: #aaa;
+            margin-bottom: 5px
+        }
+
+        .win {
+            text-align: center;
+            padding: 30px
+        }
+
+        .win h2 {
+            color: #10b981;
+            font-size: 2rem;
+            margin-bottom: 15px
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header"><span class="badge">Python Demo</span>
+            <h1>⚔️ The Cave Adventure</h1>
+        </div>
+        <div class="scene">
+            <div class="scene-icon" id="sceneIcon">🏔️</div>
+            <div class="scene-text" id="sceneText">Loading...</div>
+        </div>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-icon">❤️</div>
+                <div class="stat-val" id="health">100</div>
+                <div class="stat-lbl">Health</div>
+            </div>
+            <div class="stat">
+                <div class="stat-icon">💰</div>
+                <div class="stat-val" id="gold">0</div>
+                <div class="stat-lbl">Gold</div>
+            </div>
+            <div class="stat">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-val" id="moves">0</div>
+                <div class="stat-lbl">Moves</div>
+            </div>
+        </div>
+        <div class="inventory">
+            <div class="inv-title">🎒 Inventory</div>
+            <div class="inv-items" id="inventory"></div>
+        </div>
+        <div class="actions" id="actions"></div>
+        <div class="log">
+            <div class="log-title">📜 Adventure Log</div>
+            <div id="log"></div>
+        </div>
+    </div>
+    <script>
+        let state = { health: 100, gold: 0, moves: 0, inventory: [], scene: 'start' };
+        const scenes = {
+            start: { icon: '🏔️', text: 'You stand at the entrance of a dark cave. Cold air flows from within.', actions: [{ text: '🔦 Enter Cave', next: 'cave1' }, { text: '🏃 Explore Outside', next: 'outside' }] },
+            outside: { icon: '🌲', text: 'You find a small chest hidden behind bushes!', actions: [{ text: '📦 Open Chest', action: 'chest' }, { text: '🏠 Return to Cave', next: 'start' }] },
+            cave1: { icon: '🕯️', text: 'The cave is dimly lit. You see two paths ahead.', actions: [{ text: '⬅️ Left Path', next: 'left' }, { text: '➡️ Right Path', next: 'right' }] },
+            left: { icon: '🗡️', text: 'You find an ancient sword embedded in a rock!', actions: [{ text: '⚔️ Take Sword', action: 'sword' }, { text: '🔙 Go Back', next: 'cave1' }] },
+            right: { icon: '🐉', text: 'A sleeping dragon guards a pile of treasure!', actions: [{ text: '💰 Sneak for Gold', action: 'sneak' }, { text: '⚔️ Fight Dragon', action: 'fight' }, { text: '🔙 Retreat', next: 'cave1' }] },
+            gate: { icon: '🚪', text: 'A massive golden gate blocks your path. It needs a key.', actions: [{ text: '🔑 Use Key', action: 'usekey', need: 'Golden Key' }, { text: '🔙 Go Back', next: 'cave1' }] },
+            treasure: { icon: '🏆', text: 'You found the legendary treasure room!', actions: [{ text: '💎 Claim Victory', action: 'win' }] }
+        };
+        function render() {
+            const s = scenes[state.scene]; document.getElementById('sceneIcon').textContent = s.icon; document.getElementById('sceneText').textContent = s.text;
+            document.getElementById('health').textContent = state.health; document.getElementById('gold').textContent = state.gold; document.getElementById('moves').textContent = state.moves;
+            document.getElementById('inventory').innerHTML = state.inventory.map(i => `<span class="inv-item">${i}</span>`).join('') || '<span style="color:#666">Empty</span>';
+            document.getElementById('actions').innerHTML = s.actions.map(a => { const disabled = a.need && !state.inventory.includes(a.need); return `<button class="action-btn" onclick="doAction('${a.next || ''}','${a.action || ''}','${a.need || ''}')" ${disabled ? 'disabled' : ''}>${a.text}</button>` }).join('')
+        }
+        function doAction(next, action, need) {
+            state.moves++;
+            if (action === 'chest') { state.gold += 50; addLog('Found 50 gold in the chest!'); state.inventory.push('Golden Key'); addLog('You found a Golden Key!') }
+            else if (action === 'sword') { if (!state.inventory.includes('Ancient Sword')) { state.inventory.push('Ancient Sword'); addLog('You took the Ancient Sword!') } }
+            else if (action === 'sneak') { if (Math.random() > 0.3) { state.gold += 100; addLog('Sneaked 100 gold from the dragon!') } else { state.health -= 30; addLog('The dragon woke up! Lost 30 health.') } }
+            else if (action === 'fight') { if (state.inventory.includes('Ancient Sword')) { addLog('You defeated the dragon with the sword!'); state.gold += 200; state.scene = 'gate'; render(); return } else { state.health -= 50; addLog('Without a weapon, the dragon hurt you badly!') } }
+            else if (action === 'usekey') { state.inventory = state.inventory.filter(i => i !== 'Golden Key'); addLog('Used the Golden Key!'); state.scene = 'treasure'; render(); return }
+            else if (action === 'win') { state.scene = 'win'; document.querySelector('.container').innerHTML = '<div class="win"><h2>🏆 Victory!</h2><p>You conquered the cave!</p><p>💰 Gold: ' + state.gold + '</p><p>⚡ Moves: ' + state.moves + '</p><button class="action-btn" onclick="location.reload()" style="margin-top:20px;width:auto;padding:15px 30px">🔄 Play Again</button></div>'; return }
+            if (next) state.scene = next; if (state.health <= 0) { addLog('💀 You died!'); state.scene = 'start'; state.health = 100; state.gold = 0; state.inventory = [] } render()
+        }
+        function addLog(msg) { const log = document.getElementById('log'); log.innerHTML = `<div class="log-entry">${msg}</div>` + log.innerHTML }
+        addLog('Your adventure begins...'); render();
+    </script>
+</body>
+
+</html>

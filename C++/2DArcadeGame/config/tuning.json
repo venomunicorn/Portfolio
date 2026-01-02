@@ -1,0 +1,36 @@
+{
+    "player": {
+        "speed": 300.0,
+        "acceleration": 1500.0,
+        "friction": 800.0,
+        "size": 32.0,
+        "maxHealth": 100,
+        "invulnerabilityTime": 1.5,
+        "fireRate": 0.15
+    },
+    "projectile": {
+        "speed": 600.0,
+        "size": 8.0,
+        "lifetime": 2.0,
+        "maxCount": 100
+    },
+    "enemy": {
+        "speed": 120.0,
+        "size": 28.0,
+        "health": 30,
+        "contactDamage": 15,
+        "scoreValue": 100,
+        "maxCount": 50
+    },
+    "spawner": {
+        "initialDelay": 2.0,
+        "minDelay": 0.3,
+        "decreaseRate": 0.02
+    },
+    "scoring": {
+        "killPoints": 100,
+        "comboTimeout": 2.0,
+        "multiplierIncrement": 0.25,
+        "maxMultiplier": 5.0
+    }
+}

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Neon Hockey</title>
+    <style>
+        body {
+            margin: 0;
+            background: #222;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: white;
+            font-family: sans-serif;
+        }
+
+        canvas {
+            border: 2px solid #fff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            background: black;
+        }
+
+        .controls {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .key {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #666;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        #score {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="score">0 - 0</div>
+    <canvas id="gameCanvas" width="800" height="500"></canvas>
+    <div class="controls">
+        <p>Player 1 (Left): <span class="key">W</span> <span class="key">S</span> | Player 2 (Right): <span
+                class="key">↑</span> <span class="key">↓</span></p>
+        <p>First to 5 wins!</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('score');
+
+        // Game State
+        const paddleWidth = 10, paddleHeight = 100;
+        const player1 = { x: 0, y: 200, score: 0 };
+        const player2 = { x: canvas.width - paddleWidth, y: 200, score: 0 };
+        const ball = { x: 400, y: 250, r: 10, dx: 5, dy: 5, speed: 5 };
+
+        // Input
+        const keys = {};
+        window.addEventListener('keydown', e => keys[e.key] = true);
+        window.addEventListener('keyup', e => keys[e.key] = false);
+
+        function update() {
+            // Player 1
+            if (keys['w'] && player1.y > 0) player1.y -= 7;
+            if (keys['s'] && player1.y < canvas.height - paddleHeight) player1.y += 7;
+
+            // Player 2
+            if (keys['ArrowUp'] && player2.y > 0) player2.y -= 7;
+            if (keys['ArrowDown'] && player2.y < canvas.height - paddleHeight) player2.y += 7;
+
+            // Ball Movement
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            // Wall Collision (Top/Bottom)
+            if (ball.y < 0 || ball.y > canvas.height) ball.dy *= -1;
+
+            // Paddle Collision
+            // Player 1
+            if (ball.x < player1.x + paddleWidth && ball.y > player1.y && ball.y < player1.y + paddleHeight) {
+                ball.dx = Math.abs(ball.dx) + 0.5; // Speed up
+            }
+            // Player 2
+            if (ball.x > player2.x - ball.r && ball.y > player2.y && ball.y < player2.y + paddleHeight) {
+                ball.dx = -Math.abs(ball.dx) - 0.5;
+            }
+
+            // Scoring
+            if (ball.x < 0) {
+                player2.score++;
+                resetBall();
+            } else if (ball.x > canvas.width) {
+                player1.score++;
+                resetBall();
+            }
+
+            scoreEl.innerText = `${player1.score} - ${player2.score}`;
+        }
+
+        function resetBall() {
+            ball.x = canvas.width / 2;
+            ball.y = canvas.height / 2;
+            ball.dx = (Math.random() > 0.5 ? 1 : -1) * 5;
+            ball.dy = (Math.random() > 0.5 ? 1 : -1) * 5;
+        }
+
+        function draw() {
+            // Clear
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Center Line
+            ctx.strokeStyle = '#333';
+            ctx.setLineDash([10, 10]);
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 0);
+            ctx.lineTo(canvas.width / 2, canvas.height);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw Paddles
+            ctx.fillStyle = '#0ff'; // Cyan
+            ctx.fillRect(player1.x, player1.y, paddleWidth, paddleHeight);
+
+            ctx.fillStyle = '#f0f'; // Magenta
+            ctx.fillRect(player2.x, player2.y, paddleWidth, paddleHeight);
+
+            // Draw Ball
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+        }
+
+        function loop() {
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        loop();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game - C++ Demo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        .container {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+        }
+        h1 { 
+            color: #f87171; 
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        .badge {
+            background: linear-gradient(135deg, #f87171, #dc2626);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .message {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hint { color: #fbbf24; font-weight: bold; }
+        .success { color: #10b981; }
+        input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.5rem;
+            text-align: center;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            background: rgba(0,0,0,0.3);
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        input:focus { outline: none; border-color: #f87171; }
+        button {
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #f87171, #dc2626);
+            color: white;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        button:hover { transform: translateY(-2px); }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .stat { text-align: center; }
+        .stat-value { font-size: 2rem; font-weight: bold; color: #f87171; }
+        .stat-label { font-size: 0.8rem; color: #888; }
+        .range-info { color: #888; font-size: 0.9rem; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="badge">C++ Demo</span>
+        <h1>🎯 Number Guessing Game</h1>
+        <p class="range-info">Guess a number between 1 and 100</p>
+        
+        <div class="message" id="message">
+            I'm thinking of a number between 1 and 100. Can you guess it?
+        </div>
+        
+        <input type="number" id="guessInput" min="1" max="100" placeholder="Enter your guess">
+        
+        <div>
+            <button class="btn-primary" onclick="makeGuess()">Guess!</button>
+            <button class="btn-secondary" onclick="newGame()">New Game</button>
+        </div>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="attempts">0</div>
+                <div class="stat-label">Attempts</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="bestScore">-</div>
+                <div class="stat-label">Best Score</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let secretNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+        let bestScore = localStorage.getItem('bestScore') || null;
+        
+        document.getElementById('bestScore').textContent = bestScore || '-';
+        document.getElementById('guessInput').addEventListener('keypress', e => {
+            if (e.key === 'Enter') makeGuess();
+        });
+        
+        function makeGuess() {
+            const input = document.getElementById('guessInput');
+            const guess = parseInt(input.value);
+            const messageEl = document.getElementById('message');
+            
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                messageEl.innerHTML = '<span class="hint">Please enter a number between 1 and 100!</span>';
+                return;
+            }
+            
+            attempts++;
+            document.getElementById('attempts').textContent = attempts;
+            
+            if (guess === secretNumber) {
+                messageEl.innerHTML = `<span class="success">🎉 Congratulations! You guessed ${secretNumber} in ${attempts} attempts!</span>`;
+                input.disabled = true;
+                
+                if (!bestScore || attempts < bestScore) {
+                    bestScore = attempts;
+                    localStorage.setItem('bestScore', bestScore);
+                    document.getElementById('bestScore').textContent = bestScore;
+                }
+            } else if (guess < secretNumber) {
+                messageEl.innerHTML = '<span class="hint">📈 Too LOW! Try a higher number.</span>';
+            } else {
+                messageEl.innerHTML = '<span class="hint">📉 Too HIGH! Try a lower number.</span>';
+            }
+            
+            input.value = '';
+            input.focus();
+        }
+        
+        function newGame() {
+            secretNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            document.getElementById('attempts').textContent = '0';
+            document.getElementById('message').innerHTML = "I'm thinking of a number between 1 and 100. Can you guess it?";
+            document.getElementById('guessInput').disabled = false;
+            document.getElementById('guessInput').value = '';
+            document.getElementById('guessInput').focus();
+        }
+    </script>
+</body>
+</html>

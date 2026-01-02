@@ -1,0 +1,97 @@
+Package: vcpkg-cmake-config
+Version: 2024-05-23
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 0a0c5dae31ff90dbaa4b254ff95cc3d71d0f7fedd273fbdbd97f8633944bbd4b
+Status: install ok installed
+
+Package: vcpkg-cmake
+Version: 2024-04-23
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 3e9410c636e3099ca300fae97d4a3f6226638f56f5c8d1a53af154c456c00a20
+Status: install ok installed
+
+Package: glm
+Version: 1.0.2
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 2d5fb5c8474c843f28dda0f40a10d98e6f4d3eb7aec43566fd8b902bcda0d543
+Description: OpenGL Mathematics (GLM)
+Status: install ok installed
+
+Package: sdl2
+Version: 2.32.10
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 6061255d0549d0d64e5a47099734e036b5867016226593c18ce0fe8feb3d9444
+Description: Simple DirectMedia Layer is a cross-platform development library designed to provide low level access to audio, keyboard, mouse, joystick, and graphics hardware via OpenGL and Direct3D.
+Status: install ok installed
+
+Package: fmt
+Version: 12.1.0
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 1edd3e09df42ba7332f7e49eb4d5895a1197d03ece1cafe6d6c993a90e0bcd5c
+Description: {fmt} is an open-source formatting library providing a fast and safe alternative to C stdio and C++ iostreams.
+Status: install ok installed
+
+Package: spdlog
+Version: 1.16.0
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 70b0518d6907c5f7a272436a1b550b996239ff78ca5a0c65a67c9f538976e270
+Description: Very fast, header-only/compiled, C++ logging library.
+Default-Features: fmt
+Status: install ok installed
+
+Package: spdlog
+Feature: fmt
+Depends: fmt
+Architecture: x64-windows
+Multi-Arch: same
+Description: Use fmt library
+Status: install ok installed
+
+Package: vulkan-headers
+Version: 1.4.328.0
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 11607a0e05fc1cf072bb0b4ea98edaa4d77b4993f02a77f99317583c984ea9f0
+Description: Vulkan header files and API registry
+Status: install ok installed
+
+Package: vulkan-loader
+Version: 1.4.328.0
+Depends: vcpkg-cmake, vcpkg-cmake-config, vulkan-headers
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 6d676bfb75ba1dfce42245a0fa59bf76d58a683f0bd96179fa5f589937b6883f
+Description: Vulkan Development Tools
+Status: install ok installed
+
+Package: vulkan
+Version: 2023-12-17
+Depends: vcpkg-cmake, vulkan-headers, vulkan-loader
+Architecture: x64-windows
+Multi-Arch: same
+Abi: b8d16faf36031543aeb11c53ea31abfe472d13533ae49b8fa2bb19985ed3e3e1
+Description: A stub package that ensures that Vulkan headers and a loader are available.
+    On Android, the NDK provides a loader at API level 24 or higher.
+Status: install ok installed
+
+Package: vulkan-memory-allocator
+Version: 3.3.0
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: d4ca6def4c4ed34e66f8d8d4a7c399a12e5a673077bcb35f1a7e1fd87e8735df
+Description: Easy to integrate Vulkan memory allocation library from GPUOpen
+Status: install ok installed
+

@@ -1,0 +1,10 @@
+# ninja log v6
+17	1907	7880074035440834	engine/core/CMakeFiles/engine_core.dir/log.cpp.obj	2a4fb3a6b8a0932f
+1916	1965	7880074054430418	lib/engine_core.lib	ac3acc2840090db9
+13	3041	7880081149690490	build.ninja	bda7613516450b5f
+13	3041	7880081149690490	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/cmake_install.cmake	bda7613516450b5f
+13	3041	7880081149690490	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/engine/core/cmake_install.cmake	bda7613516450b5f
+13	3041	7880081149690490	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/engine/platform/cmake_install.cmake	bda7613516450b5f
+13	3041	7880081149690490	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/engine/render/cmake_install.cmake	bda7613516450b5f
+15	2384	7880081150102168	engine/core/CMakeFiles/engine_core.dir/log.cpp.obj	f342f9623346acf6
+2386	2451	7880081173808200	lib/engine_core.lib	ac3acc2840090db9

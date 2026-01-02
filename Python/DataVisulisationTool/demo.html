@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualization - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px
+        }
+
+        .container {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            display: inline-block;
+            margin-bottom: 10px
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px
+        }
+
+        h1 {
+            color: #10b981
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: .9rem;
+            transition: all .2s
+        }
+
+        .btn-chart {
+            background: rgba(255, 255, 255, .1);
+            color: #888
+        }
+
+        .btn-chart.active {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff
+        }
+
+        .btn-theme {
+            background: rgba(139, 92, 246, .2);
+            color: #a78bfa
+        }
+
+        .chart-area {
+            background: rgba(0, 0, 0, .3);
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 300px;
+            position: relative
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 250px;
+            padding-top: 20px
+        }
+
+        .bar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1
+        }
+
+        .bar {
+            width: 40px;
+            border-radius: 5px 5px 0 0;
+            transition: height .5s;
+            cursor: pointer
+        }
+
+        .bar:hover {
+            opacity: .8;
+            transform: scaleX(1.1)
+        }
+
+        .bar-label {
+            margin-top: 10px;
+            font-size: .8rem;
+            color: #888
+        }
+
+        .bar-value {
+            font-size: .75rem;
+            color: #fff;
+            margin-bottom: 5px
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: .85rem
+        }
+
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px
+        }
+
+        .data-table {
+            background: rgba(0, 0, 0, .2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px
+        }
+
+        .data-table h4 {
+            color: #888;
+            margin-bottom: 10px;
+            font-size: .9rem
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        th,
+        td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, .1)
+        }
+
+        th {
+            color: #10b981;
+            font-size: .8rem
+        }
+
+        td {
+            font-size: .85rem
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header"><span class="badge">Python Demo</span>
+            <h1>📊 Data Visualization</h1>
+        </div>
+        <div class="controls">
+            <button class="btn btn-chart active" onclick="setChart('bar')">📊 Bar</button>
+            <button class="btn btn-chart" onclick="setChart('line')">📈 Line</button>
+            <button class="btn btn-chart" onclick="setChart('pie')">🥧 Pie</button>
+            <button class="btn btn-theme" onclick="randomData()">🎲 New Data</button>
+        </div>
+        <div class="chart-area" id="chartArea"></div>
+        <div class="legend" id="legend"></div>
+        <div class="data-table">
+            <h4>📁 Sample CSV Data</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Value</th>
+                        <th>Growth</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        const colors = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6'];
+        const labels = ['Sales', 'Marketing', 'R&D', 'Support', 'Ops'];
+        let data = [45, 32, 28, 18, 25], chartType = 'bar';
+        function setChart(t) { chartType = t; document.querySelectorAll('.btn-chart').forEach(b => b.classList.remove('active')); event.target.classList.add('active'); render() }
+        function randomData() { data = labels.map(() => Math.floor(Math.random() * 50) + 10); render() }
+        function render() {
+            const area = document.getElementById('chartArea'), legend = document.getElementById('legend'), table = document.getElementById('tableBody');
+            if (chartType === 'bar') { area.innerHTML = '<div class="bar-chart">' + data.map((v, i) => `<div class="bar-container"><div class="bar-value">${v}</div><div class="bar" style="height:${v * 4}px;background:${colors[i]}"></div><div class="bar-label">${labels[i]}</div></div>`).join('') + '</div>' }
+            else if (chartType === 'line') { let svg = `<svg viewBox="0 0 500 250" style="width:100%;height:250px"><polyline fill="none" stroke="#10b981" stroke-width="3" points="`; const pts = data.map((v, i) => `${50 + i * 100},${230 - v * 4}`); svg += pts.join(' ') + `"/>` + data.map((v, i) => `<circle cx="${50 + i * 100}" cy="${230 - v * 4}" r="6" fill="${colors[i]}"/><text x="${50 + i * 100}" y="${245}" fill="#888" font-size="12" text-anchor="middle">${labels[i]}</text><text x="${50 + i * 100}" y="${220 - v * 4}" fill="#fff" font-size="11" text-anchor="middle">${v}</text>`).join('') + `</svg>`; area.innerHTML = svg }
+            else if (chartType === 'pie') { const total = data.reduce((a, b) => a + b, 0); let angle = 0, svg = `<svg viewBox="0 0 200 200" style="width:250px;height:250px;display:block;margin:auto">`; data.forEach((v, i) => { const pct = v / total, a1 = angle, a2 = angle + pct * 360; angle = a2; const r = 80, cx = 100, cy = 100, x1 = cx + r * Math.cos((a1 - 90) * Math.PI / 180), y1 = cy + r * Math.sin((a1 - 90) * Math.PI / 180), x2 = cx + r * Math.cos((a2 - 90) * Math.PI / 180), y2 = cy + r * Math.sin((a2 - 90) * Math.PI / 180), large = pct > .5 ? 1 : 0; svg += `<path d="M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${large},1 ${x2},${y2} Z" fill="${colors[i]}"/>` }); svg += `</svg>`; area.innerHTML = svg }
+            legend.innerHTML = labels.map((l, i) => `<div class="legend-item"><div class="legend-color" style="background:${colors[i]}"></div>${l}</div>`).join('');
+            table.innerHTML = data.map((v, i) => `<tr><td>${labels[i]}</td><td>${v}</td><td style="color:${Math.random() > .5 ? '#10b981' : '#ef4444'}">${Math.random() > .5 ? '+' : '-'}${(Math.random() * 20).toFixed(1)}%</td></tr>`).join('')
+        }
+        render();
+    </script>
+</body>
+
+</html>

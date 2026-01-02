@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Detection - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px
+        }
+
+        .container {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 600px;
+            width: 100%
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            display: inline-block;
+            margin-bottom: 10px
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px
+        }
+
+        h1 {
+            color: #10b981
+        }
+
+        .camera {
+            background: #000;
+            border-radius: 15px;
+            position: relative;
+            height: 320px;
+            overflow: hidden;
+            margin-bottom: 15px
+        }
+
+        .camera-frame {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative
+        }
+
+        .placeholder {
+            color: #888;
+            font-size: 1.2rem
+        }
+
+        .detection-box {
+            position: absolute;
+            border: 3px solid;
+            border-radius: 5px;
+            transition: all .3s
+        }
+
+        .detection-label {
+            position: absolute;
+            top: -25px;
+            left: 0;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: .75rem;
+            font-weight: bold;
+            white-space: nowrap
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: .9rem
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, .1);
+            color: #fff
+        }
+
+        .btn.active {
+            box-shadow: 0 0 15px rgba(16, 185, 129, .5)
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px
+        }
+
+        .stat {
+            background: rgba(0, 0, 0, .3);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center
+        }
+
+        .stat-val {
+            font-size: 1.3rem;
+            color: #10b981;
+            font-weight: bold
+        }
+
+        .stat-lbl {
+            font-size: .75rem;
+            color: #888
+        }
+
+        .log {
+            background: rgba(0, 0, 0, .3);
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 150px;
+            overflow-y: auto
+        }
+
+        .log-title {
+            color: #888;
+            font-size: .85rem;
+            margin-bottom: 10px
+        }
+
+        .log-entry {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 10px;
+            background: rgba(255, 255, 255, .05);
+            border-radius: 6px;
+            margin-bottom: 5px;
+            font-size: .85rem
+        }
+
+        .log-entry .conf {
+            color: #10b981
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header"><span class="badge">Python Demo</span>
+            <h1>🎯 Object Detection</h1>
+        </div>
+        <div class="camera" id="camera">
+            <div class="camera-frame">
+                <div class="placeholder">📷 Click Start to begin simulation</div>
+            </div>
+        </div>
+        <div class="controls">
+            <button class="btn btn-primary" id="startBtn" onclick="toggleDetection()">▶ Start Detection</button>
+            <button class="btn btn-secondary" onclick="clearLog()">🗑️ Clear Log</button>
+        </div>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-val" id="fps">0</div>
+                <div class="stat-lbl">FPS</div>
+            </div>
+            <div class="stat">
+                <div class="stat-val" id="objects">0</div>
+                <div class="stat-lbl">Objects</div>
+            </div>
+            <div class="stat">
+                <div class="stat-val" id="total">0</div>
+                <div class="stat-lbl">Detections</div>
+            </div>
+        </div>
+        <div class="log">
+            <div class="log-title">📋 Detection Log</div>
+            <div id="logContent"></div>
+        </div>
+    </div>
+    <script>
+        const classes = [{ name: 'Person', color: '#10b981' }, { name: 'Car', color: '#3b82f6' }, { name: 'Dog', color: '#f59e0b' }, { name: 'Cat', color: '#ec4899' }, { name: 'Bicycle', color: '#8b5cf6' }, { name: 'Phone', color: '#06b6d4' }];
+        let running = false, interval, totalDetections = 0, currentObjects = [];
+        function toggleDetection() {
+            running = !running; document.getElementById('startBtn').textContent = running ? '⏹ Stop' : '▶ Start Detection';
+            document.getElementById('startBtn').classList.toggle('active', running);
+            if (running) { interval = setInterval(detect, 1000); document.getElementById('fps').textContent = '30' }
+            else { clearInterval(interval); document.getElementById('fps').textContent = '0'; document.getElementById('objects').textContent = '0'; renderCamera([]) }
+        }
+        function detect() {
+            const numObjects = 1 + Math.floor(Math.random() * 3); currentObjects = [];
+            for (let i = 0; i < numObjects; i++) {
+                const cls = classes[Math.floor(Math.random() * classes.length)];
+                const obj = { cls, x: 10 + Math.random() * 60, y: 10 + Math.random() * 60, w: 15 + Math.random() * 20, h: 20 + Math.random() * 25, conf: (70 + Math.random() * 30).toFixed(1) };
+                currentObjects.push(obj); addLog(obj)
+            }
+            totalDetections += numObjects; document.getElementById('objects').textContent = numObjects; document.getElementById('total').textContent = totalDetections;
+            renderCamera(currentObjects)
+        }
+        function renderCamera(objects) {
+            const cam = document.getElementById('camera');
+            let html = '<div class="camera-frame" style="background:linear-gradient(45deg,#1a1a2e,#2a2a4e)">';
+            html += '<svg width="100%" height="100%" style="position:absolute;opacity:0.1"><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#fff" stroke-width="1"/></pattern><rect width="100%" height="100%" fill="url(#grid)"/></svg>';
+            objects.forEach(o => { html += `<div class="detection-box" style="left:${o.x}%;top:${o.y}%;width:${o.w}%;height:${o.h}%;border-color:${o.cls.color}"><div class="detection-label" style="background:${o.cls.color}">${o.cls.name} ${o.conf}%</div></div>` });
+            html += '</div>'; cam.innerHTML = html
+        }
+        function addLog(obj) {
+            const log = document.getElementById('logContent'); const time = new Date().toLocaleTimeString();
+            log.innerHTML = `<div class="log-entry"><span>${time} - ${obj.cls.name}</span><span class="conf">${obj.conf}%</span></div>` + log.innerHTML;
+            if (log.children.length > 20) log.removeChild(log.lastChild)
+        }
+        function clearLog() { document.getElementById('logContent').innerHTML = ''; totalDetections = 0; document.getElementById('total').textContent = '0' }
+    </script>
+</body>
+
+</html>

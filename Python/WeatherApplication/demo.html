@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px
+        }
+
+        .container {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 420px;
+            width: 100%
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            display: inline-block;
+            margin-bottom: 10px
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px
+        }
+
+        h1 {
+            color: #10b981
+        }
+
+        .search {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px
+        }
+
+        .search input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 25px;
+            background: rgba(0, 0, 0, .3);
+            color: #fff;
+            font-size: 1rem
+        }
+
+        .search input:focus {
+            outline: none;
+            border-color: #10b981
+        }
+
+        .search button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            cursor: pointer
+        }
+
+        .location {
+            text-align: center;
+            margin-bottom: 20px
+        }
+
+        .city {
+            font-size: 1.8rem;
+            font-weight: bold
+        }
+
+        .coords {
+            font-size: .85rem;
+            color: #888
+        }
+
+        .weather-main {
+            background: rgba(0, 0, 0, .3);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px
+        }
+
+        .weather-icon {
+            font-size: 5rem;
+            margin-bottom: 10px
+        }
+
+        .temp {
+            font-size: 4rem;
+            font-weight: 300
+        }
+
+        .temp span {
+            font-size: 2rem;
+            color: #888
+        }
+
+        .condition {
+            font-size: 1.2rem;
+            color: #888;
+            margin-top: 5px
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px
+        }
+
+        .detail {
+            background: rgba(0, 0, 0, .2);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center
+        }
+
+        .detail-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px
+        }
+
+        .detail-val {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #10b981
+        }
+
+        .detail-lbl {
+            font-size: .8rem;
+            color: #888
+        }
+
+        .auto-btn {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 12px;
+            background: transparent;
+            color: #888;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: .9rem
+        }
+
+        .auto-btn:hover {
+            border-color: #10b981;
+            color: #10b981
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header"><span class="badge">Python Demo</span>
+            <h1>🌤️ Weather App</h1>
+        </div>
+        <div class="search">
+            <input type="text" id="cityInput" placeholder="Enter city name..." value="New York">
+            <button onclick="search()">🔍</button>
+        </div>
+        <div class="location">
+            <div class="city" id="city">New York</div>
+            <div class="coords" id="coords">📍 40.71°N, 74.00°W</div>
+        </div>
+        <div class="weather-main">
+            <div class="weather-icon" id="icon">☀️</div>
+            <div class="temp"><span id="temp">24</span><span>°C</span></div>
+            <div class="condition" id="condition">Sunny</div>
+        </div>
+        <div class="details">
+            <div class="detail">
+                <div class="detail-icon">💧</div>
+                <div class="detail-val" id="humidity">65%</div>
+                <div class="detail-lbl">Humidity</div>
+            </div>
+            <div class="detail">
+                <div class="detail-icon">💨</div>
+                <div class="detail-val" id="wind">12 km/h</div>
+                <div class="detail-lbl">Wind</div>
+            </div>
+            <div class="detail">
+                <div class="detail-icon">🌡️</div>
+                <div class="detail-val" id="feels">26°C</div>
+                <div class="detail-lbl">Feels Like</div>
+            </div>
+            <div class="detail">
+                <div class="detail-icon">👁️</div>
+                <div class="detail-val" id="visibility">10 km</div>
+                <div class="detail-lbl">Visibility</div>
+            </div>
+        </div>
+        <button class="auto-btn" onclick="autoLocation()">📍 Use My Location (Demo)</button>
+    </div>
+    <script>
+        const cities = {
+            'new york': { temp: 24, icon: '☀️', cond: 'Sunny', hum: 65, wind: 12, feels: 26, vis: 10, lat: 40.71, lon: -74.00 },
+            'london': { temp: 15, icon: '🌧️', cond: 'Rainy', hum: 80, wind: 18, feels: 13, vis: 6, lat: 51.51, lon: -0.13 },
+            'tokyo': { temp: 28, icon: '⛅', cond: 'Partly Cloudy', hum: 70, wind: 8, feels: 30, vis: 12, lat: 35.68, lon: 139.69 },
+            'paris': { temp: 18, icon: '🌤️', cond: 'Clear', hum: 55, wind: 10, feels: 17, vis: 15, lat: 48.86, lon: 2.35 },
+            'mumbai': { temp: 32, icon: '🌥️', cond: 'Humid', hum: 85, wind: 15, feels: 38, vis: 8, lat: 19.08, lon: 72.88 },
+            'sydney': { temp: 22, icon: '☀️', cond: 'Sunny', hum: 60, wind: 20, feels: 23, vis: 20, lat: -33.87, lon: 151.21 }
+        };
+        function search() {
+            const city = document.getElementById('cityInput').value.toLowerCase(); const data = cities[city] || { temp: Math.floor(15 + Math.random() * 15), icon: '🌤️', cond: 'Variable', hum: Math.floor(50 + Math.random() * 40), wind: Math.floor(5 + Math.random() * 20), feels: Math.floor(15 + Math.random() * 15), vis: Math.floor(5 + Math.random() * 15), lat: (Math.random() * 180 - 90).toFixed(2), lon: (Math.random() * 360 - 180).toFixed(2) };
+            document.getElementById('city').textContent = document.getElementById('cityInput').value;
+            document.getElementById('coords').textContent = `📍 ${Math.abs(data.lat).toFixed(2)}°${data.lat >= 0 ? 'N' : 'S'}, ${Math.abs(data.lon).toFixed(2)}°${data.lon >= 0 ? 'E' : 'W'}`;
+            document.getElementById('temp').textContent = data.temp; document.getElementById('icon').textContent = data.icon;
+            document.getElementById('condition').textContent = data.cond; document.getElementById('humidity').textContent = data.hum + '%';
+            document.getElementById('wind').textContent = data.wind + ' km/h'; document.getElementById('feels').textContent = data.feels + '°C';
+            document.getElementById('visibility').textContent = data.vis + ' km'
+        }
+        function autoLocation() { document.getElementById('cityInput').value = 'Mumbai'; search() }
+        document.getElementById('cityInput').addEventListener('keypress', e => { if (e.key === 'Enter') search() });
+    </script>
+</body>
+
+</html>

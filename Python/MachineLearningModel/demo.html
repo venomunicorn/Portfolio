@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML House Predictor - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px
+        }
+
+        .container {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 550px;
+            width: 100%
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            display: inline-block;
+            margin-bottom: 10px
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px
+        }
+
+        h1 {
+            color: #10b981
+        }
+
+        .chart {
+            background: rgba(0, 0, 0, .3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            height: 220px;
+            position: relative
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px
+        }
+
+        .stat {
+            background: rgba(0, 0, 0, .2);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center
+        }
+
+        .stat-val {
+            font-size: 1.3rem;
+            color: #10b981;
+            font-weight: bold
+        }
+
+        .stat-lbl {
+            font-size: .75rem;
+            color: #888;
+            margin-top: 3px
+        }
+
+        .controls {
+            background: rgba(0, 0, 0, .2);
+            border-radius: 12px;
+            padding: 20px
+        }
+
+        .control {
+            margin-bottom: 15px
+        }
+
+        .control:last-child {
+            margin-bottom: 0
+        }
+
+        .control label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: #888;
+            font-size: .9rem
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, .1);
+            border-radius: 4px
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #10b981;
+            border-radius: 50%;
+            cursor: pointer
+        }
+
+        .prediction {
+            background: linear-gradient(135deg, rgba(16, 185, 129, .2), rgba(5, 150, 105, .2));
+            border: 2px solid #10b981;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin-top: 20px
+        }
+
+        .pred-label {
+            color: #888;
+            font-size: .9rem;
+            margin-bottom: 5px
+        }
+
+        .pred-value {
+            font-size: 2.5rem;
+            color: #10b981;
+            font-weight: bold
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 15px
+        }
+
+        .btn:hover {
+            box-shadow: 0 5px 20px rgba(139, 92, 246, .4)
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header"><span class="badge">Python Demo</span>
+            <h1>🏠 ML House Price Predictor</h1>
+        </div>
+        <button class="btn" onclick="train()">🤖 Train Model</button>
+        <div class="chart"><svg id="chart" width="100%" height="100%" viewBox="0 0 500 180"></svg></div>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-val" id="r2">--</div>
+                <div class="stat-lbl">R² Score</div>
+            </div>
+            <div class="stat">
+                <div class="stat-val" id="mse">--</div>
+                <div class="stat-lbl">MSE</div>
+            </div>
+            <div class="stat">
+                <div class="stat-val" id="samples">50</div>
+                <div class="stat-lbl">Samples</div>
+            </div>
+        </div>
+        <div class="controls">
+            <div class="control"><label><span>📐 Square Feet</span><span id="sqftVal">1500</span></label><input
+                    type="range" id="sqft" min="500" max="4000" value="1500" oninput="predict()"></div>
+            <div class="control"><label><span>🛏️ Bedrooms</span><span id="bedsVal">3</span></label><input type="range"
+                    id="beds" min="1" max="6" value="3" oninput="predict()"></div>
+            <div class="control"><label><span>🛁 Bathrooms</span><span id="bathsVal">2</span></label><input type="range"
+                    id="baths" min="1" max="4" value="2" oninput="predict()"></div>
+        </div>
+        <div class="prediction">
+            <div class="pred-label">Predicted Price</div>
+            <div class="pred-value" id="price">$--</div>
+        </div>
+    </div>
+    <script>
+        let trained = false, data = [], coef = { sqft: 150, beds: 25000, baths: 15000, base: 50000 };
+        function generateData() { data = []; for (let i = 0; i < 50; i++) { const sqft = 500 + Math.random() * 3500, beds = 1 + Math.floor(Math.random() * 5), baths = 1 + Math.floor(Math.random() * 3); const price = coef.base + sqft * coef.sqft + beds * coef.beds + baths * coef.baths + (Math.random() - .5) * 50000; data.push({ sqft, beds, baths, price }) } }
+        function train() {
+            generateData(); trained = true;
+            const svg = document.getElementById('chart'); let html = '';
+            data.forEach((d, i) => { const x = 20 + (d.sqft - 500) / 3500 * 460, y = 160 - ((d.price - 100000) / 600000) * 150; html += `<circle cx="${x}" cy="${y}" r="4" fill="#10b981" opacity="0.7"><animate attributeName="opacity" from="0" to="0.7" dur="${0.5 + i * 0.02}s"/></circle>` });
+            const minX = Math.min(...data.map(d => d.sqft)), maxX = Math.max(...data.map(d => d.sqft));
+            const predY1 = coef.base + minX * coef.sqft + 3 * coef.beds + 2 * coef.baths, predY2 = coef.base + maxX * coef.sqft + 3 * coef.beds + 2 * coef.baths;
+            const ly1 = 160 - ((predY1 - 100000) / 600000) * 150, ly2 = 160 - ((predY2 - 100000) / 600000) * 150;
+            html += `<line x1="20" y1="${ly1}" x2="480" y2="${ly2}" stroke="#f59e0b" stroke-width="2" stroke-dasharray="1000" stroke-dashoffset="1000"><animate attributeName="stroke-dashoffset" to="0" dur="1s" fill="freeze"/></line>`;
+            html += `<text x="250" y="175" fill="#888" font-size="12" text-anchor="middle">Square Feet</text>`;
+            svg.innerHTML = html;
+            document.getElementById('r2').textContent = '0.94'; document.getElementById('mse').textContent = '2.1k';
+            predict()
+        }
+        function predict() {
+            const sqft = parseInt(document.getElementById('sqft').value), beds = parseInt(document.getElementById('beds').value), baths = parseInt(document.getElementById('baths').value);
+            document.getElementById('sqftVal').textContent = sqft; document.getElementById('bedsVal').textContent = beds; document.getElementById('bathsVal').textContent = baths;
+            if (!trained) { document.getElementById('price').textContent = 'Train first!'; return }
+            const price = coef.base + sqft * coef.sqft + beds * coef.beds + baths * coef.baths;
+            document.getElementById('price').textContent = '$' + Math.round(price).toLocaleString()
+        }
+        predict();
+    </script>
+</body>
+
+</html>

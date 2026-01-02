@@ -1,0 +1,216 @@
+[
+  {
+    "id": "2.1",
+    "name": "CashFlow Pro",
+    "description": "SME Invoice & Receivables Management",
+    "problem": "** 60% of Indian SMEs manage invoices in spreadsheets; lose ₹50L-1Cr/year to late payments",
+    "market": "** 8M+ SMEs in India (TAM: ₹58,000 Cr annually)",
+    "score": 85.9,
+    "revenue": "** ₹2000-5000/month per SME (SaaS)",
+    "cost": "** ₹15-25 Lakh",
+    "tasks": [
+      "Create landing page highlighting \"Get paid 30 days faster\" (CashFlow-specific benefit)",
+      "Run Google Ads targeting \"invoice management,\" \"payment collection,\" \"SME accounting\"",
+      "Budget: ₹2000 for 5-7 days; target 50-100 clicks; measure signup rate (target 30%+)",
+      "Conduct 15-20 cold calls to CA firms, business centers, MSME clusters",
+      "Measure pain point confirmation (target 50%+ saying \"this is a real problem\")",
+      "Record willingness-to-pay mentions (target ₹300+ ARPU minimum validation)",
+      "Invoice generation + customizable templates",
+      "Payment tracking dashboard (status: draft, sent, partial, paid, overdue)",
+      "Automated payment reminders (email + SMS via Twilio)",
+      "Integration with bank APIs (HDFC/ICICI for auto-reconciliation)",
+      "GST billing compliance (GSTR calculations auto-updated)",
+      "UPI payment widget (embedded payment collection)",
+      "Analytics: Late payment trends, cash flow forecast by 30/60/90 days",
+      "Expand to inventory tracking for retail SMEs",
+      "Add expense management (accounts payable matching)",
+      "Integrate with accounting apps (Tally ERP, Zoho Books)",
+      "B2B partnerships with BFSIs, CA firms, GST consultants (revenue share)",
+      "Target 200+ paying customers by Month 6; ₹4-6 Lakh MRR by Month 12"
+    ]
+  },
+  {
+    "id": "2.2",
+    "name": "LocalDeals",
+    "description": "Retail Loyalty & Local Discounts",
+    "problem": "** Tier 2/3 retail (rag stores, paan shops, kirana) have NO loyalty program; losing 20% repeat customers",
+    "market": "** 1M+ retail stores in India (TAM: ₹1,00,000 Cr retail economy)",
+    "score": 85.1,
+    "revenue": "** Freemium: Free for 1 store; ₹500-1000/month per additional store",
+    "cost": "** ₹18-28 Lakh",
+    "tasks": [
+      "Create video demo: \"Turn your kirana into a loyalty program in 2 minutes\"",
+      "Instagram/YouTube Ads targeting retail owners in major cities",
+      "Budget: ₹2000; target 100 views, 20 clicks, 5 signups (measure landing page conversion)",
+      "Walk into 20 local stores; pitch 5-minute demo; measure buyer interest (target 50% interested)",
+      "Ask: \"Would you pay ₹500-1000/month for this?\" (target 40%+ saying \"yes\")",
+      "Retail dashboard: Customer card issuance + balance tracking",
+      "Digital card (QR code scannable in-store; loyalty points auto-updated)",
+      "Offer creation: Create discount offers (Buy 2 get 1 free, ₹500 spend = ₹50 points)",
+      "Customer app: Customers see nearby store offers, scan QR, auto-apply points",
+      "Payment integration: UPI payment from loyalty balance",
+      "Analytics: Repeat customer rate, avg transaction value, points redemption rate",
+      "Expand to Swiggy/Zomato-like aggregation (become marketplace hub for local offers)",
+      "Add supplier/distributor integration (give retailers bulk purchase discounts)",
+      "B2B partnerships with retail chains, mall owners, trade associations",
+      "Target 500+ stores by Month 6; ₹3-4 Lakh MRR by Month 12"
+    ]
+  },
+  {
+    "id": "2.3",
+    "name": "DocVerify",
+    "description": "Compliance Automation for GST/ITR/TDS",
+    "problem": "** 70% of SMEs struggle with GST compliance; face ₹50K-1Cr in penalties annually",
+    "market": "** 8M+ Indian MSMEs (TAM: ₹2,000 Cr compliance market)",
+    "score": 83.9,
+    "revenue": "** ₹5000-15000/month per SME (compliance package)",
+    "cost": "** ₹25-35 Lakh",
+    "tasks": [
+      "Create audit checklist: \"GST compliance in 10 minutes\" (solve compliance fear)",
+      "LinkedIn/Email campaign to CA firms, tax consultants, MSME business groups",
+      "Cold calls to 25+ CA firms; offer 50% commission on referrals (target 10 warm leads)",
+      "Measure: \"Would your clients pay ₹5000-15000/month for this?\" (target 60%+ saying \"yes\")",
+      "Document scanner: Upload invoices, GST receipts, TDS certificates (OCR extraction)",
+      "Compliance validator: Flags missing docs, duplicates, GST/ITR filing gaps",
+      "Auto-filing engine: Pre-fills GSTR forms based on uploaded documents",
+      "Penalty alerts: Notify when GST filing deadline approaching (customize reminder timing)",
+      "Integration: Connect to GST portal, bank APIs, CA software (Tally, Zoho)",
+      "Dashboard: Compliance status scorecard (% complete for each filing period)",
+      "Expand to TDS management, income tax filing automation",
+      "B2B partnerships with tax software (Cleartax, ClearVoice), bank portals, MSME platforms",
+      "White-label solution for accountant firms (use our engine, rebrand)",
+      "Target 150-200 paying customers by Month 12; ₹7-10 Lakh MRR"
+    ]
+  },
+  {
+    "id": "2.4",
+    "name": "SkillMatch",
+    "description": "Gig Talent Marketplace for SMEs",
+    "problem": "** SMEs waste ₹2-5L/year on fixed salaries for part-time roles; can't find skilled freelancers",
+    "market": "** 500 Cr SME HR budget; 10% could shift to gig model = ₹50 Cr TAM",
+    "score": 80.6,
+    "revenue": "",
+    "cost": "",
+    "tasks": [
+      "Build minimal MVP (job board only), test with 50 SMEs"
+    ]
+  },
+  {
+    "id": "2.5",
+    "name": "TeachPro",
+    "description": "Online Teaching Platform for Skill Trainers",
+    "problem": "** 5M+ skill trainers in India lack distribution; relying on low-margin offline classes",
+    "market": "** ₹300 Cr upskilling market; 15% shift to online = ₹45 Cr TAM",
+    "score": 79.2,
+    "revenue": "",
+    "cost": "",
+    "tasks": [
+      "Create course from 3 real trainers; pre-sell 50 students"
+    ]
+  },
+  {
+    "id": "2.6",
+    "name": "SupplyChain AI",
+    "description": "Inventory Optimization",
+    "score": 78.5,
+    "tasks": []
+  },
+  {
+    "id": "2.7",
+    "name": "HealthHub Clinic",
+    "description": "Telemedicine for Tier 2",
+    "score": 77.8,
+    "tasks": []
+  },
+  {
+    "id": "2.8",
+    "name": "RegioCreator",
+    "description": "Hyperlocal Creator Monetization",
+    "score": 77.1,
+    "tasks": []
+  },
+  {
+    "id": "2.9",
+    "name": "AgriTech Connect",
+    "description": "Farm-to-Market Marketplace",
+    "score": 76.4,
+    "tasks": []
+  },
+  {
+    "id": "2.10",
+    "name": "RentalFlow",
+    "description": "Real Estate Rental Management",
+    "score": 76.0,
+    "tasks": []
+  },
+  {
+    "id": "2.11",
+    "name": "EventEasy",
+    "description": "Event Management Platform",
+    "score": 75.5,
+    "tasks": []
+  },
+  {
+    "id": "2.12",
+    "name": "TalentPool",
+    "description": "HR Recruitment Automation",
+    "score": 74.2,
+    "tasks": []
+  },
+  {
+    "id": "2.13",
+    "name": "AutoDeal",
+    "description": "B2B Auto Parts Marketplace",
+    "score": 73.8,
+    "tasks": []
+  },
+  {
+    "id": "2.14",
+    "name": "ServicePro",
+    "description": "Home Services Booking",
+    "score": 73.0,
+    "tasks": []
+  },
+  {
+    "id": "2.15",
+    "name": "NutritionAI",
+    "description": "Personalized Diet Recommendations",
+    "score": 72.5,
+    "tasks": []
+  },
+  {
+    "id": "2.16",
+    "name": "DataBackup Plus",
+    "description": "SME Cloud Backup",
+    "score": 71.8,
+    "tasks": []
+  },
+  {
+    "id": "2.17",
+    "name": "LocalJobs",
+    "description": "Hyper-Local Job Board",
+    "score": 70.2,
+    "tasks": []
+  },
+  {
+    "id": "2.18",
+    "name": "WaterTech",
+    "description": "Water Quality Monitoring",
+    "score": 69.5,
+    "tasks": []
+  },
+  {
+    "id": "2.19",
+    "name": "CommunityFund",
+    "description": "Crowdfunding for Local Projects",
+    "score": 68.0,
+    "tasks": []
+  },
+  {
+    "id": "2.20",
+    "name": "ArtisanConnect",
+    "description": "Artisan Direct-to-Consumer Platform",
+    "score": 67.5,
+    "tasks": []
+  }
+]

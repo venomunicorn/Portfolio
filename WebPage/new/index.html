@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Starfield with Parallax</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        #starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 25%, #0f0f23 100%);
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 100vh 50px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+        }
+
+        .section {
+            max-width: 800px;
+            margin: 0 auto 100vh;
+            padding: 60px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(45deg, #64b5f6, #e1bee7, #81c784);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #64b5f6;
+        }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            animation: shoot linear;
+            box-shadow: 0 0 6px #fff, 0 0 12px #64b5f6, 0 0 18px #64b5f6;
+        }
+
+        .shooting-star::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #64b5f6, #fff);
+            transform: translateX(50%);
+        }
+
+        @keyframes shoot {
+            from {
+                transform: translateX(-100px) translateY(-100px);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100vw) translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starfield"></canvas>
+    
+    <div class="content">
+        <div class="section">
+            <h1>Welcome to the Cosmos</h1>
+            <p>Experience the infinite beauty of space as you journey through this 3D starfield. Notice how the stars move and shift as you scroll, creating a mesmerizing parallax effect that simulates traveling through the depths of space.</p>
+            <p>The stars dance around you in three-dimensional space, while occasional shooting stars streak across the void, leaving trails of light in their wake.</p>
+        </div>
+
+        <div class="section">
+            <h2>Stellar Navigation</h2>
+            <p>As you scroll through this cosmic landscape, the stars respond to your movement, creating depth and dimension. The closer stars move faster than the distant ones, just like looking out the window of a spacecraft.</p>
+            <p>Each star exists in its own layer of space, some near, some far, all contributing to the illusion of traversing the galaxy at incredible speeds.</p>
+        </div>
+
+        <div class="section">
+            <h2>Shooting Stars</h2>
+            <p>Keep watching for the magical shooting stars that periodically streak across the sky. These celestial visitors appear randomly, each following its own unique path through the starfield.</p>
+            <p>The motion trails they leave behind fade gently, creating beautiful ephemeral artwork against the cosmic backdrop.</p>
+        </div>
+
+        <div class="section">
+            <h2>Infinite Journey</h2>
+            <p>This journey through space is endless. The stars continuously regenerate, ensuring that your voyage through the cosmos never ends. Each scroll reveals new depths of space to explore.</p>
+            <p>The parallax effect creates a sense of speed and movement, making you feel as though you're piloting your own spacecraft through the infinite expanse of the universe.</p>
+        </div>
+    </div>
+
+    <script>
+        class Star {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.reset();
+                this.z = Math.random() * 1000; // Start at random depth
+            }
+
+            reset() {
+                this.x = (Math.random() - 0.5) * 2000;
+                this.y = (Math.random() - 0.5) * 2000;
+                this.z = 1000;
+                this.speed = Math.random() * 3 + 1;
+                this.brightness = Math.random() * 0.8 + 0.2;
+                this.size = Math.random() * 2 + 0.5;
+            }
+
+            update(scrollOffset = 0) {
+                this.z -= this.speed + scrollOffset * 0.1;
+                
+                if (this.z <= 0) {
+                    this.reset();
+                }
+            }
+
+            draw(ctx) {
+                const screenX = (this.x / this.z) * this.canvas.width/2 + this.canvas.width/2;
+                const screenY = (this.y / this.z) * this.canvas.height/2 + this.canvas.height/2;
+                const screenSize = (1 - this.z / 1000) * this.size * 3;
+                
+                if (screenX >= 0 && screenX <= this.canvas.width && 
+                    screenY >= 0 && screenY <= this.canvas.height && screenSize > 0) {
+                    
+                    const alpha = (1 - this.z / 1000) * this.brightness;
+                    const intensity = Math.max(0, alpha);
+                    
+                    ctx.save();
+                    ctx.globalAlpha = intensity;
+                    
+                    // Create star glow effect
+                    const gradient = ctx.createRadialGradient(screenX, screenY, 0, screenX, screenY, screenSize * 3);
+                    gradient.addColorStop(0, `rgba(255, 255, 255, ${intensity})`);
+                    gradient.addColorStop(0.3, `rgba(173, 216, 230, ${intensity * 0.8})`);
+                    gradient.addColorStop(1, 'rgba(173, 216, 230, 0)');
+                    
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.arc(screenX, screenY, screenSize * 3, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Draw star core
+                    ctx.fillStyle = `rgba(255, 255, 255, ${intensity})`;
+                    ctx.beginPath();
+                    ctx.arc(screenX, screenY, screenSize, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.restore();
+                }
+            }
+        }
+
+        class ShootingStar {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.reset();
+                this.trail = [];
+                this.maxTrailLength = 20;
+            }
+
+            reset() {
+                this.x = Math.random() * this.canvas.width;
+                this.y = Math.random() * this.canvas.height * 0.3;
+                this.speedX = (Math.random() + 0.5) * 8;
+                this.speedY = (Math.random() + 0.5) * 4;
+                this.life = 1;
+                this.decay = Math.random() * 0.02 + 0.01;
+                this.trail = [];
+            }
+
+            update() {
+                this.trail.push({ x: this.x, y: this.y, life: this.life });
+                
+                if (this.trail.length > this.maxTrailLength) {
+                    this.trail.shift();
+                }
+                
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life -= this.decay;
+                
+                if (this.life <= 0 || this.x > this.canvas.width + 100 || this.y > this.canvas.height + 100) {
+                    this.reset();
+                }
+            }
+
+            draw(ctx) {
+                ctx.save();
+                
+                // Draw trail
+                for (let i = 0; i < this.trail.length; i++) {
+                    const segment = this.trail[i];
+                    const alpha = (i / this.trail.length) * segment.life;
+                    const size = (i / this.trail.length) * 3;
+                    
+                    ctx.globalAlpha = alpha;
+                    ctx.fillStyle = '#64b5f6';
+                    ctx.beginPath();
+                    ctx.arc(segment.x, segment.y, size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                
+                // Draw shooting star head
+                ctx.globalAlpha = this.life;
+                ctx.fillStyle = '#ffffff';
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = '#64b5f6';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.restore();
+            }
+        }
+
+        class Starfield {
+            constructor() {
+                this.canvas = document.getElementById('starfield');
+                this.ctx = this.canvas.getContext('2d');
+                this.stars = [];
+                this.shootingStars = [];
+                this.scrollOffset = 0;
+                this.lastScrollY = 0;
+                
+                this.resize();
+                this.init();
+                this.animate();
+                
+                window.addEventListener('resize', () => this.resize());
+                window.addEventListener('scroll', () => this.handleScroll());
+            }
+
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+
+            init() {
+                // Create stars
+                for (let i = 0; i < 800; i++) {
+                    this.stars.push(new Star(this.canvas));
+                }
+                
+                // Create shooting stars
+                for (let i = 0; i < 3; i++) {
+                    this.shootingStars.push(new ShootingStar(this.canvas));
+                }
+            }
+
+            handleScroll() {
+                const currentScrollY = window.pageYOffset;
+                this.scrollOffset = (currentScrollY - this.lastScrollY) * 0.5;
+                this.lastScrollY = currentScrollY;
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Update and draw stars
+                this.stars.forEach(star => {
+                    star.update(this.scrollOffset);
+                    star.draw(this.ctx);
+                });
+                
+                // Update and draw shooting stars
+                this.shootingStars.forEach(shootingStar => {
+                    if (Math.random() < 0.003) { // Random chance to appear
+                        shootingStar.update();
+                        shootingStar.draw(this.ctx);
+                    }
+                });
+                
+                // Gradually reduce scroll offset
+                this.scrollOffset *= 0.95;
+                
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // Initialize the starfield when the page loads
+        window.addEventListener('load', () => {
+            new Starfield();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Competitive Exam Syllabus</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 300;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .nav-tab {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .nav-tab:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .nav-tab.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #667eea;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .topic-card {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .topic-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .topic-list {
+            list-style: none;
+        }
+
+        .topic-list li {
+            padding: 0.3rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .topic-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .topic-list li:hover {
+            color: #667eea;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem 0;
+            color: rgba(255,255,255,0.8);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-tabs {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+            
+            .nav-tab {
+                padding: 0.8rem 1.5rem;
+                white-space: nowrap;
+            }
+            
+            .topic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Competitive Exam Syllabus</h1>
+            <p>Comprehensive guide for exam preparation</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showSection('quantitative')">🔢 Quantitative Aptitude</button>
+            <button class="nav-tab" onclick="showSection('reasoning')">🧠 Reasoning Ability</button>
+            <button class="nav-tab" onclick="showSection('english')">📘 English Language</button>
+            <button class="nav-tab" onclick="showSection('general')">🌐 General Awareness</button>
+            <button class="nav-tab" onclick="showSection('computer')">💻 Computer Knowledge</button>
+            <button class="nav-tab" onclick="showSection('technical')">⚙️ Technical Knowledge</button>
+        </div>
+
+        <div class="content">
+            <div id="quantitative" class="section active">
+                <h2>🔢 Quantitative Aptitude</h2>
+                <div class="topic-grid">
+                    <div class="topic-card">
+                        <h3>Number System</h3>
+                        <ul class="topic-list">
+                            <li>Types of numbers: Natural, Whole, Integers, Rational, Irrational, Real</li>
+                            <li>Divisibility rules</li>
+                            <li>Factors, multiples, HCF & LCM</li>
+                            <li>Remainders and cyclicity</li>
+                            <li>Simplifications and approximations</li>
+                            <li>Surds and indices</li>
+                        </ul>
+                    </div>
+                    <div class="topic-card">
+                        <h3>Arithmetic</h3>
+                        <ul class="topic-list">
+                            <li>Percentages</li>
+                            <li>Profit, Loss & Discount</li>
+                            <li>Simple & Compound Interest</li>
+                            <li>Ratio & Proportion</li>
+                            <li>Partnership (including compound partnership)</li>
+                            <li>Mixtures and Alligation</li>
+                            <li>Averages</li>
+                            <li>Time, Speed & Distance (including boats & streams, trains)</li>
+                            <li>Time & Work (including Pipes & Cisterns)</li>
+                            <li>Problems on Ages</li>
+                            <li>Unitary Method</li>
+                        </ul>
+                    </div>
+                    <div class="topic-card">
+                        <h3>Algebra</h3>
+                        <ul class="topic-list">
+                            <li>Basic Algebraic identities</li>
+                            <li>Linear equations (single and pair)</li>
+                            <li>Quadratic equations</li>
+                            <li>Inequalities</li>
+                            <li>Polynomials and factorization</li>
+                            <li>Simplification of expressions</li>
+                        </ul>
+                    </div>
+                    <div class="topic-card">
+                        <h3>Geometry & Mensuration</h3>
+                        <ul class="topic-list">
+                            <li>Lines and Angles</li>
+                            <li>Triangles: types, properties, Pythagoras theorem</li>
+                            <li>Quadrilaterals, Circles, Polygons</li>
+                            <li>Area and perimeter of 2D figures</li>
+                            <li>Volume and surface area of 3D figures</li>
+                            <li>Coordinate geometry basics</li>
+                        </ul>
+                    </div>
+                    <div class="topic-card">
+                        <h3>Data Interpretation & Data Sufficiency</h3>
+                        <ul class="topic-list">
+                            <li>Tables</li>
+                            <li>Line Graphs</li>
+                            <li>Bar Charts</li>
+                            <li>Pie Charts</li>
+                            <li>Mixed Graphs</li>
+                            <li>Caselets</li>
+                            <li>Data Sufficiency (2-statement questions)</li>
+                        </ul>
+                    </div>
+                    <div class="topic-card">
+                        <h3>Other Topics</h3>
+                        <ul class="topic-list">
+                            <li>Trigonometry</li>
+                            <li>Simplification / Approximation</li>
+                            <li>Sequences & Series</li>
+                            <li>Arithmetic Progression (AP)</li>
+                            <li>Geometric Progression (GP)</li>
+                            <li>Number series</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="reasoning" class="section">
+                <h2>🧠 Reasoning Ability</h2>
+                <div class="topic-grid">
+                    <div class="topic-card">
+                        <h3>Verbal Reasoning</h3>
+                        <ul class="topic-list">
+                            <li>Alphabet series and positions</li>
+                            <li>Number series</li>
+                            <li>Coding-Decoding (letter shifting, number-letter coding, matrix coding)</li>
+                            <li>Blood Relations (including puzzles)</li>
+                            <li>Direction Sense Test</li>
+                            <li>Order and Ranking</li>
+                            <li>Syllogism (including Venn diagram-based)</li>
+                            <li>Inequalities (coded and mathematical)</li>
+                            <li>Statement & Conclusion / Assumption / Argument / Course of Action</li>
+                            <li>Cause and Effect</li>
+                            <li>Analogy (word, number, symbolic)</li>
+                            <li>Classification (Odd one out)</li>
+                            <li>Decision Making</li>
+                        </ul>
+                    </div>
+                    <div class="topic-card">
+                        <h3>Non-Verbal Reasoning</h3>
+                        <ul class="topic-list">
+                            <li>Series and Patterns (figural)</li>
+                            <li>Mirror and Water images</li>
+                            <li>Paper folding and cutting</li>
+                            <li>Embedded figures</li>
+                            <li>Figure completion</li>
+                        </ul>
+                    </div>
+                    <div class="topic-card">
+                        <h3>Logical Reasoning / Puzzles</h3>
+                        <ul class="topic-list">
+                            <li>Seating Arrangement (linear, circular, square)</li>
+                            <li>Floor-based puzzles</li>
+                            <li>Scheduling-based puzzles</li>
+                            <li>Box puzzles</li>
+                            <li>Tabulation</li>
+                            <li>Age-based puzzles</li>
+                            <li>Blood relation-based puzzles</li>
+                            <li>Input-output</li>
+                            <li>Binary logic</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="english" class="section">
+                <h2>📘 English Language</h2>
+                <div class="topic-grid">
+                    <div class="topic-card">
+                        <h3>Vocabulary</h3>
+                        <ul class="topic-list">
+                            <li>Synonyms</li>
+                            <li>Antonyms</li>
+                            <li>One-word Substitution</li>
+                            <li>Idioms and Phrases</li>
+                            <li>Spelling correction</li>
+                            <li>Cloze Test</li>
+                        </ul>
+                    </div>
+                    <div class="topic-card">
+                        <h3>Grammar</h3>
+                        <ul class="topic-list">
+                            <li>Subject-Verb Agreement</li>
+                            <li>Articles</li>
+                            <li>Prepositions</li>
+                            <li>Conjunctions</li>
+                            <li>Tenses</li>
+                            <li>Active and Passive Voice</li>
+                            <li>Direct and Indirect Speech</li>
+                            <li>Error Spotting / Sentence Correction</li>
+                        </ul>
+                    </div>
+                    <div class="topic-card">
+                        <h3>Comprehension & Usage</h3>
+                        <ul class="topic-list">
+                            <li>Reading Comprehension (factual and inference-based)</li>
+                            <li>Fill in the Blanks (single/double)</li>
+                            <li>Sentence Rearrangement / Para Jumbles</li>
+                            <li>Sentence Improvement</li>
+                            <li>Word/Phrase Replacement</li>
+                            <li>Match the columns</li>
+                            <li>Phrase usage</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="general" class="section">
+                <h2>🌐 General Awareness / General Knowledge</h2>
+                <div class="topic-grid">
+                    <div class="topic-card">
+                        <h3>Current Affairs (last 6–12 months)</h3>
+                        <ul class="topic-list">
+                            <li>National & International News</li>
+                            <li>Government Schemes & Policies</li>
+                            <li>Appointments and Resignations</li>
+                            <li>Awards and Honours</li>
+                            <li>Summits and Conferences</li>
+                            <li>Sports events</li>
+                            <li>Books & Authors</li>
+                            <li>Defense & Military Exercises</li>
+                            <li>Rankings & Reports</li>
+                            <li>Important Days & Themes</li>
+                            <li>Science & Tech Developments</li>
+                        </ul>
+                    </div>
+                    <div class="topic-card">
+                        <h3>Static General Knowledge</h3>
+                        <ul class="topic-list">
+                            <li>Geography: physical, political, rivers, climate</li>
+                            <li>History: Ancient, Medieval, Modern (focus on Indian)</li>
+                            <li>Polity & Constitution</li>
+                            <li>Indian Economy (basics of budgeting, taxation, GDP)</li>
+                            <li>Art & Culture: dance forms, music, architecture</li>
+                            <li>National Parks, Wildlife Sanctuaries</li>
+                            <li>Important organizations: UN, IMF, RBI, NABARD, etc.</li>
+                        </ul>
+                    </div>
+                    <div class="topic-card">
+                        <h3>Banking / Financial Awareness</h3>
+                        <ul class="topic-list">
+                            <li>Monetary policy</li>
+                            <li>RBI functions and roles</li>
+                            <li>Banking terminologies</li>
+                            <li>Financial Institutions</li>
+                            <li>Budget Highlights</li>
+                            <li>Digital banking & UPI</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="computer" class="section">
+                <h2>💻 Computer Knowledge</h2>
+                <div class="topic-grid">
+                    <div class="topic-card">
+                        <h3>Basics of Computers</h3>
+                        <ul class="topic-list">
+                            <li>History and Generations</li>
+                            <li>Input & Output Devices</li>
+                            <li>Memory (RAM, ROM, Cache, Storage types)</li>
+                            <li>Software & Hardware</li>
+                            <li>Operating Systems (Windows, Linux basics)</li>
+                            <li>MS Office (Word, Excel, PowerPoint)</li>
+                        </ul>
+                    </div>
+                    <div class="topic-card">
+                        <h3>Networking & Internet</h3>
+                        <ul class="topic-list">
+                            <li>Networking Basics (LAN, WAN, IP, DNS)</li>
+                            <li>Internet and Email</li>
+                            <li>Browsers and Search Engines</li>
+                            <li>Cyber Security and Viruses</li>
+                        </ul>
+                    </div>
+                    <div class="topic-card">
+                        <h3>Technical Concepts</h3>
+                        <ul class="topic-list">
+                            <li>Computer Abbreviations</li>
+                            <li>Common full forms and terminology</li>
+                            <li>Basics of Programming Logic</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="technical" class="section">
+                <h2>⚙️ Technical Knowledge</h2>
+                <div class="topic-grid">
+                    <div class="topic-card">
+                        <h3>Electronics & Engineering</h3>
+                        <ul class="topic-list">
+                            <li>Basic Electrical & Electronics (Ohm's law, circuits, resistors)</li>
+                            <li>Digital Logic (gates, number systems)</li>
+                            <li>Computer Fundamentals (binary, logic gates, storage)</li>
+                        </ul>
+                    </div>
+                    <div class="topic-card">
+                        <h3>IT & Software</h3>
+                        <ul class="topic-list">
+                            <li>Networking basics</li>
+                            <li>IT Tools & Cybersecurity basics</li>
+                            <li>Database Management Basics (SQL, DBMS)</li>
+                            <li>Software Engineering basics (SDLC, models)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Stay focused, stay determined, success is within reach! 🎯</p>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Add smooth scrolling to top when switching sections
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

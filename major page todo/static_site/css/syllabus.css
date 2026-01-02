@@ -1,0 +1,311 @@
+/* Specific styles for syllabus page */
+.syllabus-header {
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.375rem 1rem;
+    border-radius: 9999px;
+    background-color: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    color: var(--color-blue);
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.syllabus-header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, white, #e2e8f0, #64748b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+[data-theme="light"] .syllabus-header h1 {
+    background: linear-gradient(to right, #1e293b, #475569, #64748b);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.controls-container {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(4px);
+}
+
+.exam-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.stream-search-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stream-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.btn-exam {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--border-color);
+    color: var(--text-muted);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-stream {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--border-color);
+    color: var(--text-muted);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-exam:hover,
+.btn-stream:hover {
+    background-color: rgba(59, 130, 246, 0.05);
+    color: var(--text-color);
+}
+
+.btn-exam.active,
+.btn-stream.active {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: var(--color-blue);
+    border-color: var(--color-blue);
+}
+
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 16rem;
+}
+
+.search-input {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    font-size: 0.875rem;
+    color: var(--text-color);
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: rgba(59, 130, 246, 0.5);
+}
+
+.search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    width: 1rem;
+    height: 1rem;
+}
+
+.progress-section {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar-bg {
+    height: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(to right, #2563eb, #06b6d4);
+    width: 0%;
+    transition: width 0.5s ease-out;
+}
+
+/* Accordion */
+.subject-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    transition: all 0.3s;
+}
+
+.subject-card.expanded {
+    background-color: var(--card-bg);
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 20px 25px -5px rgba(30, 58, 138, 0.1);
+}
+
+.subject-header {
+    width: 100%;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+}
+
+.subject-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.subject-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.subject-card.expanded .subject-icon {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: var(--color-blue);
+}
+
+.chevron {
+    transition: transform 0.3s;
+    color: var(--text-muted);
+}
+
+.subject-card.expanded .chevron {
+    transform: rotate(180deg);
+    color: var(--color-blue);
+}
+
+.topics-list {
+    display: none;
+    padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.subject-card.expanded .topics-list {
+    display: block;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.topic-item {
+    padding: 0.75rem 0 0.75rem 1rem;
+    border-left: 2px solid var(--border-color);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.topic-item:hover {
+    border-left-color: rgba(59, 130, 246, 0.5);
+}
+
+.topic-item.completed {
+    border-left-color: rgba(74, 222, 128, 0.5);
+}
+
+.checkbox {
+    margin-top: 0.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 1px solid var(--text-muted);
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+
+.topic-item:hover .checkbox {
+    border-color: var(--color-blue);
+}
+
+.topic-item.completed .checkbox {
+    background-color: var(--color-green);
+    border-color: var(--color-green);
+    color: black;
+}
+
+.topic-title {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: #bfdbfe;
+    transition: color 0.2s;
+}
+
+[data-theme="light"] .topic-title {
+    color: var(--text-color);
+}
+
+.topic-item.completed .topic-title {
+    color: var(--color-green);
+    text-decoration: line-through;
+    text-decoration-color: rgba(74, 222, 128, 0.5);
+}
+
+.topic-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}

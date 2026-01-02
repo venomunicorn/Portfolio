@@ -1,0 +1,14 @@
+# Basic usage
+python build_renamer.py -p "MyApp" -v "1.2.3"
+
+# Specify directory and dry run
+python build_renamer.py -p "MyApp" -v "1.2.3" -d "./dist" --dry-run
+
+# Use configuration file
+python build_renamer.py --config build_config.json
+
+# Create sample configuration
+python build_renamer.py --create-config
+
+# Interactive mode (prompts for project name and version)
+python build_renamer.py

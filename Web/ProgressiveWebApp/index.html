@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MultiConvert | Unit Converter PWA</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="description" content="A powerful unit converter that works offline">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/564/564429.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Offline Banner -->
+    <div class="offline-banner" id="offlineBanner">
+        <i class="fas fa-wifi-slash"></i> You're offline - Conversions still work!
+    </div>
+
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="header-left">
+                <h1><i class="fas fa-exchange-alt"></i> MultiConvert</h1>
+                <p class="subtitle">Universal Unit Converter</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn-install hidden" id="installBtn" title="Install App">
+                    <i class="fas fa-download"></i>
+                </button>
+                <button class="btn-theme" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Category Tabs -->
+        <nav class="category-tabs">
+            <button class="tab-btn active" data-category="length">
+                <i class="fas fa-ruler"></i> Length
+            </button>
+            <button class="tab-btn" data-category="weight">
+                <i class="fas fa-weight-hanging"></i> Weight
+            </button>
+            <button class="tab-btn" data-category="temperature">
+                <i class="fas fa-thermometer-half"></i> Temperature
+            </button>
+        </nav>
+
+        <!-- Converter Card -->
+        <div class="converter-card">
+            <!-- From Section -->
+            <div class="conversion-side">
+                <label>From</label>
+                <select id="fromUnit" class="unit-select"></select>
+                <input type="number" id="fromValue" class="value-input" placeholder="Enter value" inputmode="decimal">
+            </div>
+
+            <!-- Swap Button -->
+            <button class="swap-btn" id="swapBtn" title="Swap Units">
+                <i class="fas fa-exchange-alt"></i>
+            </button>
+
+            <!-- To Section -->
+            <div class="conversion-side">
+                <label>To</label>
+                <select id="toUnit" class="unit-select"></select>
+                <input type="number" id="toValue" class="value-input" readonly placeholder="Result">
+            </div>
+        </div>
+
+        <!-- Quick Reference -->
+        <div class="quick-reference" id="quickReference">
+            <h3>Quick Reference</h3>
+            <div class="reference-grid" id="referenceGrid"></div>
+        </div>
+
+        <!-- History -->
+        <div class="history-section">
+            <div class="history-header">
+                <h3><i class="fas fa-history"></i> Recent Conversions</h3>
+                <button class="btn-clear" id="clearHistory" title="Clear History">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+            <div class="history-list" id="historyList">
+                <p class="history-empty">No conversions yet</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

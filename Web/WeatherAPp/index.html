@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atmosphere | Weather App</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Background Effects -->
+    <div class="background-shape"></div>
+    <div class="background-shape shape2"></div>
+    <div class="background-shape shape3"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <i class="fas fa-cloud-sun"></i>
+                <span>Atmosphere</span>
+            </div>
+            <div class="header-actions">
+                <button id="unitToggle" class="unit-toggle" title="Toggle Temperature Unit">°C</button>
+                <button id="geoBtn" class="icon-btn" title="Use My Location">
+                    <i class="fas fa-location-crosshairs"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-box">
+                <i class="fas fa-magnifying-glass"></i>
+                <input type="text" id="cityInput" placeholder="Search for a city...">
+                <button id="searchBtn"><i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- Recent Searches -->
+            <div class="recent-searches" id="recentSearches">
+                <span class="recent-tag" data-city="London">London</span>
+                <span class="recent-tag" data-city="Tokyo">Tokyo</span>
+                <span class="recent-tag" data-city="New York">New York</span>
+            </div>
+        </div>
+
+        <!-- Main Weather Card -->
+        <main class="weather-card" id="weatherCard">
+            <!-- Loading State -->
+            <div class="loading" id="loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Fetching weather data...</p>
+            </div>
+
+            <!-- Weather Content -->
+            <div class="weather-content" id="weatherContent">
+                <!-- Current Weather -->
+                <div class="current-weather">
+                    <div class="weather-left">
+                        <div class="weather-icon-container" id="weatherIcon">
+                            <i class="fas fa-cloud-sun"></i>
+                        </div>
+                        <div class="condition" id="condition">Partly Cloudy</div>
+                    </div>
+                    <div class="weather-right">
+                        <div class="temperature">
+                            <span class="temp-value" id="tempValue">24</span>
+                            <span class="temp-unit">°<span id="unitLabel">C</span></span>
+                        </div>
+                        <div class="location">
+                            <i class="fas fa-location-dot"></i>
+                            <span id="locationName">San Francisco, CA</span>
+                        </div>
+                        <div class="date-time">
+                            <span id="dateTime">Saturday, Dec 21</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Details Grid -->
+                <div class="weather-details">
+                    <div class="detail-card">
+                        <i class="fas fa-temperature-half"></i>
+                        <div class="detail-info">
+                            <span class="detail-value" id="feelsLike">22°</span>
+                            <span class="detail-label">Feels Like</span>
+                        </div>
+                    </div>
+                    <div class="detail-card">
+                        <i class="fas fa-droplet"></i>
+                        <div class="detail-info">
+                            <span class="detail-value" id="humidity">48%</span>
+                            <span class="detail-label">Humidity</span>
+                        </div>
+                    </div>
+                    <div class="detail-card">
+                        <i class="fas fa-wind"></i>
+                        <div class="detail-info">
+                            <span class="detail-value" id="wind">12 km/h</span>
+                            <span class="detail-label">Wind Speed</span>
+                        </div>
+                    </div>
+                    <div class="detail-card">
+                        <i class="fas fa-gauge-high"></i>
+                        <div class="detail-info">
+                            <span class="detail-value" id="pressure">1013 hPa</span>
+                            <span class="detail-label">Pressure</span>
+                        </div>
+                    </div>
+                    <div class="detail-card">
+                        <i class="fas fa-eye"></i>
+                        <div class="detail-info">
+                            <span class="detail-value" id="visibility">10 km</span>
+                            <span class="detail-label">Visibility</span>
+                        </div>
+                    </div>
+                    <div class="detail-card">
+                        <i class="fas fa-cloud"></i>
+                        <div class="detail-info">
+                            <span class="detail-value" id="clouds">35%</span>
+                            <span class="detail-label">Cloud Cover</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hourly Forecast -->
+                <div class="forecast-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-clock"></i>
+                        Hourly Forecast
+                    </h3>
+                    <div class="hourly-forecast" id="hourlyForecast">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+
+                <!-- 5-Day Forecast -->
+                <div class="forecast-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-calendar-week"></i>
+                        5-Day Forecast
+                    </h3>
+                    <div class="daily-forecast" id="dailyForecast">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+
+                <!-- Sun Times -->
+                <div class="sun-times">
+                    <div class="sun-item">
+                        <i class="fas fa-sun sunrise-icon"></i>
+                        <div>
+                            <span class="sun-label">Sunrise</span>
+                            <span class="sun-value" id="sunrise">6:45 AM</span>
+                        </div>
+                    </div>
+                    <div class="sun-progress">
+                        <div class="sun-arc">
+                            <div class="sun-position" id="sunPosition"></div>
+                        </div>
+                    </div>
+                    <div class="sun-item">
+                        <i class="fas fa-moon sunset-icon"></i>
+                        <div>
+                            <span class="sun-label">Sunset</span>
+                            <span class="sun-value" id="sunset">5:30 PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Data simulated for demo purposes</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

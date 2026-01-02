@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Music Player - C++ Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .player {
+            background: linear-gradient(145deg, #1e1e2e, #2a2a3e);
+            border-radius: 30px;
+            padding: 40px;
+            width: 350px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #f87171, #dc2626);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .album-art {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #f87171, #a855f7, #6366f1, #10b981);
+            background-size: 400% 400%;
+            animation: gradient 3s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3);
+        }
+
+        .album-art.playing {
+            animation: gradient 3s ease infinite, spin 8s linear infinite;
+        }
+
+        @keyframes gradient {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .track-info {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .track-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .track-artist {
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        .progress-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            height: 6px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #a855f7, #6366f1);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            opacity: 0.7;
+        }
+
+        .control-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .play-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a855f7, #6366f1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            opacity: 1;
+            box-shadow: 0 5px 20px rgba(168, 85, 247, 0.4);
+        }
+
+        .play-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .playlist {
+            margin-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
+
+        .playlist h3 {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        .playlist-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .playlist-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .playlist-item.active {
+            background: rgba(168, 85, 247, 0.2);
+        }
+
+        .playlist-item .num {
+            color: #888;
+            width: 25px;
+        }
+
+        .playlist-item .info {
+            flex: 1;
+        }
+
+        .playlist-item .title {
+            font-size: 0.95rem;
+        }
+
+        .playlist-item .artist {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .playlist-item .duration {
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        .volume {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .volume-slider {
+            width: 100px;
+            -webkit-appearance: none;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #a855f7;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="player">
+        <span class="badge">C++ Demo</span>
+
+        <div class="album-art" id="albumArt">🎵</div>
+
+        <div class="track-info">
+            <div class="track-title" id="trackTitle">Synthwave Dreams</div>
+            <div class="track-artist" id="trackArtist">Digital Artist</div>
+        </div>
+
+        <div class="progress-container" onclick="seek(event)">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="time-display">
+            <span id="currentTime">0:00</span>
+            <span id="totalTime">3:45</span>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="prevTrack()">⏮</button>
+            <button class="control-btn play-btn" onclick="togglePlay()" id="playBtn">▶</button>
+            <button class="control-btn" onclick="nextTrack()">⏭</button>
+        </div>
+
+        <div class="volume">
+            <span>🔈</span>
+            <input type="range" class="volume-slider" min="0" max="100" value="75" onchange="setVolume(this.value)">
+            <span>🔊</span>
+        </div>
+
+        <div class="playlist">
+            <h3>Playlist</h3>
+            <div id="playlistItems"></div>
+        </div>
+    </div>
+
+    <script>
+        const playlist = [
+            { title: "Synthwave Dreams", artist: "Digital Artist", duration: "3:45", durationSec: 225 },
+            { title: "Neon Nights", artist: "Cyber Pulse", duration: "4:12", durationSec: 252 },
+            { title: "Retro Future", artist: "Wave Runner", duration: "3:28", durationSec: 208 },
+            { title: "Electric Sunset", artist: "Night Drive", duration: "5:01", durationSec: 301 },
+            { title: "Midnight City", artist: "Synth Lords", duration: "4:33", durationSec: 273 }
+        ];
+
+        let currentTrack = 0;
+        let isPlaying = false;
+        let currentTime = 0;
+        let playInterval;
+        let volume = 75;
+
+        function renderPlaylist() {
+            const container = document.getElementById('playlistItems');
+            container.innerHTML = playlist.map((track, i) => `
+                <div class="playlist-item ${i === currentTrack ? 'active' : ''}" onclick="selectTrack(${i})">
+                    <span class="num">${i + 1}</span>
+                    <div class="info">
+                        <div class="title">${track.title}</div>
+                        <div class="artist">${track.artist}</div>
+                    </div>
+                    <span class="duration">${track.duration}</span>
+                </div>
+            `).join('');
+        }
+
+        function updateUI() {
+            const track = playlist[currentTrack];
+            document.getElementById('trackTitle').textContent = track.title;
+            document.getElementById('trackArtist').textContent = track.artist;
+            document.getElementById('totalTime').textContent = track.duration;
+            renderPlaylist();
+        }
+
+        function updateProgress() {
+            const track = playlist[currentTrack];
+            const percent = (currentTime / track.durationSec) * 100;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+
+            const mins = Math.floor(currentTime / 60);
+            const secs = Math.floor(currentTime % 60);
+            document.getElementById('currentTime').textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            const btn = document.getElementById('playBtn');
+            const art = document.getElementById('albumArt');
+
+            if (isPlaying) {
+                btn.textContent = '⏸';
+                art.classList.add('playing');
+                playInterval = setInterval(() => {
+                    currentTime++;
+                    if (currentTime >= playlist[currentTrack].durationSec) {
+                        nextTrack();
+                    }
+                    updateProgress();
+                }, 1000);
+            } else {
+                btn.textContent = '▶';
+                art.classList.remove('playing');
+                clearInterval(playInterval);
+            }
+        }
+
+        function selectTrack(index) {
+            if (isPlaying) {
+                togglePlay();
+            }
+            currentTrack = index;
+            currentTime = 0;
+            updateUI();
+            updateProgress();
+            togglePlay();
+        }
+
+        function prevTrack() {
+            if (isPlaying) togglePlay();
+            currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+            currentTime = 0;
+            updateUI();
+            updateProgress();
+            togglePlay();
+        }
+
+        function nextTrack() {
+            if (isPlaying) togglePlay();
+            currentTrack = (currentTrack + 1) % playlist.length;
+            currentTime = 0;
+            updateUI();
+            updateProgress();
+            togglePlay();
+        }
+
+        function seek(event) {
+            const container = event.currentTarget;
+            const percent = event.offsetX / container.offsetWidth;
+            currentTime = Math.floor(playlist[currentTrack].durationSec * percent);
+            updateProgress();
+        }
+
+        function setVolume(val) {
+            volume = val;
+        }
+
+        // Initialize
+        updateUI();
+        updateProgress();
+    </script>
+</body>
+
+</html>

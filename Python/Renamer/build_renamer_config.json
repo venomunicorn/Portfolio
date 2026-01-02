@@ -1,0 +1,6 @@
+{
+  "project_name": "MyAwesomeApp",
+  "version": "1.2.3",
+  "directory": "./build",
+  "custom_extensions": [".bundle", ".pkg"]
+}

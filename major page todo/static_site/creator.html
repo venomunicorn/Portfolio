@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreatorOS - TanTheta</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .creator-header {
+            text-align: center;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .creator-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #ef4444, #f97316);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Phase Card */
+        .phase-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .phase-header {
+            padding: 1.5rem;
+            background: linear-gradient(to right, rgba(239, 68, 68, 0.1), transparent);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .phase-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            font-size: 0.75rem;
+            font-family: monospace;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .phase-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .phase-goals {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .phase-content {
+            padding: 1.5rem;
+        }
+
+        .week-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .week-container:last-child {
+            margin-bottom: 0;
+        }
+
+        .week-header {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .week-label {
+            color: #f87171;
+        }
+
+        .tasks-list {
+            padding-left: 1rem;
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .task-item:hover {
+            background-color: var(--border-color);
+        }
+
+        .task-checkbox {
+            color: var(--text-muted);
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .task-item:hover .task-checkbox {
+            color: var(--text-color);
+        }
+
+        .task-item.completed .task-checkbox {
+            color: #f87171;
+        }
+
+        .task-text {
+            font-size: 0.875rem;
+            color: var(--text-color);
+            transition: all 0.2s;
+        }
+
+        .task-item.completed .task-text {
+            color: var(--text-muted);
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <div class="creator-header">
+                <h1>CreatorOS</h1>
+                <p style="color: var(--text-muted); font-size: 1.25rem;">The 90-Day Blueprint for YouTube Domination</p>
+            </div>
+
+            <div id="roadmap-container">
+                <div style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading roadmap...</div>
+            </div>
+        </div>
+    </main>
+    <script src="js/main.js"></script>
+    <script src="js/creator.js"></script>
+    <script src="js/background.js"></script>
+</body>
+
+</html>

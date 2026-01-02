@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Manager - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px
+        }
+
+        .container {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 480px;
+            width: 100%
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            display: inline-block;
+            margin-bottom: 10px
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px
+        }
+
+        h1 {
+            color: #10b981
+        }
+
+        .section {
+            background: rgba(0, 0, 0, .3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px
+        }
+
+        .section-title {
+            color: #10b981;
+            font-size: .9rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .input-group {
+            margin-bottom: 12px
+        }
+
+        .input-group label {
+            display: block;
+            color: #888;
+            font-size: .85rem;
+            margin-bottom: 5px
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, .3);
+            color: #fff;
+            font-size: 1rem
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #10b981
+        }
+
+        .options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 15px
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: .9rem;
+            color: #888
+        }
+
+        .option input {
+            width: 18px;
+            height: 18px;
+            accent-color: #10b981
+        }
+
+        .slider-group {
+            margin-bottom: 15px
+        }
+
+        .slider-group label {
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: .85rem;
+            margin-bottom: 8px
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, .1);
+            border-radius: 4px
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #10b981;
+            border-radius: 50%;
+            cursor: pointer
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: .95rem;
+            margin-bottom: 10px
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, .1);
+            color: #fff
+        }
+
+        .password-display {
+            background: rgba(0, 0, 0, .4);
+            border-radius: 10px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            text-align: center;
+            letter-spacing: 2px;
+            word-break: break-all;
+            margin-bottom: 15px
+        }
+
+        .strength {
+            height: 6px;
+            background: rgba(255, 255, 255, .1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px
+        }
+
+        .strength-bar {
+            height: 100%;
+            transition: all .3s
+        }
+
+        .strength-label {
+            font-size: .8rem;
+            text-align: center
+        }
+
+        .entries {
+            max-height: 200px;
+            overflow-y: auto
+        }
+
+        .entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: rgba(255, 255, 255, .05);
+            border-radius: 10px;
+            margin-bottom: 8px
+        }
+
+        .entry-info {
+            flex: 1
+        }
+
+        .entry-site {
+            font-weight: bold
+        }
+
+        .entry-user {
+            font-size: .8rem;
+            color: #888
+        }
+
+        .entry-actions {
+            display: flex;
+            gap: 8px
+        }
+
+        .entry-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, .1);
+            color: #fff;
+            cursor: pointer;
+            font-size: .8rem
+        }
+
+        .entry-btn:hover {
+            background: rgba(255, 255, 255, .2)
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #10b981;
+            padding: 12px 25px;
+            border-radius: 25px;
+            display: none
+        }
+
+        .toast.show {
+            display: block;
+            animation: fadeIn .3s
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(10px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0)
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header"><span class="badge">Python Demo</span>
+            <h1>🔐 Password Manager</h1>
+        </div>
+        <div class="section">
+            <div class="section-title">🎲 Password Generator</div>
+            <div class="password-display" id="password">Click Generate!</div>
+            <div class="strength">
+                <div class="strength-bar" id="strengthBar"></div>
+            </div>
+            <div class="strength-label" id="strengthLabel">Password Strength</div>
+            <div class="slider-group"><label><span>Length</span><span id="lenVal">16</span></label><input type="range"
+                    id="length" min="8" max="32" value="16" oninput="updateLen()"></div>
+            <div class="options">
+                <label class="option"><input type="checkbox" id="upper" checked>A-Z</label>
+                <label class="option"><input type="checkbox" id="lower" checked>a-z</label>
+                <label class="option"><input type="checkbox" id="numbers" checked>0-9</label>
+                <label class="option"><input type="checkbox" id="symbols" checked>!@#</label>
+            </div>
+            <button class="btn btn-primary" onclick="generate()">🎲 Generate Password</button>
+            <button class="btn btn-secondary" onclick="copyPassword()">📋 Copy to Clipboard</button>
+        </div>
+        <div class="section">
+            <div class="section-title">💾 Saved Passwords</div>
+            <div class="entries" id="entries"></div>
+        </div>
+    </div>
+    <div class="toast" id="toast">Copied to clipboard!</div>
+    <script>
+        const saved = [{ site: 'Google', user: 'demo@gmail.com', pass: 'G3n3r@t3d!' }, { site: 'GitHub', user: 'developer', pass: 'C0d3r#2024' }, { site: 'Twitter', user: '@handle', pass: 'Tw33t!Secure' }];
+        function updateLen() { document.getElementById('lenVal').textContent = document.getElementById('length').value }
+        function generate() {
+            const len = parseInt(document.getElementById('length').value); let chars = '';
+            if (document.getElementById('upper').checked) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            if (document.getElementById('lower').checked) chars += 'abcdefghijklmnopqrstuvwxyz';
+            if (document.getElementById('numbers').checked) chars += '0123456789';
+            if (document.getElementById('symbols').checked) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+            if (!chars) { alert('Select at least one option!'); return }
+            let pass = ''; for (let i = 0; i < len; i++)pass += chars[Math.floor(Math.random() * chars.length)];
+            document.getElementById('password').textContent = pass; updateStrength(pass)
+        }
+        function updateStrength(pass) {
+            let score = 0; if (pass.length >= 12) score++; if (pass.length >= 16) score++; if (/[A-Z]/.test(pass)) score++; if (/[a-z]/.test(pass)) score++; if (/[0-9]/.test(pass)) score++; if (/[^A-Za-z0-9]/.test(pass)) score++;
+            const pct = score / 6 * 100, colors = ['#ef4444', '#f59e0b', '#10b981'], labels = ['Weak', 'Medium', 'Strong'];
+            const idx = score < 3 ? 0 : score < 5 ? 1 : 2;
+            document.getElementById('strengthBar').style.width = pct + '%'; document.getElementById('strengthBar').style.background = colors[idx];
+            document.getElementById('strengthLabel').textContent = labels[idx] + ' Password'; document.getElementById('strengthLabel').style.color = colors[idx]
+        }
+        function copyPassword() {
+            const pass = document.getElementById('password').textContent; if (pass === 'Click Generate!') return;
+            navigator.clipboard.writeText(pass); showToast()
+        }
+        function showToast() { const t = document.getElementById('toast'); t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000) }
+        function renderEntries() { const c = document.getElementById('entries'); c.innerHTML = saved.map((e, i) => `<div class="entry"><div class="entry-info"><div class="entry-site">${e.site}</div><div class="entry-user">${e.user}</div></div><div class="entry-actions"><button class="entry-btn" onclick="copyEntry(${i})">📋</button><button class="entry-btn" onclick="showEntry(${i})">👁️</button></div></div>`).join('') }
+        function copyEntry(i) { navigator.clipboard.writeText(saved[i].pass); showToast() }
+        function showEntry(i) { alert('Password: ' + saved[i].pass) }
+        generate(); renderEntries();
+    </script>
+</body>
+
+</html>

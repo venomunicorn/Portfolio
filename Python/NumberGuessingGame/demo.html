@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px
+        }
+
+        .container {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 450px;
+            width: 100%
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            display: inline-block;
+            margin-bottom: 10px
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px
+        }
+
+        h1 {
+            color: #10b981
+        }
+
+        .difficulty {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px
+        }
+
+        .diff-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 10px;
+            background: transparent;
+            color: #888;
+            cursor: pointer
+        }
+
+        .diff-btn.active {
+            border-color: #10b981;
+            color: #10b981;
+            background: rgba(16, 185, 129, .1)
+        }
+
+        .game-area {
+            background: rgba(0, 0, 0, .3);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center
+        }
+
+        .range {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 15px
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px
+        }
+
+        input[type="number"] {
+            flex: 1;
+            padding: 15px;
+            font-size: 1.3rem;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, .3);
+            color: #fff;
+            text-align: center
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #10b981
+        }
+
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, .1);
+            color: #fff
+        }
+
+        .progress {
+            height: 10px;
+            background: rgba(255, 255, 255, .1);
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669);
+            transition: width .3s
+        }
+
+        .hint {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 1.1rem
+        }
+
+        .hint.higher {
+            background: rgba(239, 68, 68, .2);
+            color: #f87171
+        }
+
+        .hint.lower {
+            background: rgba(59, 130, 246, .2);
+            color: #60a5fa
+        }
+
+        .hint.win {
+            background: rgba(16, 185, 129, .2);
+            color: #10b981
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, .1)
+        }
+
+        .stat {
+            text-align: center
+        }
+
+        .stat-val {
+            font-size: 1.5rem;
+            color: #10b981;
+            font-weight: bold
+        }
+
+        .stat-lbl {
+            font-size: .8rem;
+            color: #888
+        }
+
+        .ai-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, .1)
+        }
+
+        .ai-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: #fff;
+            cursor: pointer
+        }
+
+        .ai-log {
+            background: rgba(0, 0, 0, .2);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: .85rem;
+            max-height: 100px;
+            overflow-y: auto;
+            display: none
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header"><span class="badge">Python Demo</span>
+            <h1>🎯 Number Guessing Game</h1>
+        </div>
+        <div class="difficulty">
+            <button class="diff-btn active" onclick="setDiff(50,10)">Easy (1-50)</button>
+            <button class="diff-btn" onclick="setDiff(100,7)">Medium (1-100)</button>
+            <button class="diff-btn" onclick="setDiff(200,8)">Hard (1-200)</button>
+        </div>
+        <div class="game-area">
+            <div class="range" id="range">Guess a number between 1 and 50</div>
+            <div class="input-row">
+                <input type="number" id="guess" placeholder="Enter guess" min="1">
+                <button class="btn btn-primary" onclick="makeGuess()">Guess!</button>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" id="progress" style="width:100%"></div>
+            </div>
+            <div id="hint"></div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-val" id="attempts">0</div>
+                    <div class="stat-lbl">Attempts</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-val" id="remaining">10</div>
+                    <div class="stat-lbl">Remaining</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-val" id="best">-</div>
+                    <div class="stat-lbl">Best Score</div>
+                </div>
+            </div>
+            <div class="ai-section">
+                <button class="ai-btn" onclick="aiDemo()">🤖 Watch AI Solve (Binary Search)</button>
+                <div class="ai-log" id="aiLog"></div>
+            </div>
+            <button class="btn btn-secondary" style="width:100%;margin-top:15px" onclick="newGame()">🔄 New
+                Game</button>
+        </div>
+    </div>
+    <script>
+        let maxNum = 50, maxAttempts = 10, target, attempts, remaining, best = null, gameOver = false;
+        function setDiff(m, a) { maxNum = m; maxAttempts = a; document.querySelectorAll('.diff-btn').forEach((b, i) => b.classList.toggle('active', i === [50, 100, 200].indexOf(m))); newGame() }
+        function newGame() {
+            target = Math.floor(Math.random() * maxNum) + 1; attempts = 0; remaining = maxAttempts; gameOver = false;
+            document.getElementById('range').textContent = `Guess a number between 1 and ${maxNum}`;
+            document.getElementById('attempts').textContent = '0'; document.getElementById('remaining').textContent = remaining;
+            document.getElementById('progress').style.width = '100%'; document.getElementById('hint').innerHTML = '';
+            document.getElementById('guess').value = ''; document.getElementById('guess').disabled = false;
+            document.getElementById('aiLog').style.display = 'none'
+        }
+        function makeGuess() {
+            if (gameOver) return; const g = parseInt(document.getElementById('guess').value);
+            if (isNaN(g) || g < 1 || g > maxNum) { document.getElementById('hint').innerHTML = '<div class="hint">Enter a valid number!</div>'; return }
+            attempts++; remaining--; document.getElementById('attempts').textContent = attempts; document.getElementById('remaining').textContent = remaining;
+            document.getElementById('progress').style.width = (remaining / maxAttempts * 100) + '%';
+            if (g === target) {
+                gameOver = true; if (!best || attempts < best) { best = attempts; document.getElementById('best').textContent = best }
+                document.getElementById('hint').innerHTML = `<div class="hint win">🎉 Correct! The number was ${target}. You won in ${attempts} attempts!</div>`; document.getElementById('guess').disabled = true
+            }
+            else if (remaining <= 0) { gameOver = true; document.getElementById('hint').innerHTML = `<div class="hint higher">💀 Game Over! The number was ${target}</div>`; document.getElementById('guess').disabled = true }
+            else if (g < target) document.getElementById('hint').innerHTML = '<div class="hint higher">📈 Higher!</div>';
+            else document.getElementById('hint').innerHTML = '<div class="hint lower">📉 Lower!</div>';
+            document.getElementById('guess').value = ''
+        }
+        function aiDemo() {
+            newGame(); const log = document.getElementById('aiLog'); log.style.display = 'block'; log.innerHTML = '';
+            let low = 1, high = maxNum, step = 0;
+            function aiStep() {
+                if (low > high || gameOver) return; step++; const mid = Math.floor((low + high) / 2);
+                log.innerHTML += `Step ${step}: Trying ${mid} (range: ${low}-${high})\n`; log.scrollTop = log.scrollHeight;
+                if (mid === target) { log.innerHTML += `✓ Found ${target} in ${step} steps!\n`; return }
+                else if (mid < target) { low = mid + 1; log.innerHTML += `→ Too low, searching ${low}-${high}\n` }
+                else { high = mid - 1; log.innerHTML += `→ Too high, searching ${low}-${high}\n` }
+                setTimeout(aiStep, 800)
+            }
+            setTimeout(aiStep, 500)
+        }
+        newGame();
+    </script>
+</body>
+
+</html>

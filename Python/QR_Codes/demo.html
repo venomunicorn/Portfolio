@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px
+        }
+
+        .container {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 450px;
+            width: 100%
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            display: inline-block;
+            margin-bottom: 10px
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px
+        }
+
+        h1 {
+            color: #10b981
+        }
+
+        .qr-preview {
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 220px
+        }
+
+        #qrcode {
+            display: flex;
+            justify-content: center
+        }
+
+        .input-group {
+            margin-bottom: 15px
+        }
+
+        .input-group label {
+            display: block;
+            color: #888;
+            font-size: .85rem;
+            margin-bottom: 8px
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, .3);
+            color: #fff;
+            font-size: 1rem;
+            resize: none
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #10b981
+        }
+
+        .color-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px
+        }
+
+        .color-group {
+            flex: 1
+        }
+
+        .color-group label {
+            display: block;
+            color: #888;
+            font-size: .85rem;
+            margin-bottom: 8px
+        }
+
+        .color-input {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .color-input input[type="color"] {
+            width: 50px;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: transparent
+        }
+
+        .color-input span {
+            font-family: monospace;
+            font-size: .9rem
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-bottom: 10px
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, .1);
+            color: #fff
+        }
+
+        .btn:hover {
+            transform: translateY(-1px)
+        }
+
+        .presets {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 15px
+        }
+
+        .preset {
+            padding: 8px 15px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            background: transparent;
+            color: #888;
+            cursor: pointer;
+            font-size: .85rem
+        }
+
+        .preset:hover {
+            border-color: #10b981;
+            color: #10b981
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header"><span class="badge">Python Demo</span>
+            <h1>📱 QR Code Generator</h1>
+        </div>
+        <div class="qr-preview">
+            <div id="qrcode"></div>
+        </div>
+        <div class="input-group">
+            <label>Enter text or URL</label>
+            <textarea id="text" rows="2" placeholder="https://example.com"
+                oninput="generate()">https://github.com</textarea>
+        </div>
+        <div class="presets">
+            <button class="preset" onclick="setPreset('https://github.com')">GitHub</button>
+            <button class="preset" onclick="setPreset('https://google.com')">Google</button>
+            <button class="preset" onclick="setPreset('Hello World!')">Text</button>
+            <button class="preset" onclick="setPreset('tel:+1234567890')">Phone</button>
+        </div>
+        <div class="color-row">
+            <div class="color-group">
+                <label>Foreground</label>
+                <div class="color-input"><input type="color" id="fgColor" value="#000000" onchange="generate()"><span
+                        id="fgVal">#000000</span></div>
+            </div>
+            <div class="color-group">
+                <label>Background</label>
+                <div class="color-input"><input type="color" id="bgColor" value="#ffffff" onchange="generate()"><span
+                        id="bgVal">#ffffff</span></div>
+            </div>
+        </div>
+        <button class="btn btn-primary" onclick="generate()">🔄 Generate QR</button>
+        <button class="btn btn-secondary" onclick="download()">💾 Save as PNG</button>
+    </div>
+    <script>
+        function generate() {
+            const text = document.getElementById('text').value || 'Hello'; const fg = document.getElementById('fgColor').value; const bg = document.getElementById('bgColor').value;
+            document.getElementById('fgVal').textContent = fg; document.getElementById('bgVal').textContent = bg;
+            const size = 180, qr = document.getElementById('qrcode');
+            // Simple QR simulation using canvas pattern
+            const canvas = document.createElement('canvas'); canvas.width = size; canvas.height = size; const ctx = canvas.getContext('2d');
+            ctx.fillStyle = bg; ctx.fillRect(0, 0, size, size); ctx.fillStyle = fg;
+            // Generate deterministic pattern from text
+            const hash = text.split('').reduce((a, c) => ((a << 5) - a) + c.charCodeAt(0), 0); const modules = 21; const cellSize = size / modules;
+            for (let y = 0; y < modules; y++) {
+                for (let x = 0; x < modules; x++) {
+                    // Position patterns
+                    const isPos = (x < 7 && y < 7) || (x >= modules - 7 && y < 7) || (x < 7 && y >= modules - 7);
+                    // Timing patterns
+                    const isTiming = (x === 6 || y === 6) && !isPos;
+                    // Data area
+                    const seed = hash + x * 31 + y * 17; const isData = Math.abs(Math.sin(seed)) > 0.5;
+                    if (isPos) {
+                        const inner = x >= 1 && x <= 5 && y >= 1 && y <= 5 && !(x >= 2 && x <= 4 && y >= 2 && y <= 4); const core = x >= 2 && x <= 4 && y >= 2 && y <= 4;
+                        const innerR = x >= modules - 6 && x <= modules - 2 && y >= 1 && y <= 5 && !(x >= modules - 5 && x <= modules - 3 && y >= 2 && y <= 4);
+                        const coreR = x >= modules - 5 && x <= modules - 3 && y >= 2 && y <= 4;
+                        const innerB = x >= 1 && x <= 5 && y >= modules - 6 && y <= modules - 2 && !(x >= 2 && x <= 4 && y >= modules - 5 && y <= modules - 3);
+                        const coreB = x >= 2 && x <= 4 && y >= modules - 5 && y <= modules - 3;
+                        if (!inner && !innerR && !innerB || core || coreR || coreB) ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize)
+                    }
+                    else if (isTiming) { if ((x + y) % 2 === 0) ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize) }
+                    else if (isData && x >= 8 && y >= 8) { ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize) }
+                }
+            }
+            qr.innerHTML = ''; qr.appendChild(canvas)
+        }
+        function setPreset(val) { document.getElementById('text').value = val; generate() }
+        function download() {
+            const canvas = document.querySelector('#qrcode canvas'); if (!canvas) return;
+            const link = document.createElement('a'); link.download = 'qrcode.png'; link.href = canvas.toDataURL(); link.click()
+        }
+        generate();
+    </script>
+</body>
+
+</html>

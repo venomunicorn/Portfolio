@@ -1,0 +1,10 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/cmake_install.cmake",
+		"C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/engine/core/cmake_install.cmake",
+		"C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/engine/platform/cmake_install.cmake",
+		"C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/engine/render/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

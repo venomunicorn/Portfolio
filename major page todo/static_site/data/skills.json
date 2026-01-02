@@ -1,0 +1,262 @@
+{
+    "guitar": {
+        "title": "Guitar Mastery",
+        "description": "30-Day Micro-Mastery Curriculum based on JustinGuitar & Yousician framework.",
+        "phases": [
+            {
+                "title": "Phase 1: Monophonic Era (Days 1-7)",
+                "days": [
+                    {
+                        "day": 1,
+                        "title": "The Open String Drone",
+                        "piece": "James Bond Theme",
+                        "goals": [
+                            "Picking hand stability",
+                            "Chromatic movement 0-1-2-3"
+                        ],
+                        "routine": [
+                            "Warm-up: Prayer stretch",
+                            "Play Open E 10x",
+                            "Fret 1-2-3 10x each",
+                            "Slow sequence 5x"
+                        ]
+                    },
+                    {
+                        "day": 2,
+                        "title": "Linear Fretboard Movement",
+                        "piece": "Seven Nation Army (White Stripes)",
+                        "goals": [
+                            "Lateral movement on A string",
+                            "Frets 7-7-10-7-5-3-2"
+                        ],
+                        "routine": [
+                            "Warm-up: Spider walk (1-4)",
+                            "Locate Fret 7",
+                            "Play pattern slowly",
+                            "Sync with recording"
+                        ]
+                    },
+                    {
+                        "day": 3,
+                        "title": "String Crossing",
+                        "piece": "Peter Gunn Theme",
+                        "goals": [
+                            "Pick alternating strings (E & A)",
+                            "Accuracy over speed"
+                        ],
+                        "routine": [
+                            "Pick E then A open",
+                            "Alternate 10 reps",
+                            "Add fretted notes",
+                            "Build ostinato"
+                        ]
+                    },
+                    {
+                        "day": 4,
+                        "title": "Finger Independence",
+                        "piece": "Smoke on the Water (Deep Purple)",
+                        "goals": [
+                            "One finger per fret discipline",
+                            "No hopping"
+                        ],
+                        "routine": [
+                            "Index Fret 3, Ring Fret 5",
+                            "Play 0-3-5 pattern",
+                            "Maintain position"
+                        ]
+                    },
+                    {
+                        "day": 5,
+                        "title": "The Slide",
+                        "piece": "Iron Man (Black Sabbath)",
+                        "goals": [
+                            "Sustain note while sliding",
+                            "Aggressive vocal quality"
+                        ],
+                        "routine": [
+                            "Fret 7, pick, slide to 9",
+                            "Don't pick 9",
+                            "10 reps"
+                        ]
+                    },
+                    {
+                        "day": 6,
+                        "title": "The Pinky Activator",
+                        "piece": "Sunshine of Your Love (Cream)",
+                        "goals": [
+                            "Force Pinky activation",
+                            "Descending blues scale"
+                        ],
+                        "routine": [
+                            "Fret 12 (Pinky), 10 (Ring), 8 (Middle)",
+                            "Descending pattern 5x"
+                        ]
+                    },
+                    {
+                        "day": 7,
+                        "title": "Review & Recording",
+                        "piece": "Best of Week 1",
+                        "goals": [
+                            "Record baseline performance",
+                            "Self-analysis"
+                        ],
+                        "routine": [
+                            "Replay all riffs",
+                            "Choose best one",
+                            "Record and listen",
+                            "Check for buzzes/timing"
+                        ]
+                    }
+                ]
+            },
+            {
+                "title": "Phase 2: Harmonic Awakening (Days 8-14)",
+                "days": [
+                    {
+                        "day": 8,
+                        "title": "The One-Finger Chord",
+                        "piece": "Em11 Chord",
+                        "goals": [
+                            "First full chord resonance",
+                            "Arch fingers"
+                        ],
+                        "routine": [
+                            "Index A/1, Middle D/2",
+                            "Strum 6 strings",
+                            "Check for buzz"
+                        ]
+                    },
+                    {
+                        "day": 9,
+                        "title": "Chord Transition",
+                        "piece": "Em to Asus2",
+                        "goals": [
+                            "Economy of motion",
+                            "Smooth shift"
+                        ],
+                        "routine": [
+                            "Strum Em",
+                            "Shift to Asus2",
+                            "Alternate 8 times"
+                        ]
+                    },
+                    {
+                        "day": 10,
+                        "title": "Three-Finger Chord",
+                        "piece": "A Major",
+                        "goals": [
+                            "Squeeze 3 fingers in Fret 2",
+                            "Open string resonance"
+                        ],
+                        "routine": [
+                            "Index A/1, Middle D/1, Ring E/2",
+                            "Strum and hold"
+                        ]
+                    }
+                ]
+            },
+            {
+                "title": "Phase 3: Dexterity (Days 15-21)",
+                "days": [
+                    {
+                        "day": 15,
+                        "title": "G-Whiz Chord",
+                        "piece": "Wish You Were Here (Pink Floyd)",
+                        "goals": [
+                            "Finger independence",
+                            "Melody within chord"
+                        ],
+                        "routine": [
+                            "Hold G chord",
+                            "Move Index/Middle for melody",
+                            "Keep Ring/Pinky planted"
+                        ]
+                    },
+                    {
+                        "day": 16,
+                        "title": "Arpeggio",
+                        "piece": "House of the Rising Sun",
+                        "goals": [
+                            "Pick individual strings",
+                            "Accuracy"
+                        ],
+                        "routine": [
+                            "Hold Am",
+                            "Pick Down-Down-Down-Up-Up-Up"
+                        ]
+                    }
+                ]
+            },
+            {
+                "title": "Phase 4: Integration (Days 22-30)",
+                "days": [
+                    {
+                        "day": 22,
+                        "title": "PIMA Fingerstyle",
+                        "piece": "Landslide / Dust in the Wind",
+                        "goals": [
+                            "Thumb independence",
+                            "Travis picking base"
+                        ],
+                        "routine": [
+                            "Thumb alternates bass",
+                            "Fingers play treble",
+                            "Sync rhythm"
+                        ]
+                    },
+                    {
+                        "day": 30,
+                        "title": "The Capstone Recording",
+                        "piece": "Graduation Piece",
+                        "goals": [
+                            "Full performance recording",
+                            "Compare to Day 1"
+                        ],
+                        "routine": [
+                            "Warm-up",
+                            "Tune carefully",
+                            "Record 3 takes",
+                            "Archive best take"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "valorant": {
+        "title": "Valorant Crosshair Trainer",
+        "description": "Real-time computer vision analysis for crosshair placement optimization.",
+        "specs": [
+            {
+                "category": "Core Concept",
+                "items": [
+                    "Objective: Real-time analysis of screen position",
+                    "Goal: Feedback on crosshair placement vs enemy head level",
+                    "Method: Python OpenCV for frame capture",
+                    "Feedback: On-screen overlay (Green/Yellow/Red)"
+                ]
+            },
+            {
+                "category": "Tech Stack",
+                "items": [
+                    "OpenCV (cv2): Image processing",
+                    "NumPy: Array operations",
+                    "PyAutoGUI: Mouse tracking",
+                    "Threading: Non-blocking processing"
+                ]
+            },
+            {
+                "category": "Pipeline",
+                "steps": [
+                    "1. Screen Capture (CAP_DSHOW)",
+                    "2. Frame Analysis (Detect enemy models)",
+                    "3. Identify Head Zone",
+                    "4. Locate Crosshair",
+                    "5. Calculate Deviation",
+                    "6. Render Overlay Feedback"
+                ]
+            }
+        ],
+        "code_snippet": "import cv2\nimport numpy as np\n\n# Basic Screen Capture Loop\ncap = cv2.VideoCapture(0)\n\nwhile True:\n    ret, frame = cap.read()\n    if not ret: break\n    \n    # Process frame here\n    # ...\n    \n    cv2.imshow('Trainer', frame)\n    if cv2.waitKey(1) == ord('q'):\n        break\n\ncap.release()\ncv2.destroyAllWindows()"
+    }
+}

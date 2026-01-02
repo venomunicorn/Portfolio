@@ -1,0 +1,373 @@
+{
+    "height": {
+        "title": "Height Maximization",
+        "description": "Spinal decompression and posture optimization (Ages 18-25).",
+        "sections": [
+            {
+                "title": "1.1 Spinal Decompression (Morning)",
+                "items": [
+                    {
+                        "text": "Dead Hang: 3 sets, 20-60s (add 2kg ankle weights if able)",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Child's Pose: 3-5 reps, 30-60s hold",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Cat-Cow: 3 sets, 10 reps fluidly",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Standing Forward Bend: 3-5 reps, 20-30s hold",
+                        "type": "checkbox"
+                    }
+                ]
+            },
+            {
+                "title": "1.2 Posture Alignment (Daily)",
+                "items": [
+                    {
+                        "text": "Downward-Facing Dog: 3 sets, 30-60s",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Cobra Pose: 2-3 reps, 15-30s hold",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Fish Pose: 20-30s hold",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Plank Hold: 3 sets, 30-60s",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Glute Bridge: 3 sets, 15-30s (with weights)",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Shoulder Blade Retractions: 3 sets, 15 reps",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Posture Check: Every 2 hours (Chin tucked, shoulders back)",
+                        "type": "checkbox"
+                    }
+                ]
+            },
+            {
+                "title": "1.3 Growth Hormone Stimulation",
+                "items": [
+                    {
+                        "text": "Rope Skipping: 10-20 mins daily (60-120 rounds)",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Single-Leg Hops: 3-4 rounds, 6-10 hops/leg",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Jump Squats: 3 sets, 3-10 reps",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Sprints: 100m x 5 reps (High Intensity)",
+                        "type": "checkbox"
+                    }
+                ]
+            },
+            {
+                "title": "1.7 Nightly Checklist",
+                "items": [
+                    {
+                        "text": "Completed all exercises",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Stretched and decompressed spine",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Ate 3 balanced meals",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Drank 8+ glasses of water",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Practiced good posture",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Sleep goal: 7-9 hours",
+                        "type": "checkbox"
+                    }
+                ]
+            }
+        ]
+    },
+    "skin": {
+        "title": "Cutaneous Radiance",
+        "description": "Skin brightening through nutrition and skincare science.",
+        "sections": [
+            {
+                "title": "2.1 Daily Nutrition & Supplements",
+                "items": [
+                    {
+                        "text": "Liposomal Glutathione: 500mg",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "NAC: 600mg",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Astaxanthin: 6-12mg (with fat)",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Vitamin D3: Target 30 ng/mL",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Eat Lycopene source (cooked tomatoes/watermelon)",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Eat Omega-3 source (walnuts/chia/fish)",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Avoid high-sugar/high-glycemic foods",
+                        "type": "checkbox"
+                    }
+                ]
+            },
+            {
+                "title": "2.2 AM Routine (Protection)",
+                "items": [
+                    {
+                        "text": "Gentle Cleanse (pH 4.5-5.5)",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Vitamin C Serum (10-20% L-Ascorbic)",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Tyrosinase Inhibitor (Alpha Arbutin/Azelaic)",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Moisturizer (Ceramide-dominant)",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "SPF 50+ with Iron Oxides",
+                        "type": "checkbox"
+                    }
+                ]
+            },
+            {
+                "title": "2.3 PM Routine (Correction)",
+                "items": [
+                    {
+                        "text": "Double Cleanse (Oil + Water)",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Chemical Exfoliation (AHA/BHA) - 2-3x/week ONLY",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Retinoid (Tretinoin/Retinal) - On dry skin",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Niacinamide Serum (5%)",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Peptide Moisturizer",
+                        "type": "checkbox"
+                    }
+                ]
+            },
+            {
+                "title": "2.5 Body Protocol",
+                "items": [
+                    {
+                        "text": "Shower with Glycolic/Salicylic Wash",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Apply Amlactin/Urea Lotion post-shower",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Apply Body SPF on exposed areas",
+                        "type": "checkbox"
+                    }
+                ]
+            }
+        ]
+    },
+    "aesthetics": {
+        "title": "Male Aesthetics",
+        "description": "Facial structure enhancement and looksmaxxing protocols.",
+        "sections": [
+            {
+                "title": "3.1 Softmaxxing Basics",
+                "items": [
+                    {
+                        "text": "Skincare Routine (See Skin Section)",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Leanmaxxing: Maintain 10-12% body fat",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Fashion: Clean, neutral colors, good fit",
+                        "type": "checkbox"
+                    }
+                ]
+            },
+            {
+                "title": "3.2 Beard Growth (Minoxidil)",
+                "items": [
+                    {
+                        "text": "Apply 1mL Minoxidil 5% (Morning)",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Apply 1mL Minoxidil 5% (Evening)",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Leave on for 4+ hours",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Microneedling (0.5mm) - ONCE WEEKLY ONLY",
+                        "type": "checkbox"
+                    }
+                ]
+            },
+            {
+                "title": "3.4 Eye/Brow Enhancement",
+                "items": [
+                    {
+                        "text": "Bimatoprost/Latisse application (Evening)",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Castor oil for brows (Optional)",
+                        "type": "checkbox"
+                    }
+                ]
+            },
+            {
+                "title": "3.5 Mewing / Oral Posture",
+                "items": [
+                    {
+                        "text": "Tongue flat on roof of mouth",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Lips sealed, teeth lightly touching",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Nose breathing only",
+                        "type": "checkbox"
+                    }
+                ]
+            }
+        ]
+    },
+    "nutrition": {
+        "title": "Nutritional Engineering",
+        "description": "7-day meal plans for fat loss, brain health, and muscle.",
+        "sections": [
+            {
+                "title": "Daily Targets",
+                "items": [
+                    {
+                        "text": "Protein: 1.2-1.5g per kg body weight",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Water: 3-4 Liters",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Calories: Surplus for growth / Deficit for lean",
+                        "type": "checkbox"
+                    }
+                ]
+            },
+            {
+                "title": "Weekly Schedule Overview",
+                "items": [
+                    {
+                        "text": "Monday: Protein + Chest/Shoulder",
+                        "type": "info"
+                    },
+                    {
+                        "text": "Tuesday: Sandwich + Lower Body",
+                        "type": "info"
+                    },
+                    {
+                        "text": "Wednesday: Dynamic/Plyometric",
+                        "type": "info"
+                    },
+                    {
+                        "text": "Thursday: Core Focus",
+                        "type": "info"
+                    },
+                    {
+                        "text": "Friday: Legs & Spine Extension",
+                        "type": "info"
+                    },
+                    {
+                        "text": "Saturday: Shoulders/Chest + Treat",
+                        "type": "info"
+                    },
+                    {
+                        "text": "Sunday: Active Recovery",
+                        "type": "info"
+                    }
+                ]
+            },
+            {
+                "title": "Daily Checklist",
+                "items": [
+                    {
+                        "text": "Ate Breakfast",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Ate Lunch",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Ate Dinner",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "No caffeine after 2 PM",
+                        "type": "checkbox"
+                    },
+                    {
+                        "text": "Prepared tomorrow's meals",
+                        "type": "checkbox"
+                    }
+                ]
+            }
+        ]
+    }
+}

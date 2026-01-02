@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Scraper - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px
+        }
+
+        .container {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 600px;
+            width: 100%
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            display: inline-block;
+            margin-bottom: 10px
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px
+        }
+
+        h1 {
+            color: #10b981
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px
+        }
+
+        .input-row input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, .3);
+            color: #fff;
+            font-size: .95rem
+        }
+
+        .input-row input:focus {
+            outline: none;
+            border-color: #10b981
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: .9rem
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, .1);
+            color: #fff
+        }
+
+        .demo-btns {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap
+        }
+
+        .demo-btn {
+            padding: 8px 15px;
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 20px;
+            background: transparent;
+            color: #888;
+            cursor: pointer;
+            font-size: .85rem
+        }
+
+        .demo-btn:hover {
+            border-color: #10b981;
+            color: #10b981
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px
+        }
+
+        .stat {
+            background: rgba(0, 0, 0, .3);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center
+        }
+
+        .stat-val {
+            font-size: 1.3rem;
+            color: #10b981;
+            font-weight: bold
+        }
+
+        .stat-lbl {
+            font-size: .75rem;
+            color: #888
+        }
+
+        .results {
+            background: rgba(0, 0, 0, .3);
+            border-radius: 12px;
+            padding: 15px;
+            max-height: 280px;
+            overflow-y: auto
+        }
+
+        .results-title {
+            font-size: .9rem;
+            color: #888;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .link-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, .05);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: .85rem
+        }
+
+        .link-url {
+            color: #10b981;
+            word-break: break-all;
+            flex: 1
+        }
+
+        .link-type {
+            padding: 3px 10px;
+            background: rgba(59, 130, 246, .2);
+            color: #60a5fa;
+            border-radius: 12px;
+            font-size: .75rem;
+            margin-left: 10px
+        }
+
+        .progress {
+            height: 6px;
+            background: rgba(255, 255, 255, .1);
+            border-radius: 3px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            display: none
+        }
+
+        .progress.active {
+            display: block
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669);
+            width: 0;
+            transition: width .3s
+        }
+
+        .empty {
+            text-align: center;
+            color: #666;
+            padding: 30px
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header"><span class="badge">Python Demo</span>
+            <h1>🔗 Web Scraper</h1>
+        </div>
+        <div class="input-row">
+            <input type="text" id="url" placeholder="Enter URL to scrape..." value="https://example.com">
+            <button class="btn btn-primary" onclick="scrape()">🔍 Scrape</button>
+        </div>
+        <div class="demo-btns">
+            <button class="demo-btn" onclick="setUrl('https://github.com')">GitHub</button>
+            <button class="demo-btn" onclick="setUrl('https://wikipedia.org')">Wikipedia</button>
+            <button class="demo-btn" onclick="setUrl('https://python.org')">Python.org</button>
+            <button class="demo-btn" onclick="setUrl('https://news.com')">News Site</button>
+        </div>
+        <div class="progress" id="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-val" id="total">0</div>
+                <div class="stat-lbl">Links Found</div>
+            </div>
+            <div class="stat">
+                <div class="stat-val" id="internal">0</div>
+                <div class="stat-lbl">Internal</div>
+            </div>
+            <div class="stat">
+                <div class="stat-val" id="external">0</div>
+                <div class="stat-lbl">External</div>
+            </div>
+        </div>
+        <div class="results">
+            <div class="results-title"><span>📋 Extracted Links</span><button class="btn btn-secondary"
+                    style="padding:6px 12px;font-size:.8rem" onclick="exportCSV()">📥 Export CSV</button></div>
+            <div id="links">
+                <div class="empty">Enter a URL and click Scrape to extract links</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const sampleLinks = {
+            'github.com': [{ url: '/features', type: 'internal' }, { url: '/explore', type: 'internal' }, { url: '/marketplace', type: 'internal' }, { url: 'https://docs.github.com', type: 'external' }, { url: '/pricing', type: 'internal' }, { url: 'https://education.github.com', type: 'external' }],
+            'wikipedia.org': [{ url: '/wiki/Main_Page', type: 'internal' }, { url: '/wiki/Portal:Contents', type: 'internal' }, { url: 'https://commons.wikimedia.org', type: 'external' }, { url: '/wiki/Wikipedia:About', type: 'internal' }, { url: 'https://meta.wikimedia.org', type: 'external' }],
+            'python.org': [{ url: '/downloads', type: 'internal' }, { url: '/docs', type: 'internal' }, { url: 'https://pypi.org', type: 'external' }, { url: '/community', type: 'internal' }, { url: 'https://discuss.python.org', type: 'external' }, { url: '/about', type: 'internal' }],
+            'news.com': [{ url: '/world', type: 'internal' }, { url: '/tech', type: 'internal' }, { url: '/sports', type: 'internal' }, { url: 'https://twitter.com/news', type: 'external' }, { url: '/contact', type: 'internal' }]
+        };
+        let currentLinks = [];
+        function setUrl(url) { document.getElementById('url').value = url }
+        function scrape() {
+            const url = document.getElementById('url').value; const domain = url.replace(/https?:\/\//, '').split('/')[0];
+            document.getElementById('progress').classList.add('active'); document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('links').innerHTML = '<div class="empty">Scraping...</div>';
+            let progress = 0; const int = setInterval(() => { progress += 10; document.getElementById('progressBar').style.width = progress + '%'; if (progress >= 100) clearInterval(int) }, 100);
+            setTimeout(() => {
+                currentLinks = sampleLinks[domain] || generateRandomLinks(); const internal = currentLinks.filter(l => l.type === 'internal').length; const external = currentLinks.length - internal;
+                document.getElementById('total').textContent = currentLinks.length; document.getElementById('internal').textContent = internal; document.getElementById('external').textContent = external;
+                document.getElementById('links').innerHTML = currentLinks.map(l => `<div class="link-item"><span class="link-url">${l.url}</span><span class="link-type">${l.type}</span></div>`).join('');
+                document.getElementById('progress').classList.remove('active')
+            }, 1200)
+        }
+        function generateRandomLinks() {
+            const paths = ['/about', '/contact', '/blog', '/products', '/services', '/careers', '/privacy', '/terms'];
+            return paths.slice(0, 4 + Math.floor(Math.random() * 4)).map(p => ({ url: p, type: Math.random() > 0.3 ? 'internal' : 'external' }))
+        }
+        function exportCSV() {
+            if (!currentLinks.length) { alert('No links to export!'); return } const csv = 'URL,Type\n' + currentLinks.map(l => `${l.url},${l.type}`).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'links.csv'; a.click()
+        }
+    </script>
+</body>
+
+</html>

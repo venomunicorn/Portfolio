@@ -1,0 +1,37 @@
+# ninja log v6
+5	60	7880073745331157	stb-populate-prefix/src/stb-populate-stamp/stb-populate-mkdir	90e0e6cdfe773278
+61	3816	7880073782892893	stb-populate-prefix/src/stb-populate-stamp/stb-populate-download	30a47db1e47abe3c
+5	60	7880073745331157	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/stb-populate-prefix/src/stb-populate-stamp/stb-populate-mkdir	90e0e6cdfe773278
+3824	5648	7880073783030619	stb-populate-prefix/src/stb-populate-stamp/stb-populate-update	315b52be07fc79fd
+5648	5706	7880073801787373	stb-populate-prefix/src/stb-populate-stamp/stb-populate-patch	ab55178d56b9e2c6
+61	3816	7880073782892893	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/stb-populate-prefix/src/stb-populate-stamp/stb-populate-download	30a47db1e47abe3c
+5907	5970	7880073804408808	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/stb-populate-prefix/src/stb-populate-stamp/stb-populate-test	d378ad456d1e1e2f
+3824	5648	7880073783030619	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/stb-populate-prefix/src/stb-populate-stamp/stb-populate-update	315b52be07fc79fd
+5648	5706	7880073801787373	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/stb-populate-prefix/src/stb-populate-stamp/stb-populate-patch	ab55178d56b9e2c6
+5706	5770	7880073802353408	stb-populate-prefix/src/stb-populate-stamp/stb-populate-configure	d8478a8947df7937
+5970	6067	7880073805391477	stb-populate-prefix/src/stb-populate-stamp/stb-populate-done	2515fbd614c263f3
+5706	5770	7880073802353408	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/stb-populate-prefix/src/stb-populate-stamp/stb-populate-configure	d8478a8947df7937
+5770	5837	7880073803096895	stb-populate-prefix/src/stb-populate-stamp/stb-populate-build	6272e87a02b2bae5
+5770	5837	7880073803096895	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/stb-populate-prefix/src/stb-populate-stamp/stb-populate-build	6272e87a02b2bae5
+5837	5907	7880073803786800	stb-populate-prefix/src/stb-populate-stamp/stb-populate-install	eb2176c213e588d3
+5837	5907	7880073803786800	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/stb-populate-prefix/src/stb-populate-stamp/stb-populate-install	eb2176c213e588d3
+5907	5970	7880073804408808	stb-populate-prefix/src/stb-populate-stamp/stb-populate-test	d378ad456d1e1e2f
+5970	6067	7880073805391477	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/CMakeFiles/stb-populate-complete	2515fbd614c263f3
+5970	6067	7880073805391477	CMakeFiles/stb-populate-complete	2515fbd614c263f3
+5970	6067	7880073805391477	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/stb-populate-prefix/src/stb-populate-stamp/stb-populate-done	2515fbd614c263f3
+6	2028	7880081124968949	stb-populate-prefix/src/stb-populate-stamp/stb-populate-update	315b52be07fc79fd
+6	2028	7880081124968949	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/stb-populate-prefix/src/stb-populate-stamp/stb-populate-update	315b52be07fc79fd
+2028	2081	7880081145665330	stb-populate-prefix/src/stb-populate-stamp/stb-populate-patch	ab55178d56b9e2c6
+2028	2081	7880081145665330	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/stb-populate-prefix/src/stb-populate-stamp/stb-populate-patch	ab55178d56b9e2c6
+2082	2132	7880081146188086	stb-populate-prefix/src/stb-populate-stamp/stb-populate-configure	d8478a8947df7937
+2082	2132	7880081146188086	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/stb-populate-prefix/src/stb-populate-stamp/stb-populate-configure	d8478a8947df7937
+2132	2201	7880081146877585	stb-populate-prefix/src/stb-populate-stamp/stb-populate-build	6272e87a02b2bae5
+2132	2201	7880081146877585	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/stb-populate-prefix/src/stb-populate-stamp/stb-populate-build	6272e87a02b2bae5
+2202	2255	7880081147405586	stb-populate-prefix/src/stb-populate-stamp/stb-populate-install	eb2176c213e588d3
+2202	2255	7880081147405586	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/stb-populate-prefix/src/stb-populate-stamp/stb-populate-install	eb2176c213e588d3
+2255	2318	7880081148042302	stb-populate-prefix/src/stb-populate-stamp/stb-populate-test	d378ad456d1e1e2f
+2255	2318	7880081148042302	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/stb-populate-prefix/src/stb-populate-stamp/stb-populate-test	d378ad456d1e1e2f
+2318	2404	7880081148893889	CMakeFiles/stb-populate-complete	2515fbd614c263f3
+2318	2404	7880081148893889	stb-populate-prefix/src/stb-populate-stamp/stb-populate-done	2515fbd614c263f3
+2318	2404	7880081148893889	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/CMakeFiles/stb-populate-complete	2515fbd614c263f3
+2318	2404	7880081148893889	C:/Users/kaush/Downloads/ProjectsCode/Startup VAYU/C++/3dGraphicEngine/build/dev-debug/_deps/stb-subbuild/stb-populate-prefix/src/stb-populate-stamp/stb-populate-done	2515fbd614c263f3

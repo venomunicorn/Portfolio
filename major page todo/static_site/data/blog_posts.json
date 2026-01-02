@@ -1,0 +1,18 @@
+[
+    {
+        "id": "welcome-to-tantheta",
+        "slug": "welcome-to-tantheta",
+        "title": "Welcome to TanTheta",
+        "excerpt": "Introduction to the TanTheta platform and our mission to build the future of technology.",
+        "content": "# Welcome to TanTheta\n\nWe are building the future of technology through rigorous engineering, deep-tech research, and rapid product incubation.\n\n## Our Mission\n\nTo bridge the gap between theoretical research and practical application in AI, Aerospace, and Software Engineering.\n\n## Core Pillars\n\n1. **Syllabus & Learning**: Mastering the fundamentals of computer science and engineering.\n2. **CreatorOS**: Empowering creators with data-driven roadmaps.\n3. **DeepTech**: Researching and developing frontier technologies.\n4. **Health & Vitality**: Optimizing human performance for maximum output.\n5. **Skill Acquisition**: Structured protocols for mastering new skills rapidly.\n\nExplore our platform to learn more.",
+        "createdAt": "2025-12-01T10:00:00Z"
+    },
+    {
+        "id": "master-todos-framework",
+        "slug": "master-todos-framework",
+        "title": "Master Todos & Execution Framework",
+        "excerpt": "A comprehensive guide to executing on Frontier Technology, AI/ML Strategy, and Startup Incubation.",
+        "content": "# MASTER TODO LIST & EXECUTION FRAMEWORK\n## Frontier Technology | AI/ML Strategy | Startup Incubation & Product Development\n**Version:** 2.0 | **Date:** December 2025 | **Status:** Production-Ready\n\n---\n\n# TABLE OF CONTENTS\n1. [SECTION 1: FRONTIER DEEP-TECH AI/ML (20 Products)](#section-1)\n2. [SECTION 2: STARTUP INCUBATION & PRODUCT IDEAS (20 Apps)](#section-2)\n3. [SECTION 3: VALIDATION PLAYBOOK & EXECUTION](#section-3)\n4. [SECTION 4: APP CLONE DATABASE & MARKET MAPPING](#section-4)\n\n---\n\n# SECTION 1: FRONTIER DEEP-TECH AI/ML OPPORTUNITIES 2025-2035\n## 20 Advanced AI/ML Products for Hard-Tech Sectors\n\n### TIER 1: HIGHEST-VALUE (START HERE) - Priority Score 0.28-0.32\n\n#### ✅ TODO 1.1: Quantum Error Correction Decoder-as-a-Service\n- [ ] **Primary Focus:** Quantum Computing\n- [ ] **Problem:** NISQ decoders run in milliseconds-to-seconds; need sub-microsecond latency for scaling\n- [ ] **Market Size:** $11.1B (2025) → $20B (2030)\n- [ ] **Revenue Potential:** $500K-$2M per-device licensing + $100K-$500K/year partnerships\n- [ ] **MVP Timeline:** 10-14 months\n- [ ] **Priority Score:** 0.316 | **Monetization Probability:** High (82%)\n\n(See full document for more details...)",
+        "createdAt": "2025-12-05T12:00:00Z"
+    }
+]

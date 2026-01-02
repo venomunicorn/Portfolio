@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mad Libs Generator - C++ Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #f87171;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #f87171, #dc2626);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .story-select {
+            margin-bottom: 25px;
+        }
+
+        select {
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            cursor: pointer;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .input-group {
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #fbbf24;
+            margin-bottom: 5px;
+            text-transform: capitalize;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #f87171;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .btn-random {
+            background: linear-gradient(135deg, #f87171, #dc2626);
+            color: white;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        .story-output {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+            text-align: left;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            display: none;
+        }
+
+        .story-output .highlight {
+            color: #10b981;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <span class="badge">C++ Demo</span>
+        <h1>📖 Mad Libs Generator</h1>
+        <p style="color: #888; margin-bottom: 15px;">Fill in the blanks for a hilarious story!</p>
+
+        <div class="story-select">
+            <select id="storySelect" onchange="changeStory()">
+                <option value="0">🏫 A Day at School</option>
+                <option value="1">🚀 Space Adventure</option>
+                <option value="2">🐉 Dragon's Quest</option>
+            </select>
+        </div>
+
+        <div class="inputs" id="inputs"></div>
+
+        <div>
+            <button class="btn-generate" onclick="generateStory()">✨ Generate Story</button>
+            <button class="btn-random" onclick="fillRandom()">🎲 Random Words</button>
+        </div>
+
+        <div class="story-output" id="storyOutput"></div>
+    </div>
+
+    <script>
+        const stories = [
+            {
+                name: "A Day at School",
+                words: ["adjective", "noun", "verb", "adverb", "animal", "food"],
+                template: "Today at school was <0>! My teacher brought a <1> to class. We had to <2> <3> while a <4> watched us. For lunch, I ate <5> and it was amazing!"
+            },
+            {
+                name: "Space Adventure",
+                words: ["adjective", "planet name", "verb", "number", "color", "creature"],
+                template: "Captain's log: We've discovered a <0> planet called <1>. The aliens here <2> for <3> hours a day. The sky is <4> and we met a friendly <5> who became our guide."
+            },
+            {
+                name: "Dragon's Quest",
+                words: ["adjective", "weapon", "verb past tense", "emotion", "treasure", "name"],
+                template: "The <0> knight wielded their mighty <1>. They <2> through the dark cave feeling <3>. At the end, they found a <4> guarded by the dragon named <5>!"
+            }
+        ];
+
+        const randomWords = {
+            adjective: ["amazing", "silly", "gigantic", "sparkly", "mysterious", "grumpy"],
+            noun: ["banana", "spaceship", "unicorn", "taco", "robot", "dragon"],
+            verb: ["dance", "sing", "juggle", "sneeze", "explode", "giggle"],
+            adverb: ["quickly", "loudly", "crazily", "mysteriously", "happily"],
+            animal: ["elephant", "penguin", "dinosaur", "octopus", "llama"],
+            food: ["pizza", "ice cream", "spaghetti", "marshmallows", "pancakes"],
+            "planet name": ["Zorgon", "Blibblob", "Sparkletopia", "Noodleverse"],
+            number: ["42", "1000", "7", "99", "infinity"],
+            color: ["purple", "neon green", "rainbow", "invisible", "sparkly gold"],
+            creature: ["blob", "space whale", "robot unicorn", "fuzzy alien"],
+            weapon: ["rubber chicken", "glowing sword", "banana launcher"],
+            "verb past tense": ["somersaulted", "moonwalked", "cartwheeled", "teleported"],
+            emotion: ["extremely excited", "slightly confused", "totally pumped"],
+            treasure: ["golden banana", "ancient memes", "infinite pizza supply"],
+            name: ["Sir Fluffybottom", "Lord Snazzypants", "Princess Glitterfang"]
+        };
+
+        let currentStory = 0;
+
+        function changeStory() {
+            currentStory = parseInt(document.getElementById('storySelect').value);
+            renderInputs();
+            document.getElementById('storyOutput').style.display = 'none';
+        }
+
+        function renderInputs() {
+            const story = stories[currentStory];
+            const container = document.getElementById('inputs');
+            container.innerHTML = '';
+
+            story.words.forEach((word, index) => {
+                const div = document.createElement('div');
+                div.className = 'input-group';
+                div.innerHTML = `
+                    <label>${word}</label>
+                    <input type="text" id="word-${index}" placeholder="Enter a ${word}">
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function generateStory() {
+            const story = stories[currentStory];
+            let result = story.template;
+
+            story.words.forEach((_, index) => {
+                const input = document.getElementById(`word-${index}`);
+                const value = input.value.trim() || '[blank]';
+                result = result.replace(`<${index}>`, `<span class="highlight">${value}</span>`);
+            });
+
+            const output = document.getElementById('storyOutput');
+            output.innerHTML = result;
+            output.style.display = 'block';
+        }
+
+        function fillRandom() {
+            const story = stories[currentStory];
+            story.words.forEach((word, index) => {
+                const options = randomWords[word] || ["something"];
+                const random = options[Math.floor(Math.random() * options.length)];
+                document.getElementById(`word-${index}`).value = random;
+            });
+        }
+
+        // Initialize
+        renderInputs();
+    </script>
+</body>
+
+</html>

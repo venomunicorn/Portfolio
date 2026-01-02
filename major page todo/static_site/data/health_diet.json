@@ -1,0 +1,63 @@
+{
+    "diet": {
+        "title": "Diet Plan Guidance",
+        "sections": [
+            {
+                "heading": "Core Principles",
+                "content": [
+                    "Caloric Surplus: Eat more calories than you burn to support growth.",
+                    "Protein Intake: 1.6-2.2g per kg of body weight.",
+                    "Hydration: 3-4 liters of water daily.",
+                    "Sleep: 7-9 hours of quality sleep for recovery."
+                ]
+            },
+            {
+                "heading": "Meal Plan Example",
+                "items": [
+                    {
+                        "meal": "Breakfast",
+                        "food": "Oats with milk, banana, almonds, 2 eggs"
+                    },
+                    {
+                        "meal": "Snack",
+                        "food": "Greek yogurt or protein shake"
+                    },
+                    {
+                        "meal": "Lunch",
+                        "food": "Chicken breast/Paneer, brown rice, mixed vegetables"
+                    },
+                    {
+                        "meal": "Pre-Workout",
+                        "food": "Apple, peanut butter toast"
+                    },
+                    {
+                        "meal": "Dinner",
+                        "food": "Fish/Lentils, quinoa/roti, salad"
+                    }
+                ]
+            }
+        ]
+    },
+    "exercises": {
+        "title": "Height Increase & Fitness",
+        "sections": [
+            {
+                "heading": "Stretching Routine",
+                "content": [
+                    "Cobra Stretch: 3 sets of 30 seconds",
+                    "Cat-Cow Stretch: 3 sets of 15 reps",
+                    "Forward Bend: 3 sets of 30 seconds",
+                    "Hanging: 3 sets of 60 seconds"
+                ]
+            },
+            {
+                "heading": "High Intensity",
+                "content": [
+                    "Sprinting: 100m x 5 reps",
+                    "Jump Rope: 5 mins daily",
+                    "Cycling: 20 mins high resistance"
+                ]
+            }
+        ]
+    }
+}

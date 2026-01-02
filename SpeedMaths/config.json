@@ -1,0 +1,52 @@
+{
+  "addition": {
+    "min_digits": 1,
+    "max_digits": 2,
+    "enabled": true
+  },
+  "subtraction": {
+    "min_digits": 1,
+    "max_digits": 2,
+    "enabled": true
+  },
+  "multiplication": {
+    "min_digits": 1,
+    "max_digits": 2,
+    "enabled": true
+  },
+  "division": {
+    "min_digits": 1,
+    "max_digits": 2,
+    "enabled": true
+  },
+  "percentages": {
+    "min_value": 1,
+    "max_value": 100,
+    "enabled": true
+  },
+  "fractions": {
+    "min_value": 1,
+    "max_value": 100,
+    "enabled": true
+  },
+  "squares": {
+    "min_value": 1,
+    "max_value": 20,
+    "enabled": true
+  },
+  "cubes": {
+    "min_value": 1,
+    "max_value": 10,
+    "enabled": true
+  },
+  "cube_roots": {
+    "min_value": 1,
+    "max_value": 1000,
+    "enabled": true
+  },
+  "mult_tables": {
+    "min_table": 1,
+    "max_table": 12,
+    "enabled": true
+  }
+}

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning Model - C++ Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #f87171;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #f87171, #dc2626);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .network-viz {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        canvas {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .training-panel {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .panel-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .panel-card h3 {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .metric {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #10b981;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        button {
+            padding: 15px 35px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+
+        .btn-train {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .btn-predict {
+            background: linear-gradient(135deg, #f87171, #dc2626);
+            color: white;
+        }
+
+        .btn-reset {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        .log {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: left;
+            font-family: 'Consolas', monospace;
+            font-size: 0.85rem;
+            max-height: 150px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
+        .log-entry {
+            margin: 5px 0;
+            color: #10b981;
+        }
+
+        .log-entry.error {
+            color: #f87171;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <span class="badge">C++ Demo</span>
+        <h1>🧠 Neural Network</h1>
+        <p style="color: #888; margin-bottom: 10px;">Simple Neural Network for XOR Problem</p>
+
+        <div class="network-viz">
+            <canvas id="networkCanvas" width="400" height="200"></canvas>
+        </div>
+
+        <div class="training-panel">
+            <div class="panel-card">
+                <h3>Training Epoch</h3>
+                <div class="metric" id="epoch">0</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="epochProgress" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="panel-card">
+                <h3>Loss</h3>
+                <div class="metric" id="loss">1.000</div>
+            </div>
+            <div class="panel-card">
+                <h3>Accuracy</h3>
+                <div class="metric" id="accuracy">0%</div>
+            </div>
+            <div class="panel-card">
+                <h3>Learning Rate</h3>
+                <div class="metric" id="lr">0.5</div>
+            </div>
+        </div>
+
+        <div>
+            <button class="btn-train" onclick="train()">🚀 Train Network</button>
+            <button class="btn-predict" onclick="testPredictions()">🔮 Test Predictions</button>
+            <button class="btn-reset" onclick="resetNetwork()">🔄 Reset</button>
+        </div>
+
+        <div class="log" id="log">
+            <div class="log-entry">> Neural Network initialized with 2-4-1 architecture</div>
+            <div class="log-entry">> Ready to train on XOR problem</div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Simple neural network for XOR
+        const learningRate = 0.5;
+        let weights1, weights2, bias1, bias2;
+        let epoch = 0;
+        let training = false;
+
+        // XOR training data
+        const trainingData = [
+            { input: [0, 0], output: [0] },
+            { input: [0, 1], output: [1] },
+            { input: [1, 0], output: [1] },
+            { input: [1, 1], output: [0] }
+        ];
+
+        function sigmoid(x) { return 1 / (1 + Math.exp(-x)); }
+        function sigmoidDerivative(x) { return x * (1 - x); }
+
+        function initNetwork() {
+            weights1 = Array(2).fill().map(() => Array(4).fill().map(() => Math.random() * 2 - 1));
+            weights2 = Array(4).fill().map(() => [Math.random() * 2 - 1]);
+            bias1 = Array(4).fill().map(() => Math.random() * 2 - 1);
+            bias2 = [Math.random() * 2 - 1];
+            epoch = 0;
+        }
+
+        function forward(input) {
+            // Hidden layer
+            const hidden = [];
+            for (let j = 0; j < 4; j++) {
+                let sum = bias1[j];
+                for (let i = 0; i < 2; i++) {
+                    sum += input[i] * weights1[i][j];
+                }
+                hidden.push(sigmoid(sum));
+            }
+
+            // Output layer
+            let sum = bias2[0];
+            for (let j = 0; j < 4; j++) {
+                sum += hidden[j] * weights2[j][0];
+            }
+            const output = sigmoid(sum);
+
+            return { hidden, output };
+        }
+
+        function trainStep(input, target) {
+            const { hidden, output } = forward(input);
+
+            // Backpropagation
+            const outputError = target[0] - output;
+            const outputDelta = outputError * sigmoidDerivative(output);
+
+            const hiddenErrors = [];
+            const hiddenDeltas = [];
+            for (let j = 0; j < 4; j++) {
+                hiddenErrors.push(outputDelta * weights2[j][0]);
+                hiddenDeltas.push(hiddenErrors[j] * sigmoidDerivative(hidden[j]));
+            }
+
+            // Update weights
+            for (let j = 0; j < 4; j++) {
+                weights2[j][0] += learningRate * outputDelta * hidden[j];
+            }
+            bias2[0] += learningRate * outputDelta;
+
+            for (let i = 0; i < 2; i++) {
+                for (let j = 0; j < 4; j++) {
+                    weights1[i][j] += learningRate * hiddenDeltas[j] * input[i];
+                }
+            }
+            for (let j = 0; j < 4; j++) {
+                bias1[j] += learningRate * hiddenDeltas[j];
+            }
+
+            return outputError * outputError;
+        }
+
+        function train() {
+            if (training) return;
+            training = true;
+
+            const maxEpochs = 1000;
+            let currentEpoch = epoch;
+
+            function step() {
+                if (!training || currentEpoch >= maxEpochs) {
+                    training = false;
+                    addLog('Training complete!');
+                    return;
+                }
+
+                let totalLoss = 0;
+                for (const data of trainingData) {
+                    totalLoss += trainStep(data.input, data.output);
+                }
+                totalLoss /= trainingData.length;
+
+                currentEpoch++;
+                epoch = currentEpoch;
+
+                // Update UI
+                document.getElementById('epoch').textContent = epoch;
+                document.getElementById('epochProgress').style.width = `${(epoch / maxEpochs) * 100}%`;
+                document.getElementById('loss').textContent = totalLoss.toFixed(4);
+
+                // Calculate accuracy
+                let correct = 0;
+                for (const data of trainingData) {
+                    const { output } = forward(data.input);
+                    if (Math.round(output) === data.output[0]) correct++;
+                }
+                const accuracy = (correct / trainingData.length) * 100;
+                document.getElementById('accuracy').textContent = `${accuracy}%`;
+
+                drawNetwork();
+
+                if (currentEpoch % 100 === 0) {
+                    addLog(`Epoch ${epoch}: Loss = ${totalLoss.toFixed(4)}, Accuracy = ${accuracy}%`);
+                }
+
+                setTimeout(step, 5);
+            }
+
+            addLog('Starting training...');
+            step();
+        }
+
+        function testPredictions() {
+            addLog('--- Testing Predictions ---');
+            for (const data of trainingData) {
+                const { output } = forward(data.input);
+                const predicted = output.toFixed(3);
+                const rounded = Math.round(output);
+                const correct = rounded === data.output[0];
+                addLog(`[${data.input}] => ${predicted} (${rounded}) ${correct ? '✓' : '✗'}`, !correct);
+            }
+        }
+
+        function resetNetwork() {
+            training = false;
+            initNetwork();
+            document.getElementById('epoch').textContent = '0';
+            document.getElementById('loss').textContent = '1.000';
+            document.getElementById('accuracy').textContent = '0%';
+            document.getElementById('epochProgress').style.width = '0%';
+            drawNetwork();
+            addLog('Network reset');
+        }
+
+        function addLog(message, isError = false) {
+            const log = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${isError ? 'error' : ''}`;
+            entry.textContent = `> ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function drawNetwork() {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const layers = [2, 4, 1];
+            const positions = [];
+            const layerX = [80, 200, 320];
+
+            // Calculate positions
+            layers.forEach((count, layerIdx) => {
+                positions[layerIdx] = [];
+                const startY = (canvas.height - (count - 1) * 40) / 2;
+                for (let i = 0; i < count; i++) {
+                    positions[layerIdx].push({ x: layerX[layerIdx], y: startY + i * 40 });
+                }
+            });
+
+            // Draw connections
+            ctx.lineWidth = 1;
+            for (let l = 0; l < layers.length - 1; l++) {
+                for (let i = 0; i < positions[l].length; i++) {
+                    for (let j = 0; j < positions[l + 1].length; j++) {
+                        const weight = l === 0 ? weights1[i]?.[j] : weights2[i]?.[0];
+                        const intensity = weight ? Math.min(1, Math.abs(weight)) : 0.2;
+                        ctx.strokeStyle = weight > 0 ?
+                            `rgba(16, 185, 129, ${intensity})` :
+                            `rgba(248, 113, 113, ${intensity})`;
+                        ctx.beginPath();
+                        ctx.moveTo(positions[l][i].x, positions[l][i].y);
+                        ctx.lineTo(positions[l + 1][j].x, positions[l + 1][j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Draw neurons
+            positions.forEach((layer, l) => {
+                layer.forEach((pos, i) => {
+                    ctx.beginPath();
+                    ctx.arc(pos.x, pos.y, 15, 0, Math.PI * 2);
+                    ctx.fillStyle = l === 0 ? '#10b981' : l === 1 ? '#fbbf24' : '#f87171';
+                    ctx.fill();
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                });
+            });
+
+            // Labels
+            ctx.fillStyle = '#888';
+            ctx.font = '12px Segoe UI';
+            ctx.textAlign = 'center';
+            ctx.fillText('Input', 80, 190);
+            ctx.fillText('Hidden', 200, 190);
+            ctx.fillText('Output', 320, 190);
+        }
+
+        initNetwork();
+        drawNetwork();
+    </script>
+</body>
+
+</html>

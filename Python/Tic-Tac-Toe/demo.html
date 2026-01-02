@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe AI - Python Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px
+        }
+
+        .container {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .75rem;
+            display: inline-block;
+            margin-bottom: 10px
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px
+        }
+
+        h1 {
+            color: #10b981
+        }
+
+        .status {
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 0, 0, .3);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 1.1rem
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px
+        }
+
+        .cell {
+            aspect-ratio: 1;
+            background: rgba(0, 0, 0, .3);
+            border: 2px solid rgba(255, 255, 255, .1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .cell:hover {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, .1)
+        }
+
+        .cell.x {
+            color: #3b82f6
+        }
+
+        .cell.o {
+            color: #ef4444
+        }
+
+        .cell.win {
+            background: rgba(16, 185, 129, .3);
+            border-color: #10b981
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, .2);
+            border-radius: 12px
+        }
+
+        .stat {
+            text-align: center
+        }
+
+        .stat-val {
+            font-size: 1.5rem;
+            font-weight: bold
+        }
+
+        .stat.player .stat-val {
+            color: #3b82f6
+        }
+
+        .stat.ai .stat-val {
+            color: #ef4444
+        }
+
+        .stat.tie .stat-val {
+            color: #888
+        }
+
+        .stat-lbl {
+            font-size: .75rem;
+            color: #888
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer
+        }
+
+        .btn:hover {
+            box-shadow: 0 5px 20px rgba(16, 185, 129, .4)
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header"><span class="badge">Python Demo</span>
+            <h1>🎯 Tic-Tac-Toe vs AI</h1>
+        </div>
+        <div class="status" id="status">Your turn (X)</div>
+        <div class="board" id="board"></div>
+        <div class="stats">
+            <div class="stat player">
+                <div class="stat-val" id="wins">0</div>
+                <div class="stat-lbl">Your Wins</div>
+            </div>
+            <div class="stat tie">
+                <div class="stat-val" id="ties">0</div>
+                <div class="stat-lbl">Ties</div>
+            </div>
+            <div class="stat ai">
+                <div class="stat-val" id="losses">0</div>
+                <div class="stat-lbl">AI Wins</div>
+            </div>
+        </div>
+        <button class="btn" onclick="newGame()">🔄 New Game</button>
+    </div>
+    <script>
+        let board, turn, gameOver, wins = 0, losses = 0, ties = 0;
+        const winPatterns = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+        function init() { board = ['', '', '', '', '', '', '', '', '']; turn = 'X'; gameOver = false; render() }
+        function render() {
+            const b = document.getElementById('board'); b.innerHTML = '';
+            board.forEach((c, i) => {
+                const cell = document.createElement('div'); cell.className = 'cell' + (c ? ' ' + c.toLowerCase() : ''); cell.textContent = c === 'X' ? '✕' : c === 'O' ? '○' : '';
+                if (!c && !gameOver) cell.onclick = () => makeMove(i); b.appendChild(cell)
+            })
+        }
+        function makeMove(i) {
+            if (board[i] || gameOver) return; board[i] = 'X'; render(); if (checkWin('X')) { endGame('You win!', 'player'); return } if (board.every(c => c)) { endGame("It's a tie!", 'tie'); return }
+            setTimeout(aiMove, 400)
+        }
+        function aiMove() { const move = getBestMove(); board[move] = 'O'; render(); if (checkWin('O')) { endGame('AI wins!', 'ai'); return } if (board.every(c => c)) endGame("It's a tie!", 'tie'); else document.getElementById('status').textContent = 'Your turn (X)' }
+        function getBestMove() { let bestScore = -Infinity, bestMove = 0; for (let i = 0; i < 9; i++) { if (!board[i]) { board[i] = 'O'; const score = minimax(false); board[i] = ''; if (score > bestScore) { bestScore = score; bestMove = i } } } return bestMove }
+        function minimax(isMax) {
+            if (checkWin('O')) return 10; if (checkWin('X')) return -10; if (board.every(c => c)) return 0;
+            let best = isMax ? -Infinity : Infinity; for (let i = 0; i < 9; i++) { if (!board[i]) { board[i] = isMax ? 'O' : 'X'; const score = minimax(!isMax); board[i] = ''; best = isMax ? Math.max(best, score) : Math.min(best, score) } } return best
+        }
+        function checkWin(p) { return winPatterns.some(pat => { if (pat.every(i => board[i] === p)) { highlightWin(pat); return true } return false }) }
+        function highlightWin(pat) { const cells = document.querySelectorAll('.cell'); pat.forEach(i => cells[i].classList.add('win')) }
+        function endGame(msg, who) {
+            gameOver = true; document.getElementById('status').textContent = msg;
+            if (who === 'player') document.getElementById('wins').textContent = ++wins;
+            else if (who === 'ai') document.getElementById('losses').textContent = ++losses;
+            else document.getElementById('ties').textContent = ++ties
+        }
+        function newGame() { init(); document.getElementById('status').textContent = 'Your turn (X)' }
+        init();
+    </script>
+</body>
+
+</html>
