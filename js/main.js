@@ -331,14 +331,9 @@ function animateCounters() {
             }
         };
 
-        // Start animation when element is in view
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                counter.textContent = '0';
-                setTimeout(updateCounter, 100);
-                observer.disconnect();
-            }
-        });
-        observer.observe(counter);
+        // Simply run animation immediately without IntersectionObserver
+        // to avoid mobile specific issues where observer might reset to 0 and fail
+        counter.textContent = '0';
+        updateCounter();
     });
 }
