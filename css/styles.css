@@ -139,6 +139,30 @@ body[data-theme="scientific"] .back-to-top:hover {
     background: var(--accent-light);
 }
 
+body[data-theme="chaos"] .back-to-top {
+    background: linear-gradient(135deg, #ff006e 0%, #8338ec 50%, #3a86ff 100%);
+    color: white;
+    border-radius: 50%;
+    animation: chaosButtonPulse 2s ease-in-out infinite;
+}
+
+body[data-theme="chaos"] .back-to-top:hover {
+    transform: translateY(-5px) rotate(10deg);
+    box-shadow: 0 10px 30px rgba(255, 0, 110, 0.4);
+}
+
+@keyframes chaosButtonPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 4px 15px rgba(255, 0, 110, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 4px 25px rgba(131, 56, 236, 0.6);
+    }
+}
+
 /* ============================================
    THEME 1: BRUTALIST TECH DOSSIER
    Terminal/Hacker aesthetic
