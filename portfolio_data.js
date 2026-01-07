@@ -380,7 +380,7 @@ window.projects = [
     "original_name": "SimpleCalculatorApplication",
     "category": "Python Scripting",
     "category_short": "Python",
-    "path": "https://github.com/Arvind826688/SimpleCalculatorApplication",
+    "path": "https://github.com/venomunicorn/Calculator",
     "description": "Calculator application in Python, C++, and Android.",
     "features": [],
     "demo_url": null
@@ -490,7 +490,7 @@ window.projects = [
     "original_name": "currency_converter",
     "category": "C++ Systems",
     "category_short": "C++",
-    "path": "https://github.com/Arvind826688/currency_converter",
+    "path": "https://github.com/venomunicorn/CurrencyConverter",
     "description": "Command-line currency converter in C++.",
     "features": [],
     "demo_url": null
@@ -510,7 +510,7 @@ window.projects = [
     "original_name": "filesortingCPP",
     "category": "C++ Systems",
     "category_short": "C++",
-    "path": "https://github.com/Arvind826688/filesortingCPP",
+    "path": "https://github.com/venomunicorn/fileSorting",
     "description": "File sorting utility in C++.",
     "features": [],
     "demo_url": null
