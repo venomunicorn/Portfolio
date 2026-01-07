@@ -1066,7 +1066,7 @@ window.projects = [
     "description": "A project from the portfolio.",
     "features": [],
     "demo_url": null
-  }
+  },
   {
     "name": "AsteroicCrator",
     "original_name": "AsteroicCrator",
