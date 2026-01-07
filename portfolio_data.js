@@ -1,5 +1,125 @@
 window.projects = [
   {
+    "name": "21 APEX Challenge",
+    "original_name": "21APEXchallenge",
+    "category": "Games",
+    "category_short": "Games",
+    "path": "https://github.com/venomunicorn/21APEXchallenge",
+    "description": "21-day APEX Legends challenge tracker and progress app.",
+    "features": [],
+    "demo_url": null
+  },
+  {
+    "name": "Arvind Profile",
+    "original_name": "Arvind826688",
+    "category": "Web Development",
+    "category_short": "Web",
+    "path": "https://github.com/Arvind826688/Arvind826688",
+    "description": "GitHub profile README with stats and showcase.",
+    "features": [],
+    "demo_url": null
+  },
+  {
+    "name": "Commercial Projects",
+    "original_name": "commercial",
+    "category": "Desktop Apps",
+    "category_short": "Apps",
+    "path": "https://github.com/venomunicorn/commercial",
+    "description": "Collection of commercial-grade projects and tools.",
+    "features": [],
+    "demo_url": null
+  },
+  {
+    "name": "Dark Theme Collection",
+    "original_name": "dark",
+    "category": "Web Development",
+    "category_short": "Web",
+    "path": "https://github.com/venomunicorn/dark",
+    "description": "Dark theme templates and UI components.",
+    "features": [],
+    "demo_url": null
+  },
+  {
+    "name": "HedgeCam Mirror",
+    "original_name": "hedgecam-mirror",
+    "category": "Mobile Apps",
+    "category_short": "Mobile",
+    "path": "https://github.com/venomunicorn/hedgecam-mirror",
+    "description": "Android HDR camera app fork with enhanced features.",
+    "features": [],
+    "demo_url": null
+  },
+  {
+    "name": "Micro Crater Chronometer",
+    "original_name": "micro-crater-chronometer",
+    "category": "AI/ML",
+    "category_short": "AI/ML",
+    "path": "https://github.com/venomunicorn/micro-crater-chronometer",
+    "description": "AI-powered lunar crater detection and dating system using YOLOv8.",
+    "features": [],
+    "demo_url": null
+  },
+  {
+    "name": "OpenCV Projects",
+    "original_name": "opencv",
+    "category": "AI/ML",
+    "category_short": "AI/ML",
+    "path": "https://github.com/Arvind826688/opencv",
+    "description": "Computer vision projects using OpenCV library.",
+    "features": [],
+    "demo_url": null
+  },
+  {
+    "name": "Startup Website",
+    "original_name": "StartupWebsite",
+    "category": "Web Development",
+    "category_short": "Web",
+    "path": "https://github.com/Arvind826688/StartupWebsite",
+    "description": "Modern startup landing page with animations.",
+    "features": [],
+    "demo_url": null
+  },
+  {
+    "name": "Syllabus Tracker",
+    "original_name": "syllabus-tracker",
+    "category": "Web Development",
+    "category_short": "Web",
+    "path": "https://github.com/venomunicorn/syllabus-tracker",
+    "description": "Academic syllabus tracking and progress management app.",
+    "features": [],
+    "demo_url": null
+  },
+  {
+    "name": "Test Websites",
+    "original_name": "testWebsites",
+    "category": "Web Development",
+    "category_short": "Web",
+    "path": "https://github.com/venomunicorn/testWebsites",
+    "description": "Collection of test websites and prototypes.",
+    "features": [],
+    "demo_url": null
+  },
+  {
+    "name": "Web Page Templates",
+    "original_name": "WebPage",
+    "category": "Web Development",
+    "category_short": "Web",
+    "path": "https://github.com/venomunicorn/WebPage",
+    "description": "Web page templates and UI components.",
+    "features": [],
+    "demo_url": null
+  },
+  {
+    "name": "YouTube Video Downloader App",
+    "original_name": "YouthubeVIDEODownloader",
+    "category": "Desktop Apps",
+    "category_short": "Apps",
+    "path": "https://github.com/Arvind826688/YouthubeVIDEODownloader",
+    "description": "Desktop YouTube video downloader application.",
+    "features": [],
+    "demo_url": null
+  },
+  {
     "name": "Kharcha",
     "original_name": "Kharcha",
     "category": "Mobile Apps",
