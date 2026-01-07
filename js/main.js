@@ -372,3 +372,38 @@ function animateCounters() {
         }, 2000);
     });
 }
+
+// ============================================
+// BACK TO TOP BUTTON
+// ============================================
+
+(function initBackToTop() {
+    const backToTopBtn = document.getElementById('backToTop');
+    if (!backToTopBtn) return;
+
+    // Show/hide button based on scroll position
+    const SCROLL_THRESHOLD = 400;
+
+    function toggleButtonVisibility() {
+        if (window.scrollY > SCROLL_THRESHOLD) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
+    }
+
+    // Scroll to top with smooth animation
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Event listeners
+    window.addEventListener('scroll', toggleButtonVisibility, { passive: true });
+    backToTopBtn.addEventListener('click', scrollToTop);
+
+    // Initial check
+    toggleButtonVisibility();
+})();
