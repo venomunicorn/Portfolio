@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderStats();
         renderProjects();
         setupEventListeners();
-        animateCounters();
+        // animateCounters(); // DISABLED: This was resetting stats to 0 on mobile
     }
 
     function setupEventListeners() {
@@ -313,27 +313,61 @@ function createParticles() {
 
 function animateCounters() {
     const counters = document.querySelectorAll('.stat-number');
+
     counters.forEach(counter => {
         const target = parseInt(counter.textContent);
         if (isNaN(target) || target === 0) return;
 
-        let current = 0;
-        const increment = target / 40;
-        const stepTime = 30;
+        // Store target in data attribute before resetting
+        counter.dataset.target = target;
+        counter.textContent = '0';
 
-        const updateCounter = () => {
-            current += increment;
-            if (current < target) {
-                counter.textContent = Math.ceil(current);
-                setTimeout(updateCounter, stepTime);
-            } else {
-                counter.textContent = target;
-            }
+        let animated = false;
+
+        const runAnimation = () => {
+            if (animated) return; // Prevent double animation
+            animated = true;
+
+            const targetValue = parseInt(counter.dataset.target);
+            let current = 0;
+            const increment = Math.max(1, targetValue / 40);
+            const stepTime = 30;
+
+            const updateCounter = () => {
+                current += increment;
+                if (current < targetValue) {
+                    counter.textContent = Math.ceil(current);
+                    requestAnimationFrame(() => setTimeout(updateCounter, stepTime));
+                } else {
+                    counter.textContent = targetValue;
+                }
+            };
+
+            updateCounter();
         };
 
-        // Simply run animation immediately without IntersectionObserver
-        // to avoid mobile specific issues where observer might reset to 0 and fail
-        counter.textContent = '0';
-        updateCounter();
+        // Try IntersectionObserver for scroll-triggered animation
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    runAnimation();
+                    observer.disconnect();
+                }
+            }, {
+                root: null,
+                rootMargin: '50px', // Trigger slightly before element is in view
+                threshold: 0.1
+            });
+            observer.observe(counter);
+        }
+
+        // Fallback: If animation hasn't started after 2 seconds, force it
+        // This handles cases where IntersectionObserver fails on mobile
+        setTimeout(() => {
+            if (!animated) {
+                console.log('Fallback: Forcing counter animation');
+                runAnimation();
+            }
+        }, 2000);
     });
 }
