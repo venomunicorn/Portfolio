@@ -59,6 +59,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize theme FIRST
     initTheme();
 
+    // Check availability of projects data with polling
+    const MAX_RETRIES = 50; // 5 seconds
+    let retries = 0;
+
+    function checkDataAndInit() {
+        if (window.projects && window.projects.length > 0) {
+            init();
+        } else {
+            console.log("Waiting for data.js...");
+            retries++;
+            if (retries < MAX_RETRIES) {
+                setTimeout(checkDataAndInit, 100);
+            } else {
+                console.error("Failed to load projects data.");
+                document.getElementById('emptyState').classList.remove('hidden');
+                document.getElementById('emptyState').innerHTML = "<h3>Error loading data</h3><p>Please refresh the page.</p>";
+            }
+        }
+    }
+
+    checkDataAndInit();
+
     const projectsGrid = document.getElementById('projectsGrid');
     const searchInput = document.getElementById('searchInput');
     const filterBtns = document.querySelectorAll('.filter-btn');
@@ -85,7 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let searchQuery = '';
 
     // Initialize
-    init();
+    // init() is now called by checkDataAndInit
+    // init();
 
     function init() {
         createParticles();
