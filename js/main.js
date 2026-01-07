@@ -139,9 +139,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderStats() {
-        totalEl.textContent = projects.length;
+        // Safety check
+        const data = window.projects || [];
+        totalEl.textContent = data.length;
 
-        const counts = projects.reduce((acc, p) => {
+        const counts = data.reduce((acc, p) => {
             acc[p.category_short] = (acc[p.category_short] || 0) + 1;
             return acc;
         }, {});
@@ -172,7 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderProjects() {
         projectsGrid.innerHTML = '';
 
-        const filtered = projects.filter(project => {
+        const data = window.projects || [];
+        const filtered = data.filter(project => {
             const matchesCategory = currentCategory === 'all' || project.category === currentCategory;
             const matchesSearch = project.name.toLowerCase().includes(searchQuery) ||
                 project.description.toLowerCase().includes(searchQuery);
