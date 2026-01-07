@@ -59,6 +59,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize theme FIRST
     initTheme();
 
+    // DOM element declarations - MUST be before checkDataAndInit
+    const projectsGrid = document.getElementById('projectsGrid');
+    const searchInput = document.getElementById('searchInput');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const emptyState = document.getElementById('emptyState');
+
+    // Stats elements
+    const totalEl = document.getElementById('totalProjects');
+    const webEl = document.getElementById('webProjects');
+    const pythonEl = document.getElementById('pythonProjects');
+    const cppEl = document.getElementById('cppProjects');
+    const aimlEl = document.getElementById('aimlProjects');
+    const gamesEl = document.getElementById('gamesProjects');
+    const appsEl = document.getElementById('appsProjects');
+
+    // Modal elements
+    const modal = document.getElementById('demoModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const demoFrame = document.getElementById('demoFrame');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalExternalLink = document.getElementById('modalExternalLink');
+
+    // State
+    let currentCategory = 'all';
+    let searchQuery = '';
+
     // Check availability of projects data with polling
     let retries = 0;
 
@@ -87,31 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     checkDataAndInit();
-
-    const projectsGrid = document.getElementById('projectsGrid');
-    const searchInput = document.getElementById('searchInput');
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const emptyState = document.getElementById('emptyState');
-
-    // Stats elements
-    const totalEl = document.getElementById('totalProjects');
-    const webEl = document.getElementById('webProjects');
-    const pythonEl = document.getElementById('pythonProjects');
-    const cppEl = document.getElementById('cppProjects');
-    const aimlEl = document.getElementById('aimlProjects');
-    const gamesEl = document.getElementById('gamesProjects');
-    const appsEl = document.getElementById('appsProjects');
-
-    // Modal elements
-    const modal = document.getElementById('demoModal');
-    const closeModalBtn = document.getElementById('closeModal');
-    const demoFrame = document.getElementById('demoFrame');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalExternalLink = document.getElementById('modalExternalLink');
-
-    // State
-    let currentCategory = 'all';
-    let searchQuery = '';
 
     // Initialize
     // init() is now called by checkDataAndInit
