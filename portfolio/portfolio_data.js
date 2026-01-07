@@ -29,16 +29,7 @@ window.projects = [
     "features": [],
     "demo_url": null
   },
-  {
-    "name": "Dark Theme Collection",
-    "original_name": "dark",
-    "category": "Web Development",
-    "category_short": "Web",
-    "path": "https://github.com/venomunicorn/dark",
-    "description": "Dark theme templates and UI components.",
-    "features": [],
-    "demo_url": null
-  },
+
   {
     "name": "HedgeCam Mirror",
     "original_name": "hedgecam-mirror",
