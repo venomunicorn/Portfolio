@@ -60,21 +60,28 @@ document.addEventListener('DOMContentLoaded', () => {
     initTheme();
 
     // Check availability of projects data with polling
-    const MAX_RETRIES = 50; // 5 seconds
     let retries = 0;
 
     function checkDataAndInit() {
-        if (window.projects && window.projects.length > 0) {
+        if (typeof window.projects !== 'undefined' && Array.isArray(window.projects)) {
+            // Data loaded!
             init();
         } else {
-            console.log("Waiting for data.js...");
+            console.log("Waiting for portfolio_data.js...");
             retries++;
-            if (retries < MAX_RETRIES) {
+            if (retries < 20) {
+                // First 2 seconds: silent wait
+                setTimeout(checkDataAndInit, 100);
+            } else if (retries < 100) {
+                // Next 8 seconds: keep waiting
                 setTimeout(checkDataAndInit, 100);
             } else {
-                console.error("Failed to load projects data.");
-                document.getElementById('emptyState').classList.remove('hidden');
-                document.getElementById('emptyState').innerHTML = "<h3>Error loading data</h3><p>Please refresh the page.</p>";
+                // Timeout after 10 seconds: Show visible error
+                const err = document.getElementById('emptyState');
+                if (err) {
+                    err.classList.remove('hidden');
+                    err.innerHTML = "<h3>Connection Slow</h3><p>Projects data could not be loaded. <br> <button onclick='location.reload()'>Reload Page</button></p>";
+                }
             }
         }
     }
