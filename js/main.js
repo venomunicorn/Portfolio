@@ -6,18 +6,32 @@
 // ============================================
 
 const THEMES = ['brutalist', 'luxury', 'scientific', 'chaos'];
+const DEFAULT_THEME = 'scientific'; // Final theme after rotation complete
 
 function initTheme() {
-    // Check for saved theme or randomize
-    let savedTheme = localStorage.getItem('portfolioTheme');
+    // Get visited themes from localStorage (stored as comma-separated string)
+    let visitedThemes = localStorage.getItem('visitedThemes');
+    visitedThemes = visitedThemes ? visitedThemes.split(',') : [];
 
-    if (!savedTheme || !THEMES.includes(savedTheme)) {
-        // Random theme on first visit
-        savedTheme = THEMES[Math.floor(Math.random() * THEMES.length)];
-        localStorage.setItem('portfolioTheme', savedTheme);
+    // Check if all themes have been shown
+    const allThemesVisited = THEMES.every(t => visitedThemes.includes(t));
+
+    let themeToShow;
+
+    if (allThemesVisited) {
+        // All themes shown - settle on the default theme
+        themeToShow = DEFAULT_THEME;
+    } else {
+        // Find themes not yet visited
+        const unseenThemes = THEMES.filter(t => !visitedThemes.includes(t));
+        // Pick a random unseen theme
+        themeToShow = unseenThemes[Math.floor(Math.random() * unseenThemes.length)];
+        // Mark this theme as visited
+        visitedThemes.push(themeToShow);
+        localStorage.setItem('visitedThemes', visitedThemes.join(','));
     }
 
-    setTheme(savedTheme);
+    setTheme(themeToShow);
     setupThemeButtons();
 }
 
