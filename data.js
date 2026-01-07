@@ -1,4 +1,4 @@
-const projects = [
+window.projects = [
   {
     "name": "2DArcadeGame",
     "original_name": "2DArcadeGame",
