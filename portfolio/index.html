@@ -4,25 +4,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>21APEXchallenge Project Portfolio</title>
+    <title>Arvind Kaushik - Portfolio</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <meta name="description" content="A showcase of 57+ projects built during the 21APEXchallenge.">
+    <!-- All theme fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&family=IBM+Plex+Sans:wght@300;400;600;700&family=Bebas+Neue&family=Archivo+Black&family=Outfit:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
+    <meta name="description" content="Portfolio of Arvind Kaushik - Software Developer showcasing 100+ projects.">
 </head>
 
-<body>
-    <div class="background-gradients"></div>
+<body data-theme="default">
+    <div class="background-effects">
+        <div class="background-gradients"></div>
+        <div class="particles" id="particles"></div>
+        <div class="grid-overlay"></div>
+        <div class="scan-line"></div>
+    </div>
 
     <header class="header">
         <div class="container">
-            <h1 class="logo">21APEX<span>Portfolio</span></h1>
-            <p class="tagline">Exploring Code, One Project at a Time.</p>
+            <h1 class="logo">
+                <span class="name-first">Arvind</span>
+                <span class="name-last">Kaushik</span>
+            </h1>
+            <p class="tagline">Building the Future, One Project at a Time.</p>
         </div>
     </header>
 
-    <main class="container">
+    <section class="about-section">
+        <div class="container about-container">
+            <div class="profile-frame">
+                <img src="images/profile.jpg" alt="Arvind Kaushik" class="profile-pic">
+            </div>
+            <div class="about-content">
+                <h2>Hi, I'm <span class="highlight">Arvind Kaushik</span></h2>
+                <p class="bio">I'm a passionate developer building everything from system utilities to full-stack web
+                    applications. This portfolio showcases my journey featuring commercial-grade apps, experimental
+                    scripts, and creative designs.</p>
+                <div class="social-links">
+                    <a href="https://github.com/venomunicorn" target="_blank" class="social-btn">GitHub (Venom)</a>
+                    <a href="https://github.com/Arvind826688" target="_blank" class="social-btn">GitHub (Arvind)</a>
+                    <a href="https://www.linkedin.com/in/arvindkaushikchamp" target="_blank"
+                        class="social-btn">LinkedIn</a>
+                    <a href="resume.html" class="social-btn">Resume</a>
+                </div>
+
+                <!-- Theme Switcher -->
+                <div class="theme-switcher">
+                    <span class="theme-label">Change Theme:</span>
+                    <div class="theme-buttons">
+                        <button class="theme-btn" data-theme="brutalist" title="Brutalist Tech">
+                            <span class="theme-icon">⌘</span>
+                            <span class="theme-name">Terminal</span>
+                        </button>
+                        <button class="theme-btn" data-theme="luxury" title="Cinematic Luxury">
+                            <span class="theme-icon">✦</span>
+                            <span class="theme-name">Luxury</span>
+                        </button>
+                        <button class="theme-btn" data-theme="scientific" title="Scientific/Aerospace">
+                            <span class="theme-icon">◎</span>
+                            <span class="theme-name">Science</span>
+                        </button>
+                        <button class="theme-btn" data-theme="chaos" title="Artistic Chaos">
+                            <span class="theme-icon">✸</span>
+                            <span class="theme-name">Chaos</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container main-content">
         <div class="controls">
             <div class="search-bar">
                 <input type="text" id="searchInput" placeholder="Search projects...">
@@ -38,6 +93,10 @@
                 <button class="filter-btn" data-category="Web Development">Web</button>
                 <button class="filter-btn" data-category="Python Scripting">Python</button>
                 <button class="filter-btn" data-category="C++ Systems">C++</button>
+                <button class="filter-btn" data-category="AI/ML">AI/ML</button>
+                <button class="filter-btn" data-category="Games">Games</button>
+                <button class="filter-btn" data-category="Mobile Apps">Mobile</button>
+                <button class="filter-btn" data-category="Desktop Apps">Apps</button>
             </div>
         </div>
 
@@ -57,6 +116,22 @@
             <div class="stat-card">
                 <span class="stat-number" id="cppProjects">0</span>
                 <span class="stat-label">C++</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="aimlProjects">0</span>
+                <span class="stat-label">AI/ML</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="gamesProjects">0</span>
+                <span class="stat-label">Games</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="appsProjects">0</span>
+                <span class="stat-label">Apps</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="mobileProjects">0</span>
+                <span class="stat-label">Mobile</span>
             </div>
         </div>
 
@@ -86,14 +161,23 @@
         </div>
     </div>
 
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" title="Back to Top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 15l-6-6-6 6" />
+        </svg>
+    </button>
+
     <footer class="footer">
-        <p>&copy; 2025 21APEXchallenge Portfolio. Generated by Antigravity AI.</p>
+        <p>&copy; 2025 Arvind Kaushik. All rights reserved. (v2.1)</p>
     </footer>
 
-    <!-- Load Data first -->
-    <script src="data.js"></script>
+    <script src="portfolio_data.js?v=4"></script>
+    <!-- 3D Effects Engine -->
+    <script src="js/effects.js?v=3"></script>
     <!-- Main Logic -->
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=3"></script>
 </body>
 
 </html>
