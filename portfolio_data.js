@@ -1,5 +1,25 @@
 window.projects = [
   {
+    "name": "Kharcha",
+    "original_name": "Kharcha",
+    "category": "Mobile Apps",
+    "category_short": "Mobile",
+    "path": "https://github.com/venomunicorn/Kharcha",
+    "description": "Android expense tracking app with budget management and analytics.",
+    "features": [],
+    "demo_url": null
+  },
+  {
+    "name": "RAWCAMPRO",
+    "original_name": "RAWCAMPRO",
+    "category": "Mobile Apps",
+    "category_short": "Mobile",
+    "path": "https://github.com/venomunicorn/RAWCAMPRO",
+    "description": "Android camera app with RAW photo capture and manual controls.",
+    "features": [],
+    "demo_url": null
+  },
+  {
     "name": "2DArcadeGame",
     "original_name": "2DArcadeGame",
     "category": "Games",
